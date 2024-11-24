@@ -110,10 +110,10 @@ export default function BoardSelection() {
           <Tabs.Panel value="all">{renderCarousel('all')}</Tabs.Panel>
 
           {[
-            { tabName: 'engineering', image: '/src/public/robot.png' },
-            { tabName: 'medical', image: '/src/public/colorPick.png' },
-            { tabName: 'drawing', image: '/src/public/drawing.png' },
-            { tabName: 'management', image: '/src/public/webImage.png' },
+            { tabName: 'engineering', image: '../public/robot.png' },
+            { tabName: 'medical', image: '../public/colorPick.png' },
+            { tabName: 'drawing', image: '../public/drawing.png' },
+            { tabName: 'management', image: '../public/webImage.png' },
           ].map((item) => (
             <Tabs.Panel value={item.tabName}>
               {renderCarousel(item.tabName, item.image)}
