@@ -2,6 +2,10 @@ import { getThemeColor, Tabs } from '@mantine/core';
 import { Carousel, Embla } from '@mantine/carousel';
 import CourseCard from './CourseCard';
 import { useState } from 'react';
+import robot from '../public/robot.png';
+import colorPick from '../public/colorPick.png';
+import drawing from '../public/drawing.png';
+import wenImage from '../public/webImage.png';
 
 export default function BoardSelection() {
   const [embla, setEmbla] = useState<Embla | null>(null);
@@ -110,10 +114,10 @@ export default function BoardSelection() {
           <Tabs.Panel value="all">{renderCarousel('all')}</Tabs.Panel>
 
           {[
-            { tabName: 'engineering', image: '../public/robot.png' },
-            { tabName: 'medical', image: '../public/colorPick.png' },
-            { tabName: 'drawing', image: '../public/drawing.png' },
-            { tabName: 'management', image: '../public/webImage.png' },
+            { tabName: 'engineering', image: robot },
+            { tabName: 'medical', image: colorPick },
+            { tabName: 'drawing', image: drawing },
+            { tabName: 'management', image: wenImage },
           ].map((item) => (
             <Tabs.Panel value={item.tabName}>
               {renderCarousel(item.tabName, item.image)}
