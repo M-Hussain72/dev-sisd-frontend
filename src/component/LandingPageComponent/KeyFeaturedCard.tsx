@@ -17,7 +17,7 @@ export default function KeyFeaturedCard({
     <Card
       padding="lg"
       radius="md"
-      className=" max-w-[255px] shadow-lg hover:shadow-xl transition-all duration-500 hover:drop-shadow-md  "
+      className=" max-w-[255px] shadow-lg bg-[#FAFAFA] hover:shadow-xl transition-all duration-500 hover:drop-shadow-md  "
     >
       <div className=" mt-2 max-w-[210px] capitalize cursor-default">
         <div

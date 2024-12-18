@@ -19,7 +19,6 @@ export default function DrawerComponent({ children }: props) {
       <Drawer
         position="left"
         size="mantine-breakpoint-sm"
-        mih={'500px'}
         style={{}}
         opened={opened}
         onClose={close}

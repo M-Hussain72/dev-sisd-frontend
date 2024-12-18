@@ -26,10 +26,17 @@
     "@mantine/carousel": "^7.14.1",
     "@mantine/core": "^7.14.1",
     "@mantine/hooks": "^7.14.1",
-    "@tanstack/react-router": "^1.82.1",
+    "@tanstack/react-query": "^5.62.2",
+    "@tanstack/react-router": "^1.85.5",
     "@tanstack/router-devtools": "^1.82.1",
+    "axios": "^1.7.9",
     "embla-carousel-react": "^7.1.0",
+    "formik": "^2.4.6",
+    "jwt-decode": "^4.0.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "swiper": "^11.1.15",
+    "yup": "^1.4.0",
+    "zod": "^3.23.8"
   }
 }

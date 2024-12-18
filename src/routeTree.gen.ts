@@ -11,10 +11,29 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as SignupImport } from './routes/signup'
+import { Route as CartImport } from './routes/cart'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
+import { Route as LoginIndexImport } from './routes/login/index'
+import { Route as CoursesIndexImport } from './routes/courses.index'
+import { Route as PaymentCheckoutImport } from './routes/payment.checkout'
+import { Route as LoginForgotpasswordImport } from './routes/login/forgotpassword'
+import { Route as CoursesIdImport } from './routes/courses.$id'
 
 // Create/Update Routes
+
+const SignupRoute = SignupImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CartRoute = CartImport.update({
+  id: '/cart',
+  path: '/cart',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const AboutRoute = AboutImport.update({
   id: '/about',
@@ -25,6 +44,36 @@ const AboutRoute = AboutImport.update({
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const LoginIndexRoute = LoginIndexImport.update({
+  id: '/login/',
+  path: '/login/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CoursesIndexRoute = CoursesIndexImport.update({
+  id: '/courses/',
+  path: '/courses/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PaymentCheckoutRoute = PaymentCheckoutImport.update({
+  id: '/payment/checkout',
+  path: '/payment/checkout',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const LoginForgotpasswordRoute = LoginForgotpasswordImport.update({
+  id: '/login/forgotpassword',
+  path: '/login/forgotpassword',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CoursesIdRoute = CoursesIdImport.update({
+  id: '/courses/$id',
+  path: '/courses/$id',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -46,6 +95,55 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
+    '/cart': {
+      id: '/cart'
+      path: '/cart'
+      fullPath: '/cart'
+      preLoaderRoute: typeof CartImport
+      parentRoute: typeof rootRoute
+    }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupImport
+      parentRoute: typeof rootRoute
+    }
+    '/courses/$id': {
+      id: '/courses/$id'
+      path: '/courses/$id'
+      fullPath: '/courses/$id'
+      preLoaderRoute: typeof CoursesIdImport
+      parentRoute: typeof rootRoute
+    }
+    '/login/forgotpassword': {
+      id: '/login/forgotpassword'
+      path: '/login/forgotpassword'
+      fullPath: '/login/forgotpassword'
+      preLoaderRoute: typeof LoginForgotpasswordImport
+      parentRoute: typeof rootRoute
+    }
+    '/payment/checkout': {
+      id: '/payment/checkout'
+      path: '/payment/checkout'
+      fullPath: '/payment/checkout'
+      preLoaderRoute: typeof PaymentCheckoutImport
+      parentRoute: typeof rootRoute
+    }
+    '/courses/': {
+      id: '/courses/'
+      path: '/courses'
+      fullPath: '/courses'
+      preLoaderRoute: typeof CoursesIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/login/': {
+      id: '/login/'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -54,36 +152,99 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/cart': typeof CartRoute
+  '/signup': typeof SignupRoute
+  '/courses/$id': typeof CoursesIdRoute
+  '/login/forgotpassword': typeof LoginForgotpasswordRoute
+  '/payment/checkout': typeof PaymentCheckoutRoute
+  '/courses': typeof CoursesIndexRoute
+  '/login': typeof LoginIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/cart': typeof CartRoute
+  '/signup': typeof SignupRoute
+  '/courses/$id': typeof CoursesIdRoute
+  '/login/forgotpassword': typeof LoginForgotpasswordRoute
+  '/payment/checkout': typeof PaymentCheckoutRoute
+  '/courses': typeof CoursesIndexRoute
+  '/login': typeof LoginIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/cart': typeof CartRoute
+  '/signup': typeof SignupRoute
+  '/courses/$id': typeof CoursesIdRoute
+  '/login/forgotpassword': typeof LoginForgotpasswordRoute
+  '/payment/checkout': typeof PaymentCheckoutRoute
+  '/courses/': typeof CoursesIndexRoute
+  '/login/': typeof LoginIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/cart'
+    | '/signup'
+    | '/courses/$id'
+    | '/login/forgotpassword'
+    | '/payment/checkout'
+    | '/courses'
+    | '/login'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about'
-  id: '__root__' | '/' | '/about'
+  to:
+    | '/'
+    | '/about'
+    | '/cart'
+    | '/signup'
+    | '/courses/$id'
+    | '/login/forgotpassword'
+    | '/payment/checkout'
+    | '/courses'
+    | '/login'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/cart'
+    | '/signup'
+    | '/courses/$id'
+    | '/login/forgotpassword'
+    | '/payment/checkout'
+    | '/courses/'
+    | '/login/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  CartRoute: typeof CartRoute
+  SignupRoute: typeof SignupRoute
+  CoursesIdRoute: typeof CoursesIdRoute
+  LoginForgotpasswordRoute: typeof LoginForgotpasswordRoute
+  PaymentCheckoutRoute: typeof PaymentCheckoutRoute
+  CoursesIndexRoute: typeof CoursesIndexRoute
+  LoginIndexRoute: typeof LoginIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  CartRoute: CartRoute,
+  SignupRoute: SignupRoute,
+  CoursesIdRoute: CoursesIdRoute,
+  LoginForgotpasswordRoute: LoginForgotpasswordRoute,
+  PaymentCheckoutRoute: PaymentCheckoutRoute,
+  CoursesIndexRoute: CoursesIndexRoute,
+  LoginIndexRoute: LoginIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -97,7 +258,14 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/about"
+        "/about",
+        "/cart",
+        "/signup",
+        "/courses/$id",
+        "/login/forgotpassword",
+        "/payment/checkout",
+        "/courses/",
+        "/login/"
       ]
     },
     "/": {
@@ -105,6 +273,27 @@ export const routeTree = rootRoute
     },
     "/about": {
       "filePath": "about.tsx"
+    },
+    "/cart": {
+      "filePath": "cart.tsx"
+    },
+    "/signup": {
+      "filePath": "signup.tsx"
+    },
+    "/courses/$id": {
+      "filePath": "courses.$id.tsx"
+    },
+    "/login/forgotpassword": {
+      "filePath": "login/forgotpassword.tsx"
+    },
+    "/payment/checkout": {
+      "filePath": "payment.checkout.tsx"
+    },
+    "/courses/": {
+      "filePath": "courses.index.tsx"
+    },
+    "/login/": {
+      "filePath": "login/index.tsx"
     }
   }
 }

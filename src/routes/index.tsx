@@ -1,23 +1,19 @@
 import * as React from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import HeroSection from '../component/HeroSection';
-import FeaturedCourses from '../component/FeaturedCourses';
-import KeyFeaturedSection from '../component/KeyFeturedSection';
-import BoardSelection from '../component/BoardSelection';
-import DiverseCoursesStn from '../component/DiverseCoursesStn';
+import Footer from '../component/Footer';
+import { useAuth } from '../context/AuthContext';
+import LandingPage from '../component/LandingPage';
+import DashBoard from '../component/DashBoard';
 
 export const Route = createFileRoute('/')({
-  component: HomePage,
+  component: Home,
 });
-
-function HomePage() {
+function Home() {
+  const { isAuthenticate } = useAuth();
   return (
-    <>
-      <HeroSection />
-      <FeaturedCourses />
-      <KeyFeaturedSection />
-      <BoardSelection />
-      <DiverseCoursesStn />
-    </>
+    <div>
+      <div className=" xs:mx-8 mx-4">{isAuthenticate ? <DashBoard /> : <LandingPage />}</div>
+      <Footer />
+    </div>
   );
 }

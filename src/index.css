@@ -13,3 +13,40 @@ body {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+main {
+  z-index: -1;
+}
+
+.image-stack {
+  position: relative;
+  width: 100%;
+  z-index: 0;
+}
+
+.image-stack__item--bottom {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  padding-right: 50%;
+  z-index: -1;
+}
+
+.image-stack__item--top {
+  padding-top: 20%;
+  padding-left: 45%;
+  width: 100%;
+  z-index: 10;
+}
+
+.img_overlap {
+  width: 100%;
+  display: block;
+}
+
+.shadow-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  box-shadow: 0px 4px 10px -4px rgba(0, 0, 0, 0.2); /* Bottom-focused shadow */
+}
