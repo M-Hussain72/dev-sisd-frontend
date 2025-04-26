@@ -1,9 +1,9 @@
 import { Outlet, createRootRouteWithContext } from '@tanstack/react-router';
 import { MantineProvider } from '@mantine/core';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
-import Header from '../component/Header.tsx';
 import '@mantine/core/styles.css';
 import '@mantine/carousel/styles.css';
+import Header from '../component/Header.tsx';
 import FooterBottom from '../component/FooterBottom';
 import type { AuthContextType } from '../context/AuthContext';
 import ScrollToTop from '../utils/ScrollToTop';
