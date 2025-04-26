@@ -3,14 +3,14 @@ import { MantineProvider } from '@mantine/core';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 import '@mantine/core/styles.css';
 import '@mantine/carousel/styles.css';
-import Header from '../component/Header.tsx';
+
 import FooterBottom from '../component/FooterBottom';
 import type { AuthContextType } from '../context/AuthContext';
 import ScrollToTop from '../utils/ScrollToTop';
 import 'video.js/dist/video-js.css';
 import Footer from '../component/Footer';
 import { AxiosInstance } from 'axios';
-
+import Header from '../component/header.tsx';
 interface MyRouterContext {
   auth: AuthContextType;
   authAxios: AxiosInstance;
