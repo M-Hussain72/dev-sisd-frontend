@@ -3,6 +3,8 @@ import { getAuthToken, setAuthToken } from '../utils/auth.ts';
 import React from 'react';
 import authHttp, { loginPropType, registerPropType } from '../http/authHttp.ts';
 import userHttp, { userApiType } from '../http/userHttp.ts';
+import { toast } from 'react-toastify';
+import { useNavigate } from '@tanstack/react-router';
 
 export interface User {
   name: string;
@@ -16,33 +18,52 @@ export interface AuthContextType {
   isAuthenticate: boolean;
   user?: User | null;
   logOut: () => void;
+  autoLogout: () => void;
   login: ({ fromData }: loginPropType) => Promise<void>;
   register: ({ fromData }: registerPropType) => Promise<void>;
   getUser: ({ authAxios }: userApiType) => Promise<User>;
+  googleLogin: ({ token }: { token: string }) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const token = getAuthToken();
 
 export default function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>();
-
-  const token = getAuthToken();
-  let isAuthenticate = !!token;
-  console.log('isAuthentic from : ');
-  console.log(isAuthenticate);
+  const [isAuthenticate, setIsAuthenticate] = useState<boolean>(!!token);
 
   function logOut() {
     setUser(null);
-    isAuthenticate = false;
+    setIsAuthenticate(false);
     localStorage.removeItem('token');
-    console.log('log out');
-    window.location.replace('/');
+    window.location.replace(`/?notify=logout-success`);
+  }
+
+  function autoLogout() {
+    setUser(null);
+    setIsAuthenticate(false);
+    localStorage.removeItem('token');
+    window.location.replace(`/?notify=section-expire`);
   }
 
   async function login({ fromData }: loginPropType) {
     try {
       const res = await authHttp.loginUser({ fromData });
-      setAuthToken(res.data.tokens);
+      setAuthToken(res.data.token);
+      setIsAuthenticate(true);
+      setUser(res.data.user);
+
+      return;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async function googleLogin({ token }: { token: string }) {
+    try {
+      const res = await authHttp.googleLoginUser({ token });
+      setAuthToken(res.data.token);
+      setIsAuthenticate(true);
       setUser(res.data.user);
       return;
     } catch (error) {
@@ -53,7 +74,8 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
   async function register({ fromData }: registerPropType) {
     try {
       const res = await authHttp.registerUser({ fromData });
-      setAuthToken(res.data.tokens);
+      setAuthToken(res.data.token);
+      setIsAuthenticate(true);
       setUser(res.data.user);
       return;
     } catch (error) {
@@ -67,13 +89,14 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
       setUser(res.data);
       return res.data;
     } catch (error) {
+      console.log(error);
       logOut();
       throw error;
     }
   }
 
   return (
-    <AuthContext.Provider value={{ isAuthenticate, user, logOut, login, register, getUser }}>
+    <AuthContext.Provider value={{ isAuthenticate, user, logOut, login, register, getUser, googleLogin, autoLogout }}>
       {children}
     </AuthContext.Provider>
   );

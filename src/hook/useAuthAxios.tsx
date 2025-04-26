@@ -1,48 +1,61 @@
+import { useEffect, useRef } from 'react';
 import axios from 'axios';
-
 import { getAuthToken } from '../utils/auth';
 import authHttp from '../http/authHttp';
+import { useAuth } from '../context/AuthContext';
+
 const useAuthAxios = () => {
-  const axiosApiInstance = axios.create();
+  const { autoLogout } = useAuth();
+  const axiosInstance = useRef(axios.create());
+  const logoutRef = useRef(autoLogout);
 
-  axiosApiInstance.interceptors.request.use(
-    async (config) => {
-      let token = getAuthToken();
-      if (token != null) {
-        config.headers.Authorization = `Bearer ${token?.access.token}`;
-      }
-      return config;
-    },
-    (error) => {
-      Promise.reject(error);
-    },
-  );
+  // Update refs when dependencies change
+  useEffect(() => {
+    logoutRef.current = autoLogout;
+  }, [autoLogout]);
 
-  // Response interceptor for API calls
-  axiosApiInstance.interceptors.response.use(
-    (response) => {
-      return response;
-    },
+  useEffect(() => {
+    const instance = axiosInstance.current;
 
-    async (error) => {
-      const originalRequest = error.config;
-
-      if (error.response.status === 401 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        try {
-          await authHttp.refreshTokens();
-          console.log('originalRequest: ');
-          // Retry the original request
-          return axiosApiInstance(originalRequest);
-        } catch (error) {
-          return Promise.reject(error);
+    // Request Interceptor
+    const reqInterceptor = instance.interceptors.request.use(
+      (config) => {
+        const token = getAuthToken();
+        if (token?.access?.token) {
+          config.headers.Authorization = `Bearer ${token.access.token}`;
         }
-      }
-      return Promise.reject(error);
-    },
-  );
+        return config;
+      },
+      (error) => Promise.reject(error),
+    );
 
-  return axiosApiInstance;
+    // Response Interceptor
+    const resInterceptor = instance.interceptors.response.use(
+      (response) => response,
+      async (error) => {
+        const originalRequest = error.config;
+        if (error.response?.status === 401 && !originalRequest._retry) {
+          originalRequest._retry = true;
+          try {
+            await authHttp.refreshTokens();
+            return instance(originalRequest);
+          } catch (err) {
+            logoutRef.current(); // Use ref to avoid stale closure
+            return Promise.reject(err);
+          }
+        }
+        return Promise.reject(error);
+      },
+    );
+
+    // Cleanup Interceptors
+    return () => {
+      instance.interceptors.request.eject(reqInterceptor);
+      instance.interceptors.response.eject(resInterceptor);
+    };
+  }, []); // Empty dependency array = setup once
+
+  return axiosInstance.current;
 };
 
 export default useAuthAxios;

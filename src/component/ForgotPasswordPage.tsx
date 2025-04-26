@@ -2,26 +2,34 @@ import Button from './ui/Button';
 import InputFelid from './ui/InputFelid';
 import { useFormik } from 'formik';
 import { loginSchema } from '../schema/loginSchema';
+import authHttp from '../http/authHttp';
+import { toast } from 'react-toastify';
+import { useState } from 'react';
+import { useCountdown } from '../hook/countDown';
+import { Link } from '@tanstack/react-router';
 
 export default function ForgotPasswordPage() {
   const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit, resetForm, setSubmitting } =
     useFormik({
       validateOnMount: true,
-      // validateOnChange: false,
-      // validateOnBlur: false,
       initialValues: {
         email: '',
       },
       validationSchema: loginSchema.fields.email,
       onSubmit,
     });
+  const { secondsLeft, start, running } = useCountdown();
 
   async function onSubmit() {
-    //  await loginUser(values);
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-    }, 400);
+    try {
+      await authHttp.forgetPassword({ email: values.email });
+      start(60);
+      toast.success('Password reset link sent to your email.');
+    } catch (error) {
+      //@ts-ignore
+      toast.error(err.message || 'Failed to send reset link.');
+    }
+    setSubmitting(false);
   }
 
   return (
@@ -45,12 +53,15 @@ export default function ForgotPasswordPage() {
               defaultChecked={false}
             />
           </div>
-          <Button type="submit" disabled={isSubmitting}>
-            <text>Reset Password</text>
+          <Button type="submit" disabled={running || isSubmitting}>
+            <text>{running ? `Resend in ${secondsLeft}s` : 'Send Reset Email'}</text>
           </Button>
         </form>
         <p className=" mt-4 text-themeGray text-sm ">
-          Back to <span className=" text-themeBlue font-medium">Login</span>
+          Back to{' '}
+          <Link to="/login" className=" text-themeBlue font-medium">
+            Login
+          </Link>
         </p>
       </div>
     </div>

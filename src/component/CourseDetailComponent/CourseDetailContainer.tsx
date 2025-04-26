@@ -2,84 +2,64 @@ import { NumberFormatter, Rating, Spoiler } from '@mantine/core';
 
 import CoursePricing from './CoursePricing';
 import FeedBack from './FeedBack';
+import InstructorInfoBar from '../helper/InstructorInfoBar';
+import { CourseIn } from '../../interface/courseInterface';
+import ReactMarkdown from 'react-markdown';
+import CourseSection from '../CourseSection';
+import CourseContent from './CourseContent';
+import { formatTimeInDays } from '../../utils/formatTime';
 
-export default function CourseDetailContainer() {
+export default function CourseDetailContainer({ ...course }: CourseIn) {
+  // console.log('id: ---');
+  // console.log(id);
+
   return (
     <div className="lg:max-w-[904px] max-w-[600px] mx-auto  lg:mt-12 mt-0 ">
-      <h1 className=" text-resHeading  font-semibold text-themeBlack ">
-        Master Digital Product Design: UX Research & UI Design
-      </h1>
-      <p className=" text-resLg cursor-default  text-themeGray mt-2 ">
-        A complete design education for product designers: Research the User Experience, then design a great user interface
-        with UX Expert Joe Natoli.
-      </p>
-      <div className=" flex mt-2 gap-6">
-        <div className=" group flex items-center gap-1  ">
-          <svg
-            width="21"
-            height="22"
-            viewBox="0 0 20 20"
-            fill="none"
-            className="  fill-[#626465] group-hover:fill-themeBlue "
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M11.6537 3.43348L11.6554 3.43454L15.7757 5.99203L15.7757 5.99206C16.6765 6.55131 17.0802 7.4904 16.9869 8.39014V11.9559C16.9869 12.2256 16.7557 12.4443 16.4706 12.4443C16.1854 12.4443 15.9543 12.2256 15.9543 11.9559V10.1596C15.8971 10.2014 15.8376 10.2416 15.7757 10.2801L15.7757 10.2801L14.907 10.8193V13.7599C14.907 14.2945 14.6918 14.8204 14.3692 15.2444C14.0466 15.6684 13.5882 16.028 13.0533 16.1967L10.8569 16.8872C10.8553 16.8877 10.8537 16.8882 10.8521 16.8886C10.5925 16.9676 10.2825 17 9.99627 17C9.71052 17 9.40085 16.9677 9.14299 16.8879L9.14078 16.8872L6.9444 16.1967C6.40956 16.028 5.95108 15.6684 5.62853 15.2444C5.30592 14.8204 5.09069 14.2945 5.09069 13.7599L5.09733 10.8161L4.23049 10.2807C2.58984 9.26735 2.58983 6.99826 4.23049 5.98491L8.37316 3.42629L8.3739 3.42583C8.84809 3.13115 9.44488 2.99906 10.0138 3C10.5824 3.00095 11.1793 3.13485 11.6537 3.43348ZM15.9594 7.97951C15.956 8.00198 15.9543 8.02493 15.9543 8.04827V8.33573C15.8965 8.77281 15.6481 9.19076 15.2092 9.46329L15.2092 9.46332L11.0858 12.0228L11.0854 12.023C10.8162 12.1904 10.4287 12.2895 10.0129 12.2895C9.59706 12.2895 9.20957 12.1904 8.94039 12.023L8.93901 12.0222L4.79496 9.46268C3.77845 8.83484 3.77845 7.43077 4.79495 6.80293L8.93901 4.24345L8.94039 4.24259C9.20954 4.07519 9.59682 3.97622 10.012 3.9769C10.4271 3.97759 10.8138 4.07783 11.0826 4.24737L11.0844 4.24845L11.0858 4.24935L15.2092 6.8088C15.6625 7.09028 15.9126 7.5269 15.9594 7.97951ZM13.8745 11.4602V13.7599C13.8745 14.0525 13.7524 14.383 13.5312 14.6737C13.3099 14.9645 13.0181 15.178 12.7269 15.2699L12.7268 15.2699L10.534 15.9592C10.408 15.9972 10.2131 16.0231 9.99627 16.0231C9.77833 16.0231 9.58591 15.9969 9.4651 15.9597L9.46417 15.9594L7.27093 15.2699L7.27065 15.2698C6.97952 15.1779 6.68777 14.9645 6.46657 14.6737C6.24547 14.3831 6.1234 14.0528 6.12327 13.7604V13.7599L6.12847 11.4529L8.37316 12.8393L8.3738 12.8397C8.84798 13.1344 9.44459 13.2664 10.0129 13.2664C10.5814 13.2664 11.1782 13.1343 11.6525 12.8394L13.8745 11.4602Z"
-            />
-          </svg>
-          <p className="  cursor-default text-themeGray text-resLg  ">Watson Holmes</p>
-        </div>
-
-        <div className=" group flex items-center gap-2  ">
-          <svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M3.78845 11.2115H8.71152V9.71153H3.78845V11.2115ZM10.7115 11.2115H12.2115V9.71153H10.7115V11.2115ZM3.78845 7.42305H5.28842V5.92308H3.78845V7.42305ZM7.28843 7.42305H12.2115V5.92308H7.28843V7.42305ZM1.8077 15C1.30257 15 0.875 14.825 0.525 14.475C0.175 14.125 0 13.6974 0 13.1923V1.8077C0 1.30257 0.175 0.875 0.525 0.525C0.875 0.175 1.30257 0 1.8077 0H14.1923C14.6974 0 15.125 0.175 15.475 0.525C15.825 0.875 16 1.30257 16 1.8077V13.1923C16 13.6974 15.825 14.125 15.475 14.475C15.125 14.825 14.6974 15 14.1923 15H1.8077ZM1.8077 13.5H14.1923C14.2692 13.5 14.3397 13.4679 14.4038 13.4038C14.4679 13.3397 14.5 13.2692 14.5 13.1923V1.8077C14.5 1.73077 14.4679 1.66024 14.4038 1.59613C14.3397 1.53203 14.2692 1.49998 14.1923 1.49998H1.8077C1.73077 1.49998 1.66024 1.53203 1.59613 1.59613C1.53202 1.66024 1.49998 1.73077 1.49998 1.8077V13.1923C1.49998 13.2692 1.53202 13.3397 1.59613 13.4038C1.66024 13.4679 1.73077 13.5 1.8077 13.5Z"
-              fill="#626465"
-            />
-          </svg>
-          <p className="  cursor-default text-themeGray text-resLg ">English</p>
-        </div>
-        <div className=" group flex items-center gap-2  ">
-          <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M8 16.5C6.9031 16.5 5.86802 16.2897 4.89475 15.8692C3.92147 15.4487 3.07261 14.8762 2.34817 14.1518C1.62375 13.4274 1.05129 12.5785 0.630781 11.6053C0.21026 10.632 0 9.5969 0 8.5C0 7.39447 0.21026 6.35722 0.630781 5.38827C1.05129 4.41931 1.62375 3.57261 2.34817 2.84818C3.07261 2.12375 3.92147 1.55129 4.89475 1.13078C5.86802 0.710261 6.9031 0.5 8 0.5C9.10553 0.5 10.1428 0.710261 11.1117 1.13078C12.0807 1.55129 12.9274 2.12375 13.6518 2.84818C14.3762 3.57261 14.9487 4.41931 15.3692 5.38827C15.7897 6.35722 16 7.39447 16 8.5C16 9.5969 15.7897 10.632 15.3692 11.6053C14.9487 12.5785 14.3762 13.4274 13.6518 14.1518C12.9274 14.8762 12.0807 15.4487 11.1117 15.8692C10.1428 16.2897 9.10553 16.5 8 16.5ZM8 15.219C8.4297 14.649 8.79138 14.0741 9.08503 13.4943C9.37869 12.9146 9.61783 12.2808 9.80245 11.5931H6.19755C6.39296 12.3024 6.6348 12.947 6.92307 13.5267C7.21132 14.1065 7.5703 14.6706 8 15.219ZM6.36926 14.9875C6.04645 14.5243 5.75657 13.9977 5.49961 13.4077C5.24266 12.8177 5.04292 12.2128 4.90041 11.5931H2.04369C2.4885 12.4676 3.085 13.2023 3.83319 13.7972C4.58139 14.3921 5.42674 14.7888 6.36926 14.9875ZM9.63074 14.9875C10.5733 14.7888 11.4186 14.3921 12.1668 13.7972C12.915 13.2023 13.5115 12.4676 13.9563 11.5931H11.0996C10.9301 12.2182 10.7169 12.8258 10.4599 13.4158C10.2029 14.0058 9.92656 14.5297 9.63074 14.9875ZM1.51415 10.33H4.64454C4.59164 10.0169 4.55332 9.71 4.52957 9.40933C4.50582 9.10864 4.49395 8.80553 4.49395 8.5C4.49395 8.19447 4.50582 7.89136 4.52957 7.59067C4.55332 7.29 4.59164 6.98311 4.64454 6.67002H1.51415C1.43318 6.95612 1.37111 7.25356 1.32792 7.56233C1.28473 7.87111 1.26314 8.18366 1.26314 8.5C1.26314 8.81634 1.28473 9.12889 1.32792 9.43767C1.37111 9.74644 1.43318 10.0439 1.51415 10.33ZM5.90768 10.33H10.0923C10.1452 10.0169 10.1835 9.7127 10.2073 9.41741C10.2311 9.12214 10.2429 8.81634 10.2429 8.5C10.2429 8.18366 10.2311 7.87786 10.2073 7.58259C10.1835 7.2873 10.1452 6.98311 10.0923 6.67002H5.90768C5.85478 6.98311 5.81645 7.2873 5.79269 7.58259C5.76894 7.87786 5.75707 8.18366 5.75707 8.5C5.75707 8.81634 5.76894 9.12214 5.79269 9.41741C5.81645 9.7127 5.85478 10.0169 5.90768 10.33ZM11.3555 10.33H14.4858C14.5668 10.0439 14.6289 9.74644 14.6721 9.43767C14.7153 9.12889 14.7369 8.81634 14.7369 8.5C14.7369 8.18366 14.7153 7.87111 14.6721 7.56233C14.6289 7.25356 14.5668 6.95612 14.4858 6.67002H11.3555C11.4084 6.98311 11.4467 7.29 11.4704 7.59067C11.4942 7.89136 11.5061 8.19447 11.5061 8.5C11.5061 8.80553 11.4942 9.10864 11.4704 9.40933C11.4467 9.71 11.4084 10.0169 11.3555 10.33ZM11.0996 5.4069H13.9563C13.5061 4.52159 12.9136 3.78689 12.179 3.20281C11.4443 2.61874 10.5949 2.21928 9.63074 2.00443C9.95355 2.49457 10.2407 3.03061 10.4923 3.61253C10.7438 4.19446 10.9463 4.79258 11.0996 5.4069ZM6.19755 5.4069H9.80245C9.60704 4.70298 9.36115 4.05439 9.06478 3.46112C8.76843 2.86787 8.4135 2.30782 8 1.78095C7.5865 2.30782 7.23157 2.86787 6.93522 3.46112C6.63885 4.05439 6.39296 4.70298 6.19755 5.4069ZM2.04369 5.4069H4.90041C5.05372 4.79258 5.25615 4.19446 5.50772 3.61253C5.75927 3.03061 6.04645 2.49457 6.36926 2.00443C5.39975 2.21928 4.549 2.62009 3.817 3.20687C3.08501 3.79365 2.49391 4.52699 2.04369 5.4069Z"
-              fill="#626465"
-            />
-          </svg>
-          <p className="  cursor-default text-[#949697] text-resLg   ">English</p>
-        </div>
+      <h1 className=" text-resHeading  font-semibold text-themeBlack ">{course.title}</h1>
+      <p className=" text-resLg cursor-default  text-themeGray mt-2 ">{course.shortDescription}</p>
+      <div className="mt-4">
+        <InstructorInfoBar instructor={course.author} language={course.language} subtitle={'english'} />
       </div>
+
       <div className="flex flex-wrap mt-2">
-        <span className=" mr-1 text-sm font-medium">4.7</span>
-        <Rating
-          value={4.7}
-          size={'sm'}
-          fractions={2}
-          className="gap-1 mt-[0.5px]"
-          color="#FFD05A"
-          emptySymbol={
-            <svg width="18" height="17" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" className="">
-              <path
-                d="M7 1.21914L8.50914 4.87861C8.63559 5.18522 8.92633 5.3855 9.2493 5.40683L13.2578 5.67149L10.1851 8.17145C9.92985 8.37909 9.81415 8.71654 9.89778 9.04022L10.8795 12.84L7.45292 10.7452L7.19213 11.1718L7.45292 10.7452C7.17536 10.5756 6.82464 10.5756 6.54708 10.7452L3.12055 12.84L4.10222 9.04022C4.18585 8.71654 4.07015 8.37909 3.81493 8.17145L0.742158 5.67149L4.7507 5.40683C5.07367 5.3855 5.36441 5.18521 5.49086 4.87861L5.07203 4.70588L5.49086 4.87861L7 1.21914Z"
-                stroke="#D1D7DC"
-              />
-            </svg>
-          }
-          readOnly
-        />
-        {/* no of reviews */}
-        <span className=" mx-1 text-sm text-themeGray cursor-default">
-          (
-          <span className=" text-themeBlue">
-            <NumberFormatter thousandSeparator value={324030} /> Reviews
+        {course.rating > 0 && (
+          <div className=" flex flex-wrap ">
+            {' '}
+            <span className=" mr-2 text-sm font-semibold text-themeBlack">{course.rating}</span>
+            <Rating
+              value={course.rating}
+              size={'sm'}
+              fractions={2}
+              className="gap-1 mt-[0.5px]"
+              color="#FFD05A"
+              emptySymbol={
+                <svg width="18" height="17" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" className="">
+                  <path
+                    d="M7 1.21914L8.50914 4.87861C8.63559 5.18522 8.92633 5.3855 9.2493 5.40683L13.2578 5.67149L10.1851 8.17145C9.92985 8.37909 9.81415 8.71654 9.89778 9.04022L10.8795 12.84L7.45292 10.7452L7.19213 11.1718L7.45292 10.7452C7.17536 10.5756 6.82464 10.5756 6.54708 10.7452L3.12055 12.84L4.10222 9.04022C4.18585 8.71654 4.07015 8.37909 3.81493 8.17145L0.742158 5.67149L4.7507 5.40683C5.07367 5.3855 5.36441 5.18521 5.49086 4.87861L5.07203 4.70588L5.49086 4.87861L7 1.21914Z"
+                    stroke="#D1D7DC"
+                  />
+                </svg>
+              }
+              readOnly
+            />
+            {/* no of reviews */}
+            <span className=" mx-1 text-sm text-themeGray cursor-default">
+              (
+              <span className=" text-themeBlue">
+                <NumberFormatter thousandSeparator value={course.noOfReviews} /> Reviews
+              </span>
+              ){' '}
+            </span>
+          </div>
+        )}
+
+        {/*  add total not of registers */}
+
+        {/* {course. < 0 && (
+          <span className=" text-sm text-themeGray cursor-default">
+            <NumberFormatter thousandSeparator value={1247052} /> students
           </span>
-          ){' '}
-        </span>
-        <span className=" text-sm text-themeGray cursor-default">
-          <NumberFormatter thousandSeparator value={1247052} /> students
-        </span>
+        )} */}
       </div>
       <div className=" flex mt-2">
         <svg width="16" height="17" viewBox="0 0 16 17" className="mt-[0.6%]" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -101,14 +81,14 @@ export default function CourseDetailContainer() {
         <p className=" ml-2 cursor-default text-themeGray text-resLg">Last updated on</p>
       </div>
       <div className=" lg:hidden block my-6">
-        <CoursePricing />
+        <CoursePricing {...course} courseId={course.id} />
       </div>
 
       <div className=" mt-20">
         <h1 className=" text-[34px] font-semibold">What you’ll learn</h1>
         <Spoiler maxHeight={226} showLabel="Show More" hideLabel="Show Less">
           <ul className=" mt-10 grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((index) => (
+            {course.learningOutcomes?.map((item, index) => (
               <li key={index} className=" flex gap-2 text-sm text-themeGray">
                 <label className=" mt-[3px]">
                   <svg width="14" height="14" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -124,15 +104,38 @@ export default function CourseDetailContainer() {
                     />
                   </svg>
                 </label>
-                <p>
-                  Build beautifully designed web and mobile projects for your customers using modern tools used by top
-                  companies in 2023
-                </p>
+                <p>{item}</p>
               </li>
             ))}
           </ul>
         </Spoiler>
       </div>
+
+      <div className=" mt-20">
+        <h1 className=" text-[34px] font-semibold mb-8">Description</h1>
+        <Spoiler maxHeight={226} showLabel="Show More" hideLabel="Show Less" ml={20} className="">
+          <ReactMarkdown
+            className={
+              ' prose-strong:font-semibold  prose-headings:mb-4 prose-sm text-themeGray prose-headings:text-themeBlack prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl   '
+            }
+          >
+            {course.description}
+          </ReactMarkdown>
+        </Spoiler>
+      </div>
+
+      <div className=" mt-20">
+        <h1 className=" text-[34px] font-semibold mb-2 ">Course Content</h1>
+        <div className=" flex items-center text-lg text-themeGray6 mb-10">
+          <p>{course.content && course.content.length} sections </p>
+          <span className=" text-3xl  ml-1 mr-[2px]">•</span>
+          <p>{course.videoCount + course.articleCount + course.assessmentCount} lectures</p>
+          {course.totalVideoDuration > 0 && <span className=" text-3xl  ml-1 mr-[2px]">•</span>}
+          {course.totalVideoDuration > 0 && <p> {formatTimeInDays(course.totalVideoDuration)} total length</p>}
+        </div>
+        <CourseContent content={course.content} courseId={course.id} />
+      </div>
+
       <div className=" mt-20">
         <FeedBack />
       </div>

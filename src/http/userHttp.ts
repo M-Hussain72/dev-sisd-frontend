@@ -7,11 +7,8 @@ export interface userApiType {
 }
 
 async function getUserApi({ authAxios }: userApiType) {
-  console.log('getUser api call');
   try {
-    const id = getUserId();
-    const res = await authAxios.get(`http://localhost:3000/v1/users/${id}`);
-    console.log('getUser');
+    const res = await authAxios.get(`http://localhost:3000/v1/auth/profile`);
     return res;
   } catch (error: any) {
     const err = new Error('user Not Found');

@@ -1,26 +1,52 @@
 import { Modal } from '@mantine/core';
-import { useCart } from '../context/CartContext';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { useNavigate } from '@tanstack/react-router';
-
+import cartHttp from '../http/cartHttp';
 import sampleImage from '../public/python.png';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import useAuthAxios from '../hook/useAuthAxios';
+import { useAddToCart } from '../hook/useAddToCart';
+import { useAuth } from '../context/AuthContext';
+import { toast } from 'react-toastify';
 
-export default function AddToCartBtn() {
-  const { addToCart } = useCart();
+export default function AddToCartBtn({ courseId, addToCart }: { courseId: string; addToCart: () => void }) {
   const [opened, { open, close }] = useDisclosure();
   const navigate = useNavigate();
+  const { isAuthenticate } = useAuth();
   const isMobile = useMediaQuery('(max-width:640px)');
+  // const authAxios =useAuthAxios()
+  // const { mutate, isError, data, isSuccess, isPending, error } = useMutation({
+  //   mutationFn: cartHttp.addCartItem,
+  //   onMutate: async (courseId) => {
+  //     await queryClient.cancelQueries('cart');
+
+  //     const previousCart = queryClient.getQueryData('cart');
+
+  //     queryClient.setQueryData('cart', (old) => ({
+  //       ...old,
+  //       items: [...(old?.items || []), { id: courseId }],
+  //     }));
+
+  //     return { previousCart };
+  //   },
+  //   onError: (err, _, context) => {
+  //     if (context?.previousCart) {
+  //       queryClient.setQueryData('cart', context.previousCart);
+  //     }
+  //   },
+  //   onSettled: () => {
+  //     queryClient.invalidateQueries('cart');
+  //   },
+  // });
 
   function handleAddToCart() {
-    const product = {
-      image: '',
-      originalPrice: 74.99,
-      discountPrice: 0,
-      id: 'id' + Math.random(),
-      rating: 3.5,
-      name: 'Master Digital Product Design: UX Research & UI Design',
-    };
-    addToCart(product);
+    if (!isAuthenticate) {
+      toast.info('Please log in to your account before adding courses to your cart.');
+      // Optionally, send them to the login page:
+      return;
+    }
+    addToCart();
+    // addToCart(product);
     open();
   }
   return (

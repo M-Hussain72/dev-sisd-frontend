@@ -12,11 +12,12 @@ interface token {
 
 export function getAuthToken(): token | null {
   const tokenStr = localStorage.getItem('token');
-  let token;
   if (tokenStr) {
-    token = JSON.parse(tokenStr);
+    const token = JSON.parse(tokenStr);
     return token;
   }
+  if (tokenStr === undefined) localStorage.removeItem('token');
+
   return null;
 }
 
@@ -26,7 +27,6 @@ export function setAuthToken(tokens: AxiosResponse) {
 }
 
 export function getUserId() {
-  console.log('get id call');
   const token = getAuthToken();
   if (!token) {
     console.log('from get user token not found');

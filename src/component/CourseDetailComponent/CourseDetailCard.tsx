@@ -1,13 +1,60 @@
-import sampleImage from '../../public/python.png';
+import defaultCourseImg from '../../assets/defaultCourseImg.png';
 import CoursePricing from './CoursePricing';
+import PreviewModal from './PreviewModal';
+import { useState } from 'react';
 
-export default function CourseDetailCard() {
-  let image = null;
+export default function CourseDetailCard({
+  price,
+  poster,
+  subscribe,
+  courseId,
+  title,
+  articleCount,
+  rating,
+  noOfReviews,
+  author,
+  videoCount,
+  totalVideoDuration,
+  assessmentCount,
+  level,
+}: {
+  price: number;
+  title: string;
+  articleCount: number;
+  rating: number;
+  noOfReviews: number;
+  author: string;
+  videoCount: number;
+  poster: string;
+  totalVideoDuration: number;
+  subscribe: boolean;
+  level: 'all-level' | 'beginner' | 'intermediate' | 'experts';
+  courseId: string;
+  assessmentCount: number;
+}) {
+  const [opened, setOpened] = useState(false);
+
+  function handlePreviewModal() {
+    setOpened(true);
+  }
   return (
     <>
+      <PreviewModal preview={false} courseId={courseId} videoId={undefined} opened={opened} setOpened={setOpened} />;
       <div className="   w-[420px] bg-[#FAFAFA]  rounded-[10px] shadow-md cursor-default">
-        <div className=" after:w-full after:absolute after:left-0 after:top-0 relative after:text-[#fff]  after:h-full after:bg-gradient-to-t after:from-[#2d2f31d3]   ">
-          <img src={sampleImage} alt="name" className=" w-full rounded-t-[10px] " />
+        <div
+          className=" after:w-full after:absolute after:left-0 after:top-0 relative after:text-[#fff]  after:h-full after:bg-gradient-to-t after:from-[#2d2f31d3] "
+          onClick={handlePreviewModal}
+        >
+          <img
+            src={poster ? poster : defaultCourseImg}
+            onError={(e) => {
+              // Prevent infinite loop in case default image also fails
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = defaultCourseImg;
+            }}
+            alt="name"
+            className=" w-full rounded-t-[10px] "
+          />
           <div className=" text-white absolute z-10 bottom-[10%] left-0 right-0 mx-auto w-fit">
             <span className=" font-semibold ">Preview this course</span>
           </div>
@@ -29,7 +76,21 @@ export default function CourseDetailCard() {
           </div>
         </div>
         <div className="p-6">
-          <CoursePricing />
+          <CoursePricing
+            title={title}
+            articleCount={articleCount}
+            rating={rating}
+            noOfReviews={noOfReviews}
+            author={author}
+            videoCount={videoCount}
+            totalVideoDuration={totalVideoDuration}
+            level={level}
+            poster={poster}
+            price={price}
+            subscribe={subscribe}
+            courseId={courseId}
+            assessmentCount={assessmentCount}
+          />
         </div>
       </div>
     </>

@@ -6,6 +6,7 @@ import SignUpSchema from '../schema/signUpSchema';
 import { useMutation, useQueries, useQuery } from '@tanstack/react-query';
 import ErrorBlock from '../utils/ErrorBlock.tsx';
 import { useAuth } from '../context/AuthContext.tsx';
+import GoogleAuthButton from './GoogleOathButton.tsx';
 
 export default function SignUp() {
   const { register } = useAuth();
@@ -98,8 +99,19 @@ export default function SignUp() {
           <div className="my-4">
             <p className="xs:text-sm text-xs font-light text-themeGray cursor-default">
               By signing up, you agree to our{' '}
-              <span className="text-themeBlue font-medium cursor-pointer hover:text-blue-700">Terms of Use</span> and{' '}
-              <span className="text-themeBlue font-medium cursor-pointer hover:text-blue-700">Privacy Policy</span>
+              <span
+                onClick={() => navigate({ to: '/terms' })}
+                className="text-themeBlue font-medium cursor-pointer hover:text-blue-700"
+              >
+                Terms of Use
+              </span>{' '}
+              and{' '}
+              <span
+                onClick={() => navigate({ to: '/privacy' })}
+                className="text-themeBlue font-medium cursor-pointer hover:text-blue-700"
+              >
+                Privacy Policy
+              </span>
             </p>
           </div>
           <Button disabled={isSubmitting || isPending} type="submit">
@@ -121,8 +133,8 @@ export default function SignUp() {
           </div>
 
           <ul className="flex gap-4 w-fit mx-auto mt-4">
-            <li id="google" className=" w-fit p-3  rounded-lg bg-[#F2F3F8] border-[0.5px] border-[#AEABBA]">
-              <svg width="26" height="25" viewBox="0 0 26 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <li id="google">
+              {/* <svg width="26" height="25" viewBox="0 0 26 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M25.5 12.7778C25.5 11.75 25.4149 11 25.2307 10.2222H13.2549V14.8611H20.2845C20.1428 16.0139 19.3775 17.75 17.6767 18.9166L17.6529 19.0719L21.4394 21.9465L21.7018 21.9722C24.111 19.7916 25.5 16.5833 25.5 12.7778Z"
                   fill="#4285F4"
@@ -139,9 +151,11 @@ export default function SignUp() {
                   d="M13.2546 4.83329C15.6497 4.83329 17.2653 5.84718 18.1866 6.69445L21.7864 3.24999C19.5756 1.23611 16.6985 0 13.2546 0C8.26582 0 3.95804 2.80556 1.86053 6.88885L5.98471 10.0278C7.0194 7.0139 9.88156 4.83329 13.2546 4.83329Z"
                   fill="#EB4335"
                 />
-              </svg>
+              </svg> */}
+
+              <GoogleAuthButton onSuccess={handelSuccess} />
             </li>
-            <li id="facebook" className=" w-fit p-3  rounded-lg bg-[#F2F3F8] border-[0.5px] border-[#AEABBA]">
+            {/* <li id="facebook" className=" w-fit p-3  rounded-lg bg-[#F2F3F8] border-[0.5px] border-[#AEABBA]">
               <svg width="26" height="25" viewBox="0 0 26 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M25.5 12.5755C25.4992 5.6302 19.9035 0 13 0C6.09649 0 0.5 5.63104 0.5 12.5772C0.5 18.8297 5.03454 24.0162 10.9745 24.9899L11.0461 25V16.2121H7.87197V12.5755H11.0461V9.80609C11.0303 9.66603 11.022 9.50332 11.022 9.33894C11.022 6.88741 12.9975 4.89969 15.434 4.89969C15.5515 4.89969 15.6682 4.90472 15.7841 4.91311L15.7691 4.91227C16.7685 4.92653 17.7354 5.01543 18.679 5.17395L18.5673 5.15801V8.25282H16.9902C16.9185 8.24275 16.836 8.23688 16.7527 8.23688C15.7549 8.23688 14.9455 9.05042 14.9455 10.0552C14.9455 10.1122 14.948 10.1684 14.953 10.2246L14.9522 10.2171V12.5755H18.4189L17.8646 16.2121H14.9522V25C20.9646 24.0154 25.4992 18.828 25.5 12.5755Z"
@@ -160,7 +174,7 @@ export default function SignUp() {
                   fill="black"
                 />
               </svg>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>

@@ -8,6 +8,7 @@ export default {
         themeBlue: '#307EE1',
         themeBlack: '#2B2B2B',
         themeGray: '#949697',
+        themeGray6: '#626465',
       },
       fontSize: {
         resHeading: 'clamp(1.3rem,calc(1.3rem + (2.6 - 1.3) * ((100vw - 36rem) / (87.5 - 36))),2.6rem)',
@@ -31,7 +32,18 @@ export default {
       '2xl': '1536px',
       // => @media (min-width: 1536px) { ... }
     },
+    // typography: {
+    //   DEFAULT: {
+    //     css: {
+    //       h1: { fontWeight: '600', fontSize: '30px' },
+    //       h2: { fontWeight: '600', fontSize: '28px' },
+    //       h3: { fontWeight: '600', fontSize: '26px' },
+    //       h4: { fontWeight: '500', fontSize: '24px' },
+    //       h5: { fontWeight: '500', fontSize: '22px' },
+    //     },
+    //   },
+    // },
   },
 
-  plugins: [],
+  plugins: [require('@tailwindcss/typography')],
 };

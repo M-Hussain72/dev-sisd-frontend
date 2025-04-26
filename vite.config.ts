@@ -7,6 +7,6 @@ export default defineConfig({
   plugins: [TanStackRouterVite({}), react()],
   server: {
     host: '0.0.0.0', // Allows connections from the network
-    port: 5173, // Ensure this matches your actual port
+    port: 5174, // Ensure this matches your actual port
   },
 });

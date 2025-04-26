@@ -1,0 +1,76 @@
+{
+  "quiz": [
+    {
+      "question": "What does the user-centered design framework focus on?",
+      "type": "single-choice",
+      "options": [
+        "User-centered design involves taking an idea and creating a working product using the steps strategy, scope, structure, skeleton, and surface.",
+        "User-centered design puts the focus on the user. In order to do so, UX designers must understand, specify, design and evaluate during the design process.",
+        "User-centered design involves doing something again by building on previous versions and making adjustments.",
+        "User-centered design involves deep-diving into a particular role like interaction, visual, or motion design."
+      ],
+      "correctAnswer": 1
+    },
+    {
+      "question": "Identify the five elements of UX design framework. Select all that apply.",
+      "type": "multiple-choice",
+      "options": [
+        "Strategy",
+        "Scope",
+        "Surface",
+        "Skeleton",
+        "Specify",
+        "Structure"
+      ],
+      "correctAnswer": [
+        0,
+        1,
+        2,
+        3,
+        5
+      ]
+    },
+    {
+      "question": "As a UX designer, your goal is to focus on the end user.",
+      "type": "single-choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correctAnswer": 0
+    },
+    {
+      "question": "Fill in the blank: User-centered design is when you consider a user’s story, emotions, and ______.",
+      "type": "single-choice",
+      "options": [
+        "the data you have collected about similar users.",
+        "the feedback you have incorporated in design updates.",
+        "the interactive elements you have included in your prototype.",
+        "the insights you have gathered about users."
+      ],
+      "correctAnswer": 3
+    },
+    {
+      "question": "Fill in the blank: In the user-centered design framework, you need to first understand how the user experience the product or similar products in order to ______.",
+      "type": "single-choice",
+      "options": [
+        "test your design solution with real people.",
+        "figure out who your target audience could be.",
+        "build on previous designs and make tweaks.",
+        "create a product people actually want to use."
+      ],
+      "correctAnswer": 3
+    },
+    {
+      "question": "In which stage the five elements of UX design is the layout defined?",
+      "type": "single-choice",
+      "options": [
+        "Surface",
+        "Structure",
+        "Scope",
+        "Skeleton"
+      ],
+      "correctAnswer": 3
+    }
+  ]
+}

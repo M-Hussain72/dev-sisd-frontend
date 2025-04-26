@@ -1,22 +1,29 @@
 import { useMediaQuery } from '@mantine/hooks';
 import CourseDetailCard from './CourseDetailComponent/CourseDetailCard';
 import CourseDetailContainer from './CourseDetailComponent/CourseDetailContainer';
-import sampleImage from '../public/python.png';
+import defaultImage from '../assets/defaultCourseImg.png';
+import { CourseIn } from '../interface/courseInterface';
 
-export default function CourseDetail() {
+export default function CourseDetail({ ...course }: CourseIn) {
   const isSmallScreen = useMediaQuery('(min-width: 1024px)');
-  // let isSmallScreen = window.matchMedia('(min-width: 1024px)').matches;
+
+  console.log('res call');
+  console.log(course);
   return (
     <div className=" flex lg:flex-nowrap flex-wrap-reverse   justify-between  gap-6 my-10 lg:mx-10 mx-4 ">
-      <CourseDetailContainer />
+      <CourseDetailContainer {...course} />
       {isSmallScreen ? (
         <div className="">
-          <CourseDetailCard />
+          <CourseDetailCard courseId={course.id} {...course} />
         </div>
       ) : (
         <div className=" max-w-[600px] mx-auto">
           <div className=" after:w-full after:absolute after:left-0 after:top-0 relative after:text-[#fff]  after:h-full after:bg-gradient-to-t after:from-[#2d2f31d3]   ">
-            <img src={sampleImage} alt="name" className=" w-full border-[1px] border-[#2d2f31]  " />
+            <img
+              src={course.poster ? course.poster : defaultImage}
+              alt="name"
+              className=" w-full border-[1px] border-[#2d2f31]  "
+            />
             <div className=" text-white absolute z-10 bottom-[10%] left-0 right-0 mx-auto w-fit">
               <span className=" font-semibold ">Preview this course</span>
             </div>

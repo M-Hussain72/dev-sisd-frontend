@@ -3,8 +3,10 @@ import asianWomen from '../../assets/asianWomen1.png';
 import arabWomen from '../../assets/arabWomen.png';
 import blueMen from '../../assets/blueMen.png';
 import crispHairMen from '../../assets/crisphairMen.png';
+import { useNavigate } from '@tanstack/react-router';
 
 const HeroSection = () => {
+  const navigate = useNavigate();
   return (
     <div className=" min-[845px]:flex  gap-8 xs:mt-20 my-10 xs:mx-8   justify-between">
       <div className=" md:w-[546px] w-full xs:mt-16 mt-6 ">
@@ -33,7 +35,7 @@ const HeroSection = () => {
           learning speed with the best teaching instructors in the world!
         </p>
         <div className=" mt-6">
-          <Button>get started</Button>
+          <Button onClick={() => navigate({ to: '/signup' })}>get started</Button>
         </div>
       </div>
       <div className=" relative z-0 w-fit h-fit ">

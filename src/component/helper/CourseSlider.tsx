@@ -1,0 +1,38 @@
+import { useCallback, useRef, useState } from 'react';
+import CourseCard from './CourseCard';
+import { Carousel, Embla } from '@mantine/carousel';
+import ControlCarousel from '../ui/ControlCarousel';
+import CarouselSlide from '../LandingPageComponent/CarouselSlide';
+import { getCoursesBySearch } from '../../http/courseHttp';
+
+interface prop {
+  heading: string;
+}
+
+const CourseSlider = ({ heading }: prop) => {
+  const [embla, setEmbla] = useState<Embla | null>(null);
+
+  async function handleCourse() {
+    return await getCoursesBySearch({
+      search: '',
+      filters: {
+        featured: true,
+        rating: undefined,
+        totalDuration: undefined,
+        language: undefined,
+        price: undefined,
+        level: undefined,
+      },
+    });
+  }
+  return (
+    <div className=" mb-20">
+      <ControlCarousel heading={heading} embla={embla} />
+      <div className=" mt-12">
+        <CarouselSlide setEmbla={setEmbla} handleGetCourses={handleCourse} slug="featured" />
+      </div>
+    </div>
+  );
+};
+
+export default CourseSlider;

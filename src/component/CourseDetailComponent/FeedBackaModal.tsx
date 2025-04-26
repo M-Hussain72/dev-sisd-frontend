@@ -1,11 +1,11 @@
 import FeedBackCard from './FeedBackCard';
 import reviewMan from '../../public/reviewMen.png';
 import { Modal, Rating } from '@mantine/core';
-import { useDisclosure, useMediaQuery } from '@mantine/hooks';
-import starIcon from '../assets/starIcon.svg';
+import { useMediaQuery } from '@mantine/hooks';
+
 import { useState } from 'react';
 import DrawerComponent from '../LandingPageComponent/DrawerComponent';
-import RatingFilter from '../RatingFilter';
+import RatingFilter from './RatingFilter';
 import Button from '../ui/Button';
 
 export default function FeedBackModal({ opened, close }: { opened: boolean; close: () => void }) {

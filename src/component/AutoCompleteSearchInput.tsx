@@ -2,13 +2,15 @@ import { useState, useRef } from 'react';
 import { Combobox, Loader, Input, useCombobox, Text } from '@mantine/core';
 import searchIcon from '../assets/searchIcon.svg';
 import { Link, useNavigate } from '@tanstack/react-router';
+import { getCoursesBySuggestion } from '../http/courseHttp';
+import { SearchSuggestionIn } from '../interface/courseInterface';
 
 export default function AutoCompleteSearchInput() {
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
   });
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState<string[] | null>(null);
+  const [data, setData] = useState<SearchSuggestionIn[] | null>(null);
   const [value, setValue] = useState('');
   const [empty, setEmpty] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -18,7 +20,7 @@ export default function AutoCompleteSearchInput() {
   const fetchOptions = (query: string) => {
     setLoading(true);
 
-    getAsyncData(query)
+    getCoursesBySuggestion({ search: query })
       .then((result) => {
         setData(result);
         setLoading(false);
@@ -29,6 +31,7 @@ export default function AutoCompleteSearchInput() {
 
   const handelChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.currentTarget.value);
+
     if (event.currentTarget.value.length != 0) {
       fetchOptions(event.currentTarget.value);
       combobox.resetSelectedOption();
@@ -43,25 +46,19 @@ export default function AutoCompleteSearchInput() {
       inputRef.current?.blur();
       combobox.closeDropdown();
       navigate({
-        to: '/courses',
-        search: {
-          search: inputRef.current?.value,
-        },
+        to: `/courses/search/${inputRef.current?.value}`,
       });
     }
   }
 
-  const options = (data || []).slice(0, 7).map((item) => (
-    <Combobox.Option value={item} key={item} c="#949697">
+  const options = (data || []).map((item) => (
+    <Combobox.Option value={item.title} key={item.slug} c="#949697">
       <Link
-        to="/courses"
-        search={{
-          search: item,
-        }}
+        to={!(item.type === 'category') ? `/courses/search/${item.title}` : `/courses/category/${item.slug}`}
         className="flex items-center"
       >
         <img src={searchIcon} className=" pr-2   " />
-        {item}
+        {item.title}
       </Link>
     </Combobox.Option>
   ));
@@ -78,7 +75,7 @@ export default function AutoCompleteSearchInput() {
       shadow="sm"
     >
       <Combobox.Target>
-        <div className=" sm:block hidden ml-8 max-w-[450px] w-full min-w-0 ">
+        <div className="  ml-8 max-w-[450px] w-full min-w-0 ">
           <Input
             ref={inputRef}
             type="text"
@@ -115,35 +112,4 @@ export default function AutoCompleteSearchInput() {
       </Combobox.Dropdown>
     </Combobox>
   );
-}
-
-const MockData = [
-  'UX/UI Design Basics',
-  'JavaScript Essentials',
-  'React.js for Beginners',
-  'Advanced Node.js',
-  'Full-Stack Development',
-  'Python for Data Science',
-  'Introduction to AI',
-  'Machine Learning 101',
-  'HTML & CSS Mastery',
-  'Cybersecurity Basics',
-  'Cloud Computing Intro',
-  'Flutter App Development',
-  'DevOps Fundamentals',
-  'SQL Database Management',
-  'Digital Marketing Pro',
-  'Graphic Design Essentials',
-  'Web Accessibility Basics',
-  'Angular Masterclass',
-  'Mobile App Design',
-  'Data Structures & Algorithms',
-];
-
-function getAsyncData(searchQuery: string) {
-  return new Promise<string[]>((resolve, reject) => {
-    setTimeout(() => {
-      resolve(MockData.filter((item) => item.toLowerCase().includes(searchQuery.toLowerCase())));
-    }, Math.random() * 1000);
-  });
 }

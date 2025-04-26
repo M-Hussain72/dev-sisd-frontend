@@ -1,7 +1,10 @@
 import Button from '../ui/Button';
 import bookHoldingWomenPic from '../../assets/bookHoldingWomen.png';
+import { useNavigate } from '@tanstack/react-router';
 
 export default function SecondPromotionalBanner() {
+  const navigate = useNavigate();
+
   return (
     <div className=" max-w-[1200px] xl:mx-auto  flex min-[845px]:flex-nowrap flex-wrap-reverse  mb-24 gap-10 justify-normal">
       <div className=" relative z-0 mt-4 max-w-[650px] xs:min-w-[450px] w-full ">
@@ -15,7 +18,7 @@ export default function SecondPromotionalBanner() {
         <p className=" my-4 text-[#949697] font-medium text-lg leading-6">
           Join now and become a part of dynamic learning platform. Embark on a journey of knowledge and growth with us.
         </p>
-        <Button>get started</Button>
+        <Button onClick={() => navigate({ to: '/signup' })}>get started</Button>
       </div>
     </div>
   );

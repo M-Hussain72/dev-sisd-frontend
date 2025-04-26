@@ -9,9 +9,15 @@ export default function Footer() {
         <div className=" grid-1 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 max-w-[1000px] ">
           <div className="">
             <h6 className="mb-6 flex justify-center font-semibold uppercase md:justify-start text-[#2B2B2B]">SISD</h6>
-            {['About Us', 'Alumni', 'Blogs', 'Events'].map((item) => (
-              <p key={item} className="mb-4 capitalize">
-                <Link className=" text-[#949697]">{item}</Link>
+            {[
+              { label: 'About Us', value: 'about' },
+              { label: 'Alumni', value: 'about' },
+              { label: 'Blogs', value: 'blogs' },
+            ].map((item) => (
+              <p key={item.value} className="mb-4 capitalize">
+                <Link to={`/${item.value}`} className=" text-[#949697]">
+                  {item.label}
+                </Link>
               </p>
             ))}
           </div>
@@ -29,9 +35,15 @@ export default function Footer() {
             <h6 className="mb-6 flex justify-center font-semibold uppercase md:justify-start text-[#2B2B2B]">
               Popular Courses
             </h6>
-            {['Help & Support', 'Privacy Policy', 'Terms of Use'].map((item, index) => (
+            {[
+              { label: 'Help & Support', value: 'contact' },
+              { label: 'Privacy Policy', value: 'privacy' },
+              { label: 'Terms of Use', value: 'terms' },
+            ].map((item, index) => (
               <p key={index} className="mb-4 capitalize">
-                <Link className=" text-[#949697]">{item}</Link>
+                <Link to={`/${item.value}`} className=" text-[#949697]">
+                  {item.label}
+                </Link>
               </p>
             ))}
           </div>
