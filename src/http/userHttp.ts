@@ -17,6 +17,18 @@ async function getUserApi({ authAxios }: userApiType) {
   }
 }
 
+async function assignCourse({ authAxios, courseId }: { authAxios: AxiosInstance; courseId: string }) {
+  try {
+    const res = await authAxios.post(`${config.BASE_URL}/v1/user/assign/free`, { courseId });
+    return res;
+  } catch (error: any) {
+    const err = new Error('Course Not Assign');
+    err.message = error.response.message;
+    throw err;
+  }
+}
+
 export default {
   getUserApi,
+  assignCourse,
 };

@@ -3,6 +3,11 @@ import AddToCartBtn from '../AddToCartBtn';
 import { useNavigate, useParams } from '@tanstack/react-router';
 import { useAddToCart } from '../../hook/useAddToCart';
 import { formatTimeInHours } from '../../utils/formatTime';
+import userHttp from '../../http/userHttp';
+import useAuthAxios from '../../hook/useAuthAxios';
+import { toast } from 'react-toastify';
+import { queryClient } from '../../utils/queryClient';
+import { useState } from 'react';
 
 export default function CoursePricing({
   courseId,
@@ -34,8 +39,23 @@ export default function CoursePricing({
   assessmentCount: number;
 }) {
   const param = useParams({ from: '/course/$courseSlug/' });
+  const authAxios = useAuthAxios();
   const navigate = useNavigate();
+  const [isAssign, setIsAssign] = useState(false);
   const { mutate } = useAddToCart();
+
+  async function handleFreeCourse() {
+    try {
+      await userHttp.assignCourse({ authAxios, courseId });
+      await queryClient.invalidateQueries({
+        queryKey: ['course', param.courseSlug],
+      });
+      setIsAssign(true);
+      toast.success('Successfully enroll Course');
+    } catch (error: any) {
+      toast.error(error?.message || 'Fail Enroll Course');
+    }
+  }
   function handleAddToCart() {
     mutate({
       course: {
@@ -59,13 +79,24 @@ export default function CoursePricing({
         {price > 0 ? <NumberFormatter prefix="Rs " thousandSeparator value={price} /> : 'Free'}
       </h1>
       <div className=" mt-2 gap-2">
-        {!subscribe ? (
+        {!(subscribe || isAssign) ? (
           <>
-            {' '}
-            <AddToCartBtn courseId={courseId} addToCart={handleAddToCart} />
-            {/* <button className=" mt-6 py-3 px-6 w-full text-lg text-[#307EE1] font-semibold text-nowrap bg-white border-[1px] border-[#307EE1] hover:bg-[#307EE1] hover:text-white   rounded-lg">
+            {price > 0 ? (
+              <>
+                {' '}
+                <AddToCartBtn courseId={courseId} addToCart={handleAddToCart} />
+                {/* <button className=" mt-6 py-3 px-6 w-full text-lg text-[#307EE1] font-semibold text-nowrap bg-white border-[1px] border-[#307EE1] hover:bg-[#307EE1] hover:text-white   rounded-lg">
               Gift This Course
             </button> */}
+              </>
+            ) : (
+              <button
+                className=" mt-6 py-3 px-6 w-full text-lg text-[#307EE1] font-semibold text-nowrap bg-white border-[1px] border-[#307EE1] hover:bg-[#307EE1] hover:text-white   rounded-lg"
+                onClick={handleFreeCourse}
+              >
+                Enroll This Course
+              </button>
+            )}
           </>
         ) : (
           <button
