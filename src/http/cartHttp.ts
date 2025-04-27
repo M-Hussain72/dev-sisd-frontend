@@ -1,12 +1,13 @@
 import axios, { AxiosInstance } from 'axios';
 import { CategoryIn } from '../interface/courseInterface';
 import { CartIn, CartItemIn } from '../interface/cartInterface';
+import config from '../utils/config';
 
 async function addCartItem({ courseId, authAxios }: { courseId: string; authAxios: AxiosInstance }) {
   console.log('call---->addCart');
 
   try {
-    const res = await authAxios.post(`http://localhost:3000/v1/cart/add-item`, {
+    const res = await authAxios.post(`${config.BASE_URL}/v1/cart/add-item`, {
       courseId,
     });
     return res.data;
@@ -19,7 +20,7 @@ async function addCartItem({ courseId, authAxios }: { courseId: string; authAxio
 async function getCartItem({ authAxios }: { authAxios: AxiosInstance }): Promise<CartIn | undefined> {
   console.log('call---->GetCart');
   try {
-    const res = await authAxios.get(`http://localhost:3000/v1/cart`);
+    const res = await authAxios.get(`${config.BASE_URL}/v1/cart`);
     return res.data;
   } catch (error: any) {
     console.log(error);
@@ -29,7 +30,7 @@ async function getCartItem({ authAxios }: { authAxios: AxiosInstance }): Promise
 
 async function removeCartItem({ courseId, authAxios }: { courseId: string; authAxios: AxiosInstance }) {
   try {
-    const res = await authAxios.delete(`http://localhost:3000/v1/cart/remove/${courseId}`);
+    const res = await authAxios.delete(`${config.BASE_URL}/v1/cart/remove/${courseId}`);
     return res.data;
   } catch (error: any) {
     console.log(error);

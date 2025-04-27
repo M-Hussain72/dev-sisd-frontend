@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { CategoryIn } from '../interface/courseInterface';
+import config from '../utils/config';
 async function getCategories(): Promise<CategoryIn[]> {
   try {
-    const res = await axios.get(`http://localhost:3000/v1/category`);
+    const res = await axios.get(`${config.BASE_URL}/v1/category`);
     return res.data;
   } catch (error: any) {
     console.log(error);

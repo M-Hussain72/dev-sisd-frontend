@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import { User } from '../context/AuthContext.tsx';
 import { getAuthToken, setAuthToken } from '../utils/auth.ts';
+import config from '../utils/config.ts';
 
 export interface registerPropType {
   fromData: { name: string; email: string; password: string };
@@ -8,7 +9,7 @@ export interface registerPropType {
 
 async function registerUser({ fromData }: registerPropType) {
   try {
-    const res = await axios.post('http://localhost:3000/v1/auth/register', fromData);
+    const res = await axios.post(`${config.BASE_URL}/v1/auth/register`, fromData);
     console.log(res.data);
     return res;
   } catch (error: any) {
@@ -25,7 +26,7 @@ export interface loginPropType {
 
 async function loginUser({ fromData }: loginPropType) {
   try {
-    const res = await axios.post('http://localhost:3000/v1/auth/login', fromData);
+    const res = await axios.post(`${config.BASE_URL}/v1/auth/login`, fromData);
     console.log(res.data);
     // while (true);
     return res;
@@ -40,7 +41,7 @@ async function loginUser({ fromData }: loginPropType) {
 async function googleLoginUser({ token }: { token: string }) {
   console.log('call it google for login');
   try {
-    const res = await axios.post('http://localhost:3000/v1/auth/google', { token });
+    const res = await axios.post(`${config.BASE_URL}/v1/auth/google`, { token });
     console.log(res.data);
     return res;
   } catch (error: any) {
@@ -60,7 +61,7 @@ async function refreshTokens() {
       err.message = 'Section is expire!';
       throw err;
     }
-    const res = await axios.post(`http://localhost:3000/v1/auth/refresh-tokens`, { refreshToken: token.refresh.token });
+    const res = await axios.post(`${config.BASE_URL}/v1/auth/refresh-tokens`, { refreshToken: token.refresh.token });
     console.log(res.data);
     setAuthToken(res.data.token);
 
@@ -75,7 +76,7 @@ async function refreshTokens() {
 
 async function resetpassword({ token, password }: { token: string; password: string }) {
   try {
-    await axios.post(`http://localhost:3000/v1/auth/reset-password`, { password }, { params: { token } });
+    await axios.post(`${config.BASE_URL}/v1/auth/reset-password`, { password }, { params: { token } });
     return;
   } catch (error: any) {
     console.log(error);
@@ -87,7 +88,7 @@ async function resetpassword({ token, password }: { token: string; password: str
 
 async function forgetPassword({ email }: { email: string }) {
   try {
-    await axios.post(`http://localhost:3000/v1/auth/forgot-password`, { email });
+    await axios.post(`${config.BASE_URL}/v1/auth/forgot-password`, { email });
     return;
   } catch (error: any) {
     console.log(error);
@@ -99,7 +100,7 @@ async function forgetPassword({ email }: { email: string }) {
 
 async function sendVerifyEmail({ email, authAxios }: { email: string; authAxios: AxiosInstance }) {
   try {
-    await authAxios.post(`http://localhost:3000/v1/auth/send-verification-email`, { email });
+    await authAxios.post(`${config.BASE_URL}/v1/auth/send-verification-email`, { email });
     return;
   } catch (error: any) {
     console.log(error);
@@ -112,7 +113,7 @@ async function sendVerifyEmail({ email, authAxios }: { email: string; authAxios:
 async function verifyEmail({ token }: { token: string }) {
   console.log(token);
   try {
-    await axios.post(`http://localhost:3000/v1/auth/verify-email`, {}, { params: { token } });
+    await axios.post(`${config.BASE_URL}/v1/auth/verify-email`, {}, { params: { token } });
     return;
   } catch (error: any) {
     console.log(error);

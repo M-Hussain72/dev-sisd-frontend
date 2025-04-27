@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import { CourseCardIn, CourseIn, LectureIn } from '../interface/courseInterface';
 import { filterIn } from '../interface/filterInterface';
+import config from '../utils/config';
 
 async function getCoursesByCategory({
   categorySlug,
@@ -10,7 +11,7 @@ async function getCoursesByCategory({
   filters: filterIn | null;
 }): Promise<CourseCardIn[]> {
   try {
-    const res = await axios.get(`http://localhost:3000/v1/course/category/${categorySlug}`, {
+    const res = await axios.get(`${config.BASE_URL}/v1/course/category/${categorySlug}`, {
       params: {
         rating: filters?.rating || '',
         totalDuration: filters?.totalDuration?.join('|') || '',
@@ -35,7 +36,7 @@ async function getCoursesBySearch({
 }): Promise<CourseCardIn[]> {
   try {
     const searchQuery = encodeURIComponent(search);
-    const res = await axios.get(`http://localhost:3000/v1/course/search`, {
+    const res = await axios.get(`${config.BASE_URL}/v1/course/search`, {
       params: {
         search: searchQuery,
         rating: filters?.rating || '',
@@ -56,7 +57,7 @@ async function getCoursesBySearch({
 async function getCoursesBySuggestion({ search }: { search: string }) {
   try {
     const searchQuery = encodeURIComponent(search);
-    const res = await axios.get(`http://localhost:3000/v1/course/search/suggestion`, {
+    const res = await axios.get(`${config.BASE_URL}/v1/course/search/suggestion`, {
       params: {
         search: searchQuery,
       },
@@ -70,7 +71,7 @@ async function getCoursesBySuggestion({ search }: { search: string }) {
 
 async function fetchCourse({ courseSlug, authAxios }: { courseSlug: string; authAxios: AxiosInstance }): Promise<CourseIn> {
   try {
-    const res = await authAxios.get(`http://localhost:3000/v1/course/slug/${courseSlug}`);
+    const res = await authAxios.get(`${config.BASE_URL}/v1/course/slug/${courseSlug}`);
     return res.data.course;
   } catch (error: any) {
     const err = new Error('Course  Not Found');
@@ -80,7 +81,7 @@ async function fetchCourse({ courseSlug, authAxios }: { courseSlug: string; auth
 
 async function getUserLearningCourses({ authAxios }: { authAxios: AxiosInstance }): Promise<{ course: CourseCardIn }[]> {
   try {
-    const res = await authAxios.get(`http://localhost:3000/v1/user/paid/course`);
+    const res = await authAxios.get(`${config.BASE_URL}/v1/user/paid/course`);
     return res.data.course;
   } catch (error: any) {
     const err = new Error('Course  Not Found');
@@ -90,7 +91,7 @@ async function getUserLearningCourses({ authAxios }: { authAxios: AxiosInstance 
 
 async function getCompleteCourse({ authAxios }: { authAxios: AxiosInstance }): Promise<{ course: CourseCardIn }[]> {
   try {
-    const res = await authAxios.get(`http://localhost:3000/v1/user/complete/course`);
+    const res = await authAxios.get(`${config.BASE_URL}/v1/user/complete/course`);
     return res.data.course;
   } catch (error: any) {
     const err = new Error('Course  Not Found');
@@ -100,7 +101,7 @@ async function getCompleteCourse({ authAxios }: { authAxios: AxiosInstance }): P
 
 async function getPreviewOfCourse({ courseId }: { courseId: string }) {
   try {
-    const res = await axios.get(`http://localhost:3000/v1/course/preview/${courseId}`);
+    const res = await axios.get(`${config.BASE_URL}/v1/course/preview/${courseId}`);
 
     return res.data.coursePreview;
   } catch (error: any) {
@@ -121,7 +122,7 @@ async function fetchLecture({
   authAxios: AxiosInstance;
 }): Promise<LectureIn> {
   try {
-    const res = await authAxios.get(`http://localhost:3000/v1/user/${courseSlug}/${sectionId}/${lectureId}`);
+    const res = await authAxios.get(`${config.BASE_URL}/v1/user/${courseSlug}/${sectionId}/${lectureId}`);
     return res.data;
   } catch (error: any) {
     const err = new Error(' Lecture Not Found');
@@ -155,7 +156,7 @@ async function setLectureProgress({
       ...(userAnswers ? { userAnswers } : {}),
     };
 
-    const res = await authAxios.post(`http://localhost:3000/v1/user/${courseSlug}/${lectureId}`, requestData);
+    const res = await authAxios.post(`${config.BASE_URL}/v1/user/${courseSlug}/${lectureId}`, requestData);
     return res.data;
   } catch (error: any) {
     const err = new Error(' Lecture Not Found');
