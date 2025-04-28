@@ -68,6 +68,7 @@ export default function VideoPlayer({
             },
             ratio: '16:9',
             autoplay: true,
+            keyboard: { global: true },
             html5: { attributes: { crossorigin: 'anonymous', playsinline: '' } },
           });
         });
@@ -79,6 +80,7 @@ export default function VideoPlayer({
         speed: { selected: 1, options: [0.5, 1, 1.25, 1.5, 2] },
         ratio: '16:9',
         autoplay: true,
+        keyboard: { global: true },
         html5: { attributes: { playsinline: '' } },
       });
     }
@@ -103,11 +105,15 @@ export default function VideoPlayer({
       plyrInst.on('pause', handlePause);
       plyrInst.on('ended', handleEnded);
 
-      if (startTime > 0) {
-        plyrInst.currentTime = Math.min(startTime, plyrInst.duration || 0);
+      if (media && startTime > 0) {
+        const onLoaded = () => {
+          media.currentTime = Math.min(startTime, media.duration);
+          media.removeEventListener('loadedmetadata', onLoaded);
+        };
+        media.addEventListener('loadedmetadata', onLoaded);
       }
-      plyrInst.play();
 
+      plyrInst.play();
       return () => {
         plyrInst.off('pause', handlePause);
         plyrInst.off('ended', handleEnded);

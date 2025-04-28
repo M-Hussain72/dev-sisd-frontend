@@ -3,20 +3,24 @@ import { useAuth } from '../context/AuthContext';
 import { useCountdown } from '../hook/countDown';
 import useAuthAxios from '../hook/useAuthAxios';
 import authHttp from '../http/authHttp';
+import { useState } from 'react';
 
 export default function VerifiedEmail() {
   const { user } = useAuth();
   const authAxios = useAuthAxios();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { start, running, secondsLeft } = useCountdown();
   async function sendVerifyEmail() {
     if (user) {
       try {
+        setIsSubmitting(true);
         await authHttp.sendVerifyEmail({ email: user.email, authAxios });
         start(60);
-        toast.success('Email Verify link sent to your email.');
+        setIsSubmitting(false);
+        toast.success('Email Verify link sent!.Please also check your spam folder.');
       } catch (error) {
         //@ts-ignore
-        toast.error(err.message || 'Failed to send Verify link.');
+        toast.error(error.message || 'Failed to send Verify link.');
       }
     }
   }
@@ -42,7 +46,12 @@ export default function VerifiedEmail() {
 
           <div className="flex-1 text-sm font-medium">
             Your email <span className="font-semibold">{user?.email}</span> is not verified.{' '}
-            <button type="button" className="underline hover:text-yellow-600" onClick={sendVerifyEmail} disabled={running}>
+            <button
+              type="button"
+              className="underline hover:text-yellow-600"
+              onClick={sendVerifyEmail}
+              disabled={running || isSubmitting}
+            >
               {running ? `Resend in ${secondsLeft}s` : 'send verification email'}
             </button>
             .

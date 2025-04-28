@@ -24,10 +24,11 @@ export default function ForgotPasswordPage() {
     try {
       await authHttp.forgetPassword({ email: values.email });
       start(60);
-      toast.success('Password reset link sent to your email.');
+      toast.success('Password reset link sent! Please also check your spam folder.');
     } catch (error) {
+      console.log(error);
       //@ts-ignore
-      toast.error(err.message || 'Failed to send reset link.');
+      toast.error(error.message || 'Failed to send reset link.');
     }
     setSubmitting(false);
   }

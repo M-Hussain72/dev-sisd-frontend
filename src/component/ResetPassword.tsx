@@ -5,8 +5,10 @@ import SignUpSchema from '../schema/signUpSchema';
 import Button from './ui/Button';
 import InputFelid from './ui/InputFelid';
 import { useFormik } from 'formik';
+import { useNavigate } from '@tanstack/react-router';
 
 export default function ResetPassword({ token }: { token: string }) {
+  const navigate = useNavigate();
   const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit, resetForm, setSubmitting } =
     useFormik({
       validateOnMount: true,
@@ -22,6 +24,9 @@ export default function ResetPassword({ token }: { token: string }) {
     try {
       await authHttp.resetpassword({ password: values.password, token });
       toast.success('Your password has been successfully updated.');
+      setTimeout(() => {
+        navigate({ to: '/login' });
+      }, 2000);
     } catch (error) {
       //@ts-ignore
       const errMsg = error?.message || 'An unexpected error occurred during password reset.';
