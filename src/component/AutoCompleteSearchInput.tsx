@@ -75,7 +75,7 @@ export default function AutoCompleteSearchInput() {
       shadow="sm"
     >
       <Combobox.Target>
-        <div className="  ml-8 max-w-[450px] w-full min-w-0 ">
+        <div className=" max-w-[450px] w-full min-w-0 ">
           <Input
             ref={inputRef}
             type="text"

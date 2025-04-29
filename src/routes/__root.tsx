@@ -1,6 +1,5 @@
 import { Outlet, createRootRouteWithContext } from '@tanstack/react-router';
 import { MantineProvider } from '@mantine/core';
-import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 import '@mantine/core/styles.css';
 import '@mantine/carousel/styles.css';
 
@@ -34,8 +33,6 @@ function RootComponent() {
 
         <Footer />
         <FooterBottom />
-
-        <TanStackRouterDevtools position="bottom-right" />
       </main>
     </MantineProvider>
   );

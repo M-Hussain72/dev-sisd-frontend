@@ -8,7 +8,7 @@ export default function SearchModal({ openButton, children }: { openButton: JSX.
   return (
     <>
       <Modal opened={opened} onClose={close} fullScreen={isMobile} transitionProps={{ transition: 'fade', duration: 200 }}>
-        {children}
+        <div> {children}</div>
       </Modal>
 
       <button onClick={open}>{openButton}</button>

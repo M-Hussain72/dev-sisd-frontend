@@ -19,6 +19,7 @@ const GoogleAuthButton = ({ onSuccess }: { onSuccess: () => void }) => {
       onSuccess();
     } catch (error: any) {
       toast.error(error.message || 'An unexpected error occurred during Google login.');
+      setIsSubmitting(false);
     }
   };
 

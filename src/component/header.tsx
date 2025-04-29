@@ -127,11 +127,17 @@ const Header = () => {
 
               {/* search bar on header */}
 
-              {!isMobile && <AutoCompleteSearchInput />}
+              {!isMobile && (
+                <div className="ml-8 w-full">
+                  <AutoCompleteSearchInput />
+                </div>
+              )}
             </div>
 
-            <div className="flex gap-6  ">
-              <ul className=" lg:flex hidden ml-4 items-center  justify-evenly  w-[345px] capitalize text-[#949697] text-[16px]  ">
+            {/* when Event add then add gap-6 here blow  */}
+            <div className="flex  ">
+              {/* when Event add then change height id h-[345px] here blow  */}
+              <ul className=" lg:flex hidden ml-4 items-center  justify-evenly  w-[300px] capitalize text-[#949697] text-[16px]  ">
                 <DropDown.Courses isLoading={categoryLoading} items={data || []}>
                   <li className=" flex group hover:text-[#307EE1] cursor-pointer">
                     Courses
@@ -177,7 +183,7 @@ const Header = () => {
                     }
                   >
                     {/* <AutoCompleteSearchInput /> */}
-                    <div>
+                    <div className=" ">
                       <AutoCompleteSearchInput />
                     </div>
                   </SearchModal>

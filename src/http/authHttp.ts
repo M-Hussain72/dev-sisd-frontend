@@ -48,7 +48,7 @@ async function googleLoginUser({ token }: { token: string }) {
     console.log(error);
     const err = new Error('Oops! Failed to Login');
     err.message = error.response.data?.message || 'An unexpected error occurred. Please try again later.';
-    throw err.message;
+    throw err;
   }
 }
 

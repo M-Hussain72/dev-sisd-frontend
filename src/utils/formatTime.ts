@@ -28,3 +28,25 @@ export function formatTimeInHours(seconds: number) {
   const courseDurationString = (totalHours > 0 ? totalHours + 'h ' : '') + (minutes > 0 ? minutes + 'm' : '');
   return courseDurationString;
 }
+
+export function formatDate(input: Date | string) {
+  const date = typeof input === 'string' ? new Date(input) : input;
+
+  if (!date) {
+    return '';
+  }
+  // 2) Optionally guard against invalid dates
+  if (Number.isNaN(date.getTime())) {
+    console.warn('Invalid date passed to formatDate():', input);
+    return '';
+  }
+  // date: a JS Date object
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  };
+
+  const dateInString = date.toLocaleDateString('en-US', options);
+  return dateInString;
+}
