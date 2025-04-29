@@ -35,7 +35,6 @@ const Header = () => {
   const { isLoading } = useQuery({
     queryKey: ['user'],
     queryFn: async () => {
-      console.log('call query user');
       return await getUser({ authAxios });
     },
     enabled: isAuthenticate && !!!user,
