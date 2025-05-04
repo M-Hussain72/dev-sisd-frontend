@@ -125,17 +125,15 @@ const CourseCard = ({
                     {percentageComplete === 100 ? 'Completed' : percentageComplete + '% '} Complete
                   </p>
                   {
-                    //  percentageComplete > 50 &&
-
-                    <span
-                      className=" text-themeBlue  font-medium  "
+                    <button
+                      className=" text-themeBlue  font-medium "
                       onClick={(e) => {
                         e.stopPropagation();
                         setOpened(true);
                       }}
                     >
                       Leave a Rating
-                    </span>
+                    </button>
                   }
                 </div>
               ) : (
