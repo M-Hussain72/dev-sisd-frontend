@@ -31,8 +31,6 @@ export default function CoursesPage() {
       </div>
     );
   }
-
-  console.log(data);
   if (isError || (data && !(data?.length > 0))) {
     return <NotFound search={search} message="Please try refining your search term." />;
   }

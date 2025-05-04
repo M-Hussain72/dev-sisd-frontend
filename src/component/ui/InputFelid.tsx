@@ -60,7 +60,6 @@ const InputFelid: React.FC<InputSpreadProps> = ({
           ${labelWrap ? `  ${error ? 'border-red-500' : ' border-themeBlack'}` : 'border-[#CCCCCC]'} ` +
           (!width ? '  w-full min-w-[280px] ' : width)
         }
-        // onFocusCapture={() => console.log('onFocusC')}
         onFocus={onFocus}
         onBlur={onBlur}
         {...props}

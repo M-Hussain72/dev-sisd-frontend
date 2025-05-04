@@ -5,8 +5,6 @@ import { ContentIn } from '../../interface/courseInterface';
 
 export default function CourseContent({ content, courseId }: { content: ContentIn[]; courseId: string }) {
   const [selectedSection, setSelectedSection] = useState<string[]>([content ? content[0]._id : '']);
-  console.log('content:');
-  console.log(content);
 
   const handleSelectedSection = (sectionId: string) => {
     setSelectedSection((prev) => {
@@ -19,7 +17,6 @@ export default function CourseContent({ content, courseId }: { content: ContentI
     });
   };
 
-  console.log(content);
   return (
     <>
       <div className="max-w-[1040px] mt-6 ">

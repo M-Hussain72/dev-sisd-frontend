@@ -24,7 +24,6 @@ export default function CategoryCoursesSection({
   // const { categorySlug } = useParams({ from: '/courses/category/$categorySlug/' });
   const [checked, setChecked] = useState(false);
   const navigate = useNavigate();
-  console.log(componentKey);
   const { data, isLoading, isError, refetch, isFetching } = useQuery({
     queryKey: ['category/', selectedFilters, componentKey],
     queryFn: () => handleGetCourses(),
@@ -36,8 +35,6 @@ export default function CategoryCoursesSection({
   });
 
   useEffect(() => {
-    console.log(selectedFilters);
-
     if (selectedFilters) {
       refetch();
     }
@@ -76,7 +73,9 @@ export default function CategoryCoursesSection({
         <div>
           {checked ? (
             <div className=" grid gap-8 grid-cols-1 min-[600px]:grid-cols-2  xl:grid-cols-4  min-[900px]:grid-cols-3 auto-rows-fr">
-              {data?.map((item) => <CourseCard {...item} onClick={() => navigate({ to: `/course/${item.slug}` })} />)}
+              {data?.map((item) => (
+                <CourseCard isPaid={false} {...item} onClick={() => navigate({ to: `/course/${item.slug}` })} />
+              ))}
             </div>
           ) : (
             <div className="space-y-8 sm:block hidden ">{data?.map((item) => <CourseHorizontalCard {...item} />)}</div>

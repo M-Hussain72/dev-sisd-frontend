@@ -15,8 +15,6 @@ export default function MyLearning() {
     staleTime: 100 * 60 * 5,
   });
 
-  console.log(data);
-
   return (
     <>
       {' '}

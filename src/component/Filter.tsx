@@ -61,113 +61,6 @@ const data = [
   // },
 ];
 
-// const renderTreeNode = ({ node, expanded, hasChildren, elementProps, tree }: RenderTreeNodePayload) => {
-//   const checked = tree.isNodeChecked(node.value);
-
-//   return (
-//     <Group gap={4} wrap="nowrap" {...elementProps}>
-//       {!hasChildren && (
-//         <>
-//           <Checkbox.Indicator
-//             checked={checked}
-//             size="xs"
-//             onClick={() => (!checked ? tree.checkNode(node.value) : tree.uncheckNode(node.value))}
-//           />
-//           <br className="my-2" />
-//         </>
-//       )}
-//       <Group
-//         justify="space-between"
-//         flex={'true'}
-//         gap={'xs'}
-//         className={hasChildren ? ' max-w-[200px] w-full min-w-[100px]' : ''}
-//         onClick={() => tree.toggleExpanded(node.value)}
-//         wrap="nowrap"
-//       >
-//         <span>{node.label}</span>
-
-//         {hasChildren && (
-//           <svg
-//             width="20"
-//             height="21"
-//             viewBox="0 0 20 21"
-//             className="mt-[2px] fill-[#949697]  group-hover:fill-[#307EE1]"
-//             style={{
-//               transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)',
-//             }}
-//             fill="none"
-//             xmlns="http://www.w3.org/2000/svg"
-//           >
-//             <path d="M10 13L6 8.75972L6.71667 8L10 11.4982L13.2833 8.01767L14 8.77739L10 13Z" />
-//           </svg>
-//         )}
-//       </Group>
-//       {hasChildren && <div className=" "></div>}
-//     </Group>
-//   );
-// };
-
-// export default function Filter() {
-//   const tree = useTree({
-//     initialExpandedState: getTreeExpandedState(data, '*'),
-//   });
-
-//   // Add useEffect to track checked nodes changes
-//   // useEffect(() => {
-//   //   // Get only leaf nodes (actual filter values)
-//   //   const checkedLeafNodes = tree.checkedState.filter(node =>
-//   //     !data.some(parent => parent.value === node)
-//   //   );
-
-//   //   // Group filters by category
-//   //   const filters = data.reduce((acc, parent) => {
-//   //     const childrenValues = parent.children?.map(child => child.value) || [];
-//   //     const selected = checkedLeafNodes
-//   //       .filter(checkedValue => childrenValues.includes(checkedValue))
-//   //       .map(String);
-
-//   //     if (selected.length > 0) {
-//   //       acc[parent.value] = selected;
-//   //     }
-//   //     return acc;
-//   //   }, {} as Record<string, string[]>);
-
-//   //   onChange(filters);
-//   // }, [tree.checkedNodes, data, onChange]);
-//   console.log(tree.checkedState);
-//   console.log(tree.selectedState);
-
-//   return (
-//     <>
-//       <Group justify="space-between" mr={'xs'} my={'lg'}>
-//         <h1 className="text-themeBlack text-2xl">Filters</h1>
-//         <span
-//           onClick={() => tree.uncheckAllNodes()}
-//           className=" text-base focus:text-[#3065e1] text-themeBlue cursor-pointer"
-//         >
-//           clear
-//         </span>
-//       </Group>
-//       <Tree
-//         tree={tree}
-//         data={data}
-//         levelOffset={0}
-//         expandOnClick={false}
-//         renderNode={renderTreeNode}
-//         styles={{
-//           subtree: {
-//             padding: '12px 0',
-//             margin: '0 0',
-//           },
-//         }}
-//         classNames={{
-//           root: 'space-y-4', // Add vertical spacing between items
-//         }}
-//       />
-//     </>
-//   );
-// }
-
 export default function Filter({ onChange }: { onChange: React.Dispatch<React.SetStateAction<filterIn | null>> }) {
   const [checkedNodes, setCheckedNodes] = useState<string[]>([]);
   const [ratingSelection, setRatingSelection] = useState<string | null>(null);
@@ -208,9 +101,7 @@ export default function Filter({ onChange }: { onChange: React.Dispatch<React.Se
       return acc;
     }, {});
 
-    console.log(filters);
     if (onChange && Object.keys(filters).length > 0) {
-      console.log('filters:', filters);
       onChange({
         rating: filters.rating ? filters?.rating.join('-') : undefined,
         totalDuration: filters?.totalDuration,

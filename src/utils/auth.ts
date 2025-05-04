@@ -29,11 +29,8 @@ export function setAuthToken(tokens: AxiosResponse) {
 export function getUserId() {
   const token = getAuthToken();
   if (!token) {
-    console.log('from get user token not found');
     return '';
   }
-  console.log(token);
   const decoded = jwtDecode(token.refresh.token);
-  console.log(decoded);
   return decoded.sub;
 }

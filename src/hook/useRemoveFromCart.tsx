@@ -15,11 +15,9 @@ export const useRemoveFromCart = () => {
   return useMutation<void, Error, string, MutationContext>({
     // Accepts the courseId to remove
     mutationFn: (courseId: string) => {
-      console.log('In mutationFn remove for course', courseId);
       return cartHttp.removeCartItem({ courseId, authAxios });
     },
     onMutate: async (courseId: string) => {
-      console.log('remove mutation for course', courseId);
       // Optionally cancel outgoing queries if necessary
       await queryClient.cancelQueries({ queryKey: ['cart'] });
       const previousCart = queryClient.getQueryData<CartIn>(['cart']);

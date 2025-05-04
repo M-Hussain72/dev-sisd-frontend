@@ -10,7 +10,6 @@ export interface registerPropType {
 async function registerUser({ fromData }: registerPropType) {
   try {
     const res = await axios.post(`${config.BASE_URL}/v1/auth/register`, fromData);
-    console.log(res.data);
     return res;
   } catch (error: any) {
     console.log(error);
@@ -27,7 +26,6 @@ export interface loginPropType {
 async function loginUser({ fromData }: loginPropType) {
   try {
     const res = await axios.post(`${config.BASE_URL}/v1/auth/login`, fromData);
-    console.log(res.data);
     // while (true);
     return res;
   } catch (error: any) {
@@ -39,10 +37,8 @@ async function loginUser({ fromData }: loginPropType) {
 }
 
 async function googleLoginUser({ token }: { token: string }) {
-  console.log('call it google for login');
   try {
     const res = await axios.post(`${config.BASE_URL}/v1/auth/google`, { token });
-    console.log(res.data);
     return res;
   } catch (error: any) {
     console.log(error);
@@ -56,13 +52,11 @@ async function refreshTokens() {
   try {
     const token = getAuthToken();
     if (token === null) {
-      console.log('from refresh token token check falid');
       const err = new Error('Section is expire');
       err.message = 'Section is expire!';
       throw err;
     }
     const res = await axios.post(`${config.BASE_URL}/v1/auth/refresh-tokens`, { refreshToken: token.refresh.token });
-    console.log(res.data);
     setAuthToken(res.data.token);
 
     return res.data.token;
@@ -111,7 +105,6 @@ async function sendVerifyEmail({ email, authAxios }: { email: string; authAxios:
 }
 
 async function verifyEmail({ token }: { token: string }) {
-  console.log(token);
   try {
     await axios.post(`${config.BASE_URL}/v1/auth/verify-email`, {}, { params: { token } });
     return;

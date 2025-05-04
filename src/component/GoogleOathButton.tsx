@@ -11,7 +11,6 @@ const GoogleAuthButton = ({ onSuccess }: { onSuccess: () => void }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSuccess = async (tokenResponse: any) => {
-    console.log('Google Login Success:', tokenResponse);
     try {
       setIsSubmitting(true);
       await googleLogin({ token: tokenResponse.credential });

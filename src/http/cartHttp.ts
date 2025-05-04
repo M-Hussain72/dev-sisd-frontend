@@ -4,8 +4,6 @@ import { CartIn, CartItemIn } from '../interface/cartInterface';
 import config from '../utils/config';
 
 async function addCartItem({ courseId, authAxios }: { courseId: string; authAxios: AxiosInstance }) {
-  console.log('call---->addCart');
-
   try {
     const res = await authAxios.post(`${config.BASE_URL}/v1/cart/add-item`, {
       courseId,
@@ -18,7 +16,6 @@ async function addCartItem({ courseId, authAxios }: { courseId: string; authAxio
 }
 
 async function getCartItem({ authAxios }: { authAxios: AxiosInstance }): Promise<CartIn | undefined> {
-  console.log('call---->GetCart');
   try {
     const res = await authAxios.get(`${config.BASE_URL}/v1/cart`);
     return res.data;

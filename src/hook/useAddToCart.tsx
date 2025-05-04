@@ -13,12 +13,9 @@ export const useAddToCart = () => {
   const authAxios = useAuthAxios();
   return useMutation<void, Error, CartItemIn, MutationContext>({
     mutationFn: (course) => {
-      console.log('In mutationFn for course', course.course.id);
-
       return cartHttp.addCartItem({ courseId: course.course.id, authAxios });
     },
     onMutate: async (course) => {
-      console.log('mutation', course);
       // await queryClient.cancelQueries({ queryKey: ['cart'] });
 
       const previousCart = queryClient.getQueryData<CartIn>(['cart']);

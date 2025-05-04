@@ -63,7 +63,6 @@ export default function VideoPlayer({
               onChange: (q: string | number) => {
                 if (!hlsRef.current) return;
                 hlsRef.current.currentLevel = q === 'auto' ? 0 : hlsRef.current.levels.findIndex((l) => l.height === q);
-                console.log(q);
               },
             },
             ratio: '16:9',

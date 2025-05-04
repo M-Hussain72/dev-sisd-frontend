@@ -45,7 +45,6 @@ const CourseLessonPage = ({ courseSection, initialLectureId }: { courseSection: 
   }
 
   function handleForwardLecture() {
-    console.log('completed forwared');
     const currentLectureIndex = courseSection.sectionContent.findIndex((item) => item._id === selectedLectureId);
     const sectionLength = courseSection?.sectionContent?.length;
     if (currentLectureIndex < sectionLength - 1 && currentLectureIndex != -1) {

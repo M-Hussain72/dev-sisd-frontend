@@ -7,8 +7,6 @@ import { CourseIn } from '../interface/courseInterface';
 export default function CourseDetail({ ...course }: CourseIn) {
   const isSmallScreen = useMediaQuery('(min-width: 1024px)');
 
-  console.log('res call');
-  console.log(course);
   return (
     <div className=" flex lg:flex-nowrap flex-wrap-reverse   justify-between  gap-6 my-10 lg:mx-10 mx-4 ">
       <CourseDetailContainer {...course} />

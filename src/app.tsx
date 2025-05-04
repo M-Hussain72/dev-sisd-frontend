@@ -29,7 +29,6 @@ declare module '@tanstack/react-router' {
 function InnerApp() {
   const auth = useAuth();
   const authAxios = useAuthAxios();
-  console.log(auth);
   return <RouterProvider router={router} context={{ auth, authAxios }} />;
 }
 

@@ -45,7 +45,6 @@ function RouteComponent() {
   }
 
   async function handleLectureProgress({ lastViewTime, completed }: { lastViewTime: number; completed: boolean }) {
-    console.log('completed', completed);
     await setLectureProgress({
       courseSlug: params.courseSlug,
       lectureId: params.lectureId,

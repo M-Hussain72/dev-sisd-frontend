@@ -1,5 +1,4 @@
 import { Checkbox, Radio } from '@mantine/core';
-import quizData from '../public/quizData.json';
 import { useState } from 'react';
 import Divider from './ui/divider';
 import Button from './ui/Button';
@@ -58,8 +57,6 @@ export default function Quiz({ questions, title, completed, userAnswers, userSco
   };
 
   async function handleSubmit() {
-    console.log(selectedOptions);
-
     if (questions.length != selectedOptions.length) {
       alert('Answering the all question!');
       return;

@@ -49,7 +49,6 @@ export default function PreviewSection({
               <>
                 <li
                   onClick={() => {
-                    console.log(item.video);
                     setCurrentPlay(item);
                   }}
                   id={item.id}

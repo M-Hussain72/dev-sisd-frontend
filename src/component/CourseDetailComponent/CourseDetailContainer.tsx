@@ -10,9 +10,6 @@ import CourseContent from './CourseContent';
 import { formatTimeInDays } from '../../utils/formatTime';
 
 export default function CourseDetailContainer({ ...course }: CourseIn) {
-  // console.log('id: ---');
-  // console.log(id);
-
   return (
     <div className="lg:max-w-[904px] max-w-[600px] mx-auto  lg:mt-12 mt-0 ">
       <h1 className=" text-resHeading  font-semibold text-themeBlack ">{course.title}</h1>

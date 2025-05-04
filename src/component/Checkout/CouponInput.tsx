@@ -19,7 +19,6 @@ export default function CouponInput() {
       }
     } else {
     }
-    console.log;
   }
 
   function handleChange(e: React.FocusEvent<HTMLInputElement>) {
