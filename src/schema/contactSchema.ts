@@ -10,6 +10,6 @@ const ContactSchema = yup.object().shape({
     message: 'Full name must only contain letters, hyphens, apostrophes.',
   }),
   topic: yup.string().required('Required'),
-  message: yup.string().required('Required'),
+  message: yup.string().required('Required').max(2000, 'Comment is too long — please keep it under 2000 characters'),
 });
 export default ContactSchema;

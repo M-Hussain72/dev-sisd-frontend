@@ -74,7 +74,11 @@ export default function CourseHorizontalCard({
           }
           <div className="flex items-center gap-2">
             {discount && <p className=" text-themeGray line-through font-semibold ">&#8360; {price}</p>}
-            <p className=" text-themeBlack text-lg font-semibold ">&#8360; {price}</p>
+            {price > 0 ? (
+              <p className=" text-themeBlack text-lg font-semibold ">&#8360; {price}</p>
+            ) : (
+              <p className=" text-themeBlack text-lg font-semibold ">Free</p>
+            )}{' '}
           </div>
         </div>
         <div className="">

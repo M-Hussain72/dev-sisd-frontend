@@ -81,7 +81,7 @@ export default function VideoPlayer({
         ratio: '16:9',
         autoplay: true,
         keyboard: { global: true },
-        html5: { attributes: { playsinline: '' } },
+        html5: { attributes: { crossorigin: 'anonymous', playsinline: '' } },
       });
     }
 

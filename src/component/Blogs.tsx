@@ -23,10 +23,12 @@ export default function Blogs() {
   return (
     <div className=" px-8 mb-32">
       <h1 className=" text-[42px] font-semibold text-themeBlack">Blogs</h1>
-      <p className=" text-lg text-themeGray mt-4 ">
-        We’re a leading marketplace platform for learning and teaching online. Explore some of our most popular content and
-        learn something new.
-      </p>
+      {data && (
+        <p className=" text-lg text-themeGray mt-4 ">
+          We’re a leading marketplace platform for learning and teaching online. Explore some of our most popular content and
+          learn something new.
+        </p>
+      )}
       {data && data?.length > 0 ? (
         <ul className=" mt-10 grid gap-8 grid-cols-1    min-[1250px]:grid-cols-4  min-[950px]:grid-cols-3  sm:grid-cols-2 grid-flow-row ">
           {data.map((item) => (

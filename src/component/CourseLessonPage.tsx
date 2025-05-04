@@ -14,7 +14,7 @@ const CourseLessonPage = ({ courseSection, initialLectureId }: { courseSection: 
 
   const [selectedLectureId, setSelectedLectureId] = useState(initialLectureId);
   const navigate = useNavigate();
-  const isSmallScreen = useMediaQuery('(min-width: 1024px)');
+  // const isSmallScreen = useMediaQuery('(min-width: 1024px)');
 
   useEffect(() => {
     window.scrollTo({
@@ -86,7 +86,7 @@ const CourseLessonPage = ({ courseSection, initialLectureId }: { courseSection: 
                     <li key={item._id} className="">
                       <CourseContentItem
                         {...item}
-                        isSideBar={!isSmallScreen ? false : true}
+                        isSideBar={true}
                         purchased={true}
                         courseId=""
                         selected={selectedLectureId === item._id}

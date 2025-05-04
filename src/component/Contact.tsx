@@ -5,15 +5,18 @@ import TextAreaField from './ui/textArea';
 import Button from './ui/Button';
 import { Select } from '@mantine/core';
 import ContactSchema from '../schema/contactSchema';
+import userHttp from '../http/userHttp';
+import { toast } from 'react-toastify';
 
 export default function Contact() {
-  // const { mutate, isError, data, isSuccess, isPending, error } = useMutation({
-  //   mutationFn: register,
-  // });
-
-  // if (isSuccess) {
-  //   handelSuccess();
-  // }
+  const { mutate, isError, error, isPending } = useMutation({
+    mutationFn: userHttp.sendContactEmail,
+    onSuccess: handelSuccess,
+    onError: () => {
+      toast.error('Fail Sending Email!');
+      setSubmitting(false);
+    },
+  });
 
   const { values, errors, touched, isSubmitting, handleChange, handleSubmit, resetForm, setSubmitting } = useFormik({
     validateOnMount: true,
@@ -29,20 +32,17 @@ export default function Contact() {
   });
 
   function handelSuccess() {
+    toast.success('Successfully Send Email!');
+    setSubmitting(false);
     resetForm();
   }
 
-  function onSubmit() {
-    setTimeout(() => {
-      const { ...fromData } = values;
-      console.log(values);
-      setSubmitting(false);
-      resetForm();
-    }, 400);
+  async function onSubmit() {
+    await mutate({ ...values });
   }
 
   return (
-    <div className=" sm:flex  gap-6 justify-center px-4 sm:my-10 my-4 mb-16">
+    <div className=" sm:flex  gap-6 justify-center px-4 sm:mt-10 mt-6 mb-40">
       <h1 className=" max-w-[450px] text-black font-semibold text-4xl pt-8 ">
         Didn’t find what you’re looking for? Get in touch with us
       </h1>
@@ -104,7 +104,9 @@ export default function Contact() {
           value={values.message}
           disabled={isSubmitting}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit" disabled={isSubmitting || isPending}>
+          Submit
+        </Button>
       </form>
     </div>
   );

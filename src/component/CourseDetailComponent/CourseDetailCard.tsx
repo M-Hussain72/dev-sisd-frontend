@@ -39,7 +39,7 @@ export default function CourseDetailCard({
   }
   return (
     <>
-      <PreviewModal preview={false} courseId={courseId} videoId={undefined} opened={opened} setOpened={setOpened} />;
+      <PreviewModal preview={false} courseId={courseId} videoId={undefined} opened={opened} setOpened={setOpened} />
       <div className="   w-[420px] bg-[#FAFAFA]  rounded-[10px] shadow-md cursor-default">
         <div
           className=" after:w-full after:absolute after:left-0 after:top-0 relative after:text-[#fff]  after:h-full after:bg-gradient-to-t after:from-[#2d2f31d3] "

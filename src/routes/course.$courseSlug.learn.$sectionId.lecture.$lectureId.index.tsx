@@ -61,7 +61,6 @@ function RouteComponent() {
       handleForwardLecture();
     }
   }
-
   return (
     <>
       <div className="w-full max-w-[1025px] mt-2 md:max-h-[580px] h-auto overflow-scroll  border-[1px] border-[#EEEEEE]  rounded-xl ">
