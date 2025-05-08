@@ -58,25 +58,27 @@ const TextAreaField: React.FC<InputSpreadProps> = ({
         className={
           ` max-h-[200px] min-h-[160px] focus:border-themeBlue py-3   outline-none px-3 rounded-lg border-[1px] bg-[#FAFAFA] disabled:text-themeGray 
           ${labelWrap ? `  ${error ? 'border-red-500' : ' border-themeBlack'}` : 'border-[#CCCCCC]'} ` +
-          (!width ? '  w-full min-w-[280px] ' : width)
+          (!width ? '  w-full min-w-[250px] ' : width)
         }
         onFocus={onFocus}
         onBlur={onBlur}
         {...props}
       ></textarea>
       {!isInputFocus && error && <p className=" w-fit text-red-500 text-xs my-1 ">{errorMessage}</p>}
-      <label
-        className={`
+      {title && (
+        <label
+          className={`
                 transition-all  duration-200 capitalize 
                 ${
                   labelWrap
                     ? ` absolute left-3 -top-3 px-1 h-[13px] text-[12px] font-light bg-[#FAFAFA] ${isInputFocus ? ' text-themeBlue' : `  ${error ? 'text-red-500' : ' text-themeBlack'}`}`
                     : ' absolute left-6 top-[9px]  text-[#949697] text-lg  cursor-pointer'
                 }`}
-        onClick={onFocus}
-      >
-        {title}
-      </label>
+          onClick={onFocus}
+        >
+          {title}
+        </label>
+      )}
     </div>
   );
 };

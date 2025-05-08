@@ -1,3 +1,5 @@
+import { AxiosInstance } from 'axios';
+
 export interface CourseCardIn {
   poster: string;
   title: string;
@@ -13,7 +15,9 @@ export interface CourseCardIn {
   assessmentCount: number;
   articleCount: number;
   discount: number;
-  percentageComplete: number | undefined;
+  percentageComplete: number;
+  hasReviewed: boolean;
+  reviewId: string | null;
 }
 
 export interface SectionContentIn {
@@ -61,6 +65,15 @@ export interface QuizIn {
   questionType: 'single-choice' | 'multiple-choice';
   options: string[];
   correctOptionsIndex: number[];
+}
+export interface LectureProgressPayload {
+  courseSlug: string;
+  lectureId: string;
+  authAxios: AxiosInstance;
+  lastViewTime: number | null;
+  completed: boolean;
+  userAnswers: (number | number[])[] | null; // Replace with proper type for answers
+  lectureType: 'video' | 'article' | 'assessment';
 }
 export interface LectureIn {
   lecture: {

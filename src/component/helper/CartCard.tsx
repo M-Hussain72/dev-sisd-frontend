@@ -1,6 +1,4 @@
 import { Rating } from '@mantine/core';
-import image2 from '../../public/python.png';
-import { CartItemsType } from '../../context/CartContext';
 import defaultImage from '../../assets/defaultCourseImg.png';
 import { CartItemIn } from '../../interface/cartInterface';
 import { formatTimeInHours } from '../../utils/formatTime';

@@ -1,15 +1,16 @@
 import { createFileRoute, notFound } from '@tanstack/react-router';
 import CourseLessonPage from '../component/CourseLessonPage';
 import { fetchLecture, setLectureProgress } from '../http/courseHttp';
-import { queryClient } from '../app';
 import VideoPlayer from '../component/videoPlayer';
 import QuizResult from '../component/QuizResult';
 import DocumentReading from '../public/document';
 import { Loader } from '@mantine/core';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import NotFound from '../component/helper/NotFound';
 import { useLectureNav } from '../context/LectureNavigationContext';
 import { useEffect } from 'react';
+import { CourseIn, LectureProgressPayload } from '../interface/courseInterface';
+import { queryClient } from '../utils/queryClient';
 
 export const Route = createFileRoute('/course/$courseSlug/learn/$sectionId/lecture/$lectureId/')({
   component: RouteComponent,
@@ -28,6 +29,28 @@ function RouteComponent() {
   });
 
   const { handleForwardLecture } = useLectureNav();
+
+  const { mutate } = useMutation({
+    mutationFn: async ({
+      courseSlug,
+      lectureId,
+      authAxios,
+      lastViewTime,
+      completed,
+      userAnswers,
+      lectureType,
+    }: LectureProgressPayload) => {
+      await setLectureProgress({
+        courseSlug,
+        lectureId,
+        authAxios,
+        lastViewTime,
+        completed,
+        userAnswers,
+        lectureType,
+      });
+    },
+  });
 
   if (isLoading) {
     return (
@@ -81,7 +104,11 @@ function RouteComponent() {
         ) : data?.lecture?.type === 'article' ? (
           <div className=" p-3  shadow-inner shadow-black/20 rounded-xl">
             {' '}
-            <DocumentReading article={data?.lecture?.article || ' Oops Empty File'} />
+            <DocumentReading
+              article={data?.lecture?.article || ' Oops Empty File'}
+              isSeen={data?.progress?.completed}
+              mutate={mutate}
+            />
           </div>
         ) : (
           <div> Lecture Not Found! Skip This lecture.</div>

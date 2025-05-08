@@ -6,6 +6,7 @@ import { useRouter, useNavigate, useParams } from '@tanstack/react-router';
 import { QuizIn } from '../interface/courseInterface';
 import { setLectureProgress } from '../http/courseHttp';
 import useAuthAxios from '../hook/useAuthAxios';
+import { toast } from 'react-toastify';
 
 interface quizType {
   questions: QuizIn[];
@@ -58,7 +59,7 @@ export default function Quiz({ questions, title, completed, userAnswers, userSco
 
   async function handleSubmit() {
     if (questions.length != selectedOptions.length) {
-      alert('Answering the all question!');
+      toast.error('Answering the all question!');
       return;
     }
     setSubmitting(true);
@@ -74,7 +75,7 @@ export default function Quiz({ questions, title, completed, userAnswers, userSco
       });
     } catch (error) {
       setSubmitting(false);
-      alert('Something went wrong!');
+      toast.error('Something went wrong!');
     }
 
     navigate({

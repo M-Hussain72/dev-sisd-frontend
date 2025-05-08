@@ -37,9 +37,7 @@ export default function ForgotPasswordPage() {
     <div className=" min-h-[69vh]">
       <div className=" xs:w-[440px] w-[300px] mt-20 mx-auto">
         <h1 className=" font-semibold text-xl text-themeBlack">Forgot Password</h1>
-        <p className=" mt-4 text-themeGray">
-          Please enter the email address and we will send you a link to reset your password
-        </p>
+        <p className=" mt-4 text-themeGray">Enter the email address and we will send you a link to reset your password</p>
         <form onSubmit={handleSubmit} noValidate>
           <div className=" space-y-7 my-7">
             <InputFelid
@@ -55,7 +53,7 @@ export default function ForgotPasswordPage() {
             />
           </div>
           <Button type="submit" disabled={running || isSubmitting}>
-            <text>{running ? `Resend in ${secondsLeft}s` : 'Send Reset Email'}</text>
+            <text>{running ? `Resend in ${secondsLeft}s` : 'Request Password Reset'}</text>
           </Button>
         </form>
         <p className=" mt-4 text-themeGray text-sm ">

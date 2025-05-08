@@ -5,6 +5,8 @@ import { useNavigate } from '@tanstack/react-router';
 import { CourseCardIn } from '../../interface/courseInterface';
 import ReviewSubmitModal from './reviewSubmitModal';
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import reviewHttp from '../../http/reviewHttp';
 
 interface CourseCardProps extends CourseCardIn {
   onClick?: () => void; // Separate onClick prop
@@ -12,6 +14,7 @@ interface CourseCardProps extends CourseCardIn {
 }
 
 const CourseCard = ({
+  id,
   poster,
   title,
   author,
@@ -22,16 +25,29 @@ const CourseCard = ({
   onClick,
   isPaid = false,
   percentageComplete,
+  hasReviewed,
+  reviewId,
 }: CourseCardProps) => {
   const [opened, setOpened] = useState(false);
+  const { data: currentReview, isLoading } = useQuery({
+    queryKey: ['review', id], // Query key
+    queryFn: () => reviewHttp.getReviewById({ courseId: reviewId || '' }),
+    refetchOnWindowFocus: false,
+    staleTime: 0,
+    enabled: opened && hasReviewed,
+  });
+
   return (
     <>
       {isPaid && (
         <ReviewSubmitModal
-          courseSlug={slug}
+          courseId={id}
           courseTitle={title}
           opened={opened}
           setOpened={setOpened}
+          reviewLoading={isLoading}
+          hasReviewed={hasReviewed}
+          reviewData={{ rating: currentReview?.rating, comment: currentReview?.comment }}
           // openButton={<span className=" text-themeBlue  font-medium  ">Leave a Rating</span>}
         ></ReviewSubmitModal>
       )}
@@ -119,25 +135,28 @@ const CourseCard = ({
               <div className="w-full mt-4  bg-gray-200 rounded-full h-1">
                 <div className="bg-themeBlue h-1 rounded-full" style={{ width: `${percentageComplete || 0}%` }}></div>
               </div>
-              {percentageComplete && percentageComplete > 0 ? (
-                <div className="mt-2 mb-4 flex gap-2 justify-between items-center">
+              {percentageComplete > 0 ? (
+                <div className="mt-3 mb-4 flex gap-1 justify-between items-center">
                   <p className=" text-themeGray6 flex-1  ">
-                    {percentageComplete === 100 ? 'Completed' : percentageComplete + '% '} Complete
+                    {percentageComplete === 100 ? 'Completed' : percentageComplete + '% Complete'}
                   </p>
                   {
                     <button
-                      className=" text-themeBlue  font-medium "
+                      className=" text-sm text-themeBlue  font-medium "
                       onClick={(e) => {
                         e.stopPropagation();
-                        setOpened(true);
+                        if (!isLoading) {
+                          console.log(currentReview);
+                          setOpened(true);
+                        }
                       }}
                     >
-                      Leave a Rating
+                      {hasReviewed ? 'Edit Rating' : 'Leave a Rating'}
                     </button>
                   }
                 </div>
               ) : (
-                <p className=" text-themeBlue font-medium mt-2 mb-4 ">Start Course</p>
+                <p className=" text-themeBlue font-medium mt-3 mb-4 ">Start Course</p>
               )}
             </div>
           )}

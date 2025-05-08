@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { CourseCardIn, CourseIn, LectureIn } from '../interface/courseInterface';
+import { CourseCardIn, CourseIn, LectureIn, LectureProgressPayload } from '../interface/courseInterface';
 import { filterIn } from '../interface/filterInterface';
 import config from '../utils/config';
 
@@ -79,7 +79,11 @@ async function fetchCourse({ courseSlug, authAxios }: { courseSlug: string; auth
   }
 }
 
-async function getUserLearningCourses({ authAxios }: { authAxios: AxiosInstance }): Promise<{ course: CourseCardIn }[]> {
+async function getUserLearningCourses({
+  authAxios,
+}: {
+  authAxios: AxiosInstance;
+}): Promise<{ course: CourseCardIn; percentageComplete: number; reviewId: string | null; hasReviewed: boolean }[]> {
   try {
     const res = await authAxios.get(`${config.BASE_URL}/v1/user/paid/course`);
     return res.data.course;
@@ -89,7 +93,11 @@ async function getUserLearningCourses({ authAxios }: { authAxios: AxiosInstance 
   }
 }
 
-async function getCompleteCourse({ authAxios }: { authAxios: AxiosInstance }): Promise<{ course: CourseCardIn }[]> {
+async function getCompleteCourse({
+  authAxios,
+}: {
+  authAxios: AxiosInstance;
+}): Promise<{ course: CourseCardIn; percentageComplete: number; reviewId: string | null; hasReviewed: boolean }[]> {
   try {
     const res = await authAxios.get(`${config.BASE_URL}/v1/user/complete/course`);
     return res.data.course;
@@ -138,15 +146,7 @@ async function setLectureProgress({
   userAnswers,
   lectureType,
   completed,
-}: {
-  courseSlug: string;
-  lectureId: string;
-  authAxios: AxiosInstance;
-  lastViewTime: number | null;
-  lectureType: 'video' | 'assessment' | 'article';
-  userAnswers: (number | number[])[] | null;
-  completed: boolean;
-}) {
+}: LectureProgressPayload) {
   try {
     const requestData = {
       completed,

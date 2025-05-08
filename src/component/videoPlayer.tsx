@@ -3,6 +3,7 @@ import 'plyr/dist/plyr.css';
 import Hls from 'hls.js';
 import Plyr, { APITypes, PlyrInstance } from 'plyr-react';
 import { Loader } from '@mantine/core';
+import useAuthAxios from '../hook/useAuthAxios';
 
 export default function VideoPlayer({
   url,
@@ -26,6 +27,7 @@ export default function VideoPlayer({
   const playerRef = useRef<APITypes>(null);
   const hlsRef = useRef<Hls | null>(null);
   const [opts, setOpts] = useState<any>(null);
+  const authAxios = useAuthAxios();
 
   const handlePause = async () => {
     const currentTime = playerRef.current?.plyr.currentTime || 0;

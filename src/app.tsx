@@ -10,6 +10,8 @@ import useAuthAxios from './hook/useAuthAxios';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { ToastContainer } from 'react-toastify';
 
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
 // Set up a Router instance
 const router = createRouter({
   routeTree,
@@ -43,11 +45,13 @@ export default function App() {
           <PaymentProvider>
             <QueryClientProvider client={queryClient}>
               <InnerApp />
+              <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>
           </PaymentProvider>
           {/* </CartProvider> */}
         </GoogleOAuthProvider>
       </AuthProvider>
+
       <ToastContainer
         position="bottom-right"
         autoClose={8000} // Auto-close after 5 seconds (optional)

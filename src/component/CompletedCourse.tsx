@@ -16,23 +16,26 @@ export default function CompletedCourse() {
   });
 
   return (
-    <>
+    <div className=" min-h-dvh">
       {' '}
       {data && data?.length > 0 ? (
-        <div className="  grid gap-8 grid-cols-1  min-[848px]:grid-cols-3  min-[1370px]:grid-cols-5  min-[1110px]:grid-cols-4  sm:grid-cols-2 ">
+        <div className="  grid gap-4 grid-cols-1  min-[848px]:grid-cols-3  min-[1370px]:grid-cols-5  min-[1110px]:grid-cols-4  sm:grid-cols-2   ">
           {data.map((item) => (
             <CourseCard
               {...item.course}
               onClick={() => navigate({ to: `/course/${item.course.slug}/learn` })}
+              percentageComplete={item.percentageComplete}
+              hasReviewed={item.hasReviewed}
+              reviewId={item.reviewId}
               isPaid={true}
             />
           ))}
         </div>
       ) : (
-        <div className="w-full text-center mx-2 p-8  bg-white border-2 border-dashed border-gray-300 rounded-lg">
+        <div className="w-full max-w-[600px] mx-auto text-center  p-8 mt-[10%] bg-white border-2 border-dashed border-gray-300 rounded-lg">
           <p className="text-gray-500 ">No courses Competed at the moment!</p>
         </div>
       )}
-    </>
+    </div>
   );
 }

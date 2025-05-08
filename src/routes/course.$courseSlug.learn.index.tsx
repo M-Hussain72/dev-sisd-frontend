@@ -15,7 +15,7 @@ function RouteComponent() {
   const params = Route.useParams();
   const { authAxios } = Route.useRouteContext();
   const { data, isLoading, isError } = useQuery({
-    queryKey: ['course', params.courseSlug], // Query key
+    queryKey: ['course/learn', params.courseSlug], // Query key
     queryFn: () => fetchCourse({ courseSlug: params.courseSlug, authAxios }),
     refetchOnWindowFocus: false,
     staleTime: 0,
