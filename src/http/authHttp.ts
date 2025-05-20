@@ -80,9 +80,9 @@ async function resetpassword({ token, password }: { token: string; password: str
   }
 }
 
-async function forgetPassword({ email }: { email: string }) {
+async function forgetPassword({ email, source = 'customer' }: { email: string; source: 'panel' | 'customer' }) {
   try {
-    await axios.post(`${config.BASE_URL}/v1/auth/forgot-password`, { email });
+    await axios.post(`${config.BASE_URL}/v1/auth/forgot-password`, { email, source });
     return;
   } catch (error: any) {
     console.log(error);

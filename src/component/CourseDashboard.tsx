@@ -4,10 +4,11 @@ import CourseSection from './CourseSection';
 import InstructorInfoBar from './helper/InstructorInfoBar';
 import { Loading } from './ui/Loading';
 import { CourseIn } from '../interface/courseInterface';
-import { SectionNavigationContext } from '../context/SectionNavigationContext';
+import { useSearch } from '@tanstack/react-router';
 
 export default function CourseDashboard({ language, author, content, title, shortDescription }: CourseIn) {
-  const [selectedSectionId, setSelectedSectionId] = useState(content[0]._id);
+  const { sectionId: initialSectionId } = useSearch({ from: '/course/$courseSlug/learn/' });
+  const [selectedSectionId, setSelectedSectionId] = useState(initialSectionId || content[0]._id);
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -21,20 +22,8 @@ export default function CourseDashboard({ language, author, content, title, shor
   const findSection = content.find((item) => item._id === selectedSectionId);
   const selectedSection = findSection ? findSection : content[0];
 
-  function handleSectionComplete() {
-    // const currentIndex = content.findIndex((item) => item._id === selectedSectionId);
-    // if (currentIndex < content.length - 1) {
-    //   const nextSection = content[currentIndex + 1];
-    //   setSelectedSectionId(nextSection._id);
-    // } else {
-    //   // Optionally, handle when the entire course is complete.
-    //   console.log('Course complete');
-    // }
-  }
-
   return (
-    // <SectionNavigationContext.Provider value={{ handleSectionComplete }}>
-    <div className=" mt-10 mb-20 ">
+    <div className="  mb-20 ">
       <div className="mx-10">
         <h1 className=" text-[32px] font-semibold text-themeBlack ">{title}</h1>
         <p className=" text-[18px] text-themeGray">{shortDescription}</p>
@@ -105,6 +94,5 @@ export default function CourseDashboard({ language, author, content, title, shor
         </div>
       </div>
     </div>
-    // </SectionNavigationContext.Provider>
   );
 }

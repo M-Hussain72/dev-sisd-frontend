@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import 'plyr/dist/plyr.css';
-import Hls from 'hls.js';
+import Hls, { ErrorData, ErrorTypes, Events } from 'hls.js';
 import Plyr, { APITypes, PlyrInstance } from 'plyr-react';
 import { Loader } from '@mantine/core';
 import useAuthAxios from '../hook/useAuthAxios';
+import { getAuthToken } from '../utils/auth';
 
 export default function VideoPlayer({
   url,
@@ -27,32 +28,47 @@ export default function VideoPlayer({
   const playerRef = useRef<APITypes>(null);
   const hlsRef = useRef<Hls | null>(null);
   const [opts, setOpts] = useState<any>(null);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const authAxios = useAuthAxios();
+
+  // extract primitive token value to avoid object reference changes
+  const token = getAuthToken();
+  const accessToken = token?.access?.token || '';
 
   const handlePause = async () => {
     const currentTime = playerRef.current?.plyr.currentTime || 0;
     await setLectureProgress({ lastViewTime: currentTime, completed: false });
   };
-  const handleEnded = () => {
-    setLectureProgress({ lastViewTime: 0, completed: true });
+  const handleEnded = async () => {
+    await setLectureProgress({ lastViewTime: 0, completed: true });
   };
 
   // 1) Preload & parse HLS manifest to discover quality levels
   useEffect(() => {
     let hls: Hls | null = null;
-    if (url.endsWith('.m3u8')) {
+    let errorHandled = false;
+    setErrorMsg(null);
+
+    if (url.endsWith('.m3u8') && accessToken) {
       if (Hls.isSupported()) {
         const dummy = document.createElement('video');
         dummy.crossOrigin = 'anonymous';
 
-        hls = new Hls();
+        hls = new Hls({
+          xhrSetup: (xhr) => xhr.setRequestHeader('Authorization', `Bearer ${accessToken}`),
+          manifestLoadingMaxRetry: 0,
+          levelLoadingMaxRetry: 0,
+          fragLoadingMaxRetry: 0,
+        });
         hlsRef.current = hls;
-        hls.loadSource(url);
-        hls.attachMedia(dummy);
 
-        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        hls.attachMedia(dummy);
+        hls.loadSource(url);
+
+        const onManifest = () => {
+          if (errorHandled) return;
           const heights = Array.from(new Set(hls!.levels.map((l) => l.height))).sort((a, b) => b - a);
-          const qualityOptions = ['auto', ...heights.map((h) => h)]; // use strings, not numbers
+          const qualityOptions = ['auto', ...heights.map(String)];
 
           setOpts({
             controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'settings', 'fullscreen'],
@@ -62,9 +78,10 @@ export default function VideoPlayer({
               default: 0,
               options: qualityOptions,
               forced: true,
-              onChange: (q: string | number) => {
+              onChange: (q: string) => {
                 if (!hlsRef.current) return;
-                hlsRef.current.currentLevel = q === 'auto' ? 0 : hlsRef.current.levels.findIndex((l) => l.height === q);
+                hlsRef.current.currentLevel =
+                  q === 'auto' ? -1 : hlsRef.current.levels.findIndex((l) => String(l.height) === q);
               },
             },
             ratio: '16:9',
@@ -72,9 +89,35 @@ export default function VideoPlayer({
             keyboard: { global: true },
             html5: { attributes: { crossorigin: 'anonymous', playsinline: '' } },
           });
-        });
+        };
+        hls.on(Events.MANIFEST_PARSED, onManifest);
+
+        const onError = (_event: string, data: ErrorData) => {
+          if (errorHandled || !hls) return;
+          errorHandled = true;
+          console.error('HLS fatal error', data);
+
+          let msg = 'Error loading video.';
+          if (data.type === ErrorTypes.NETWORK_ERROR) {
+            msg = 'Network error: failed to load video.';
+          } else if (data.type === ErrorTypes.MEDIA_ERROR) {
+            msg = 'Media error: corrupted stream.';
+          } else {
+            msg = `Error: ${data.details}`;
+          }
+
+          hls.off(Events.MANIFEST_PARSED, onManifest);
+          hls.off(Events.ERROR, onError);
+          hls.stopLoad();
+          hls.detachMedia();
+          hls.destroy();
+
+          setErrorMsg(msg);
+        };
+        hls.on(Events.ERROR, onError);
       }
     } else {
+      // non-HLS fallback
       setOpts({
         controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'settings', 'fullscreen'],
         settings: ['speed'],
@@ -89,10 +132,12 @@ export default function VideoPlayer({
     return () => {
       (hls || hlsRef.current)?.destroy();
     };
-  }, [url]);
+  }, [url, accessToken]);
 
-  // 2) Attach HLS to the actual Plyr video element and setup events
+  // 2) Attach HLS to the actual video element
   useEffect(() => {
+    if (errorMsg) return;
+
     const init = () => {
       if (!opts) return;
       const plyrInst = playerRef.current?.plyr as PlyrInstance;
@@ -122,20 +167,24 @@ export default function VideoPlayer({
     };
 
     const timer = setTimeout(init, 100);
+    return () => clearTimeout(timer);
+  }, [opts, id, startTime, url, errorMsg]);
 
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [opts, id, startTime, url]);
+  if (errorMsg) {
+    return (
+      <div className="relative aspect-video max-h-[580px] bg-black flex items-center justify-center">
+        <p className="text-white text-lg text-center px-4">{errorMsg}</p>
+      </div>
+    );
+  }
 
   if (!opts) {
     return (
-      <div className="  aspect-video max-h-[580px] bg-white border-[1px] rounded-xl flex items-center justify-center">
+      <div className="aspect-video max-h-[580px] bg-white border-[1px] rounded-xl flex items-center justify-center">
         <Loader size="xl" />
       </div>
     );
   }
 
-  // 3) Render Plyr with empty sources: HLS will feed segments
   return <Plyr id={`plyr${id}`} source={{ type: 'video', sources: [] }} options={opts} ref={playerRef} />;
 }

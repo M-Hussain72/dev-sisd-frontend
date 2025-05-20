@@ -5,23 +5,50 @@ import SignUpSchema from '../schema/signUpSchema';
 import { useFormik } from 'formik';
 import { useAuth } from '../context/AuthContext';
 import VerifiedEmail from './VerifiedEmail';
+import { useMutation } from '@tanstack/react-query';
+import userHttp from '../http/userHttp';
+import { toast } from 'react-toastify';
+import useAuthAxios from '../hook/useAuthAxios';
+import ProfileSchema from '../schema/profileSchema';
 
 export default function Profile() {
-  const { user } = useAuth();
-  const { values, errors, touched, isSubmitting, handleChange, handleSubmit, resetForm, setSubmitting } = useFormik({
-    validateOnMount: true,
-    initialValues: {
-      name: user?.name || '',
-      email: user?.email || '',
-      phoneNo: '',
+  const { user, getUser } = useAuth();
+  const authAxios = useAuthAxios();
+
+  const { mutate } = useMutation({
+    mutationFn: userHttp.updateUser,
+    onSuccess: () => {
+      toast.success('Successfully Update Profile!');
+      setSubmitting(false);
+      getUser({ authAxios });
     },
-    validationSchema: SignUpSchema,
-    onSubmit,
+    onError: (error) => {
+      toast.error(error.message);
+      setSubmitting(false);
+    },
   });
+  const { values, errors, touched, isSubmitting, handleChange, handleSubmit, resetForm, setSubmitting, initialValues } =
+    useFormik({
+      validateOnMount: true,
+      initialValues: {
+        name: user?.name || '',
+        email: user?.email || '',
+        phoneNo: user?.phoneNo || '',
+        profileImage: user?.profileImage || '',
+      },
+      validationSchema: ProfileSchema,
+      onSubmit,
+    });
 
   function onSubmit() {
+    const hasChanged = JSON.stringify(values) !== JSON.stringify(initialValues);
+    if (!hasChanged) {
+      toast.error('No changes detected.');
+      setSubmitting(false);
+      return;
+    }
     setTimeout(() => {
-      //  mutate({ fromData: values });
+      mutate({ ...values, authAxios: authAxios });
     }, 400);
     console.log(values);
     setSubmitting(false);
@@ -31,9 +58,19 @@ export default function Profile() {
     <>
       <VerifiedEmail />
       <div>
-        <ImageUpload />
-        <form className=" mt-10">
-          <div className=" ">
+        <form onSubmit={handleSubmit}>
+          <ImageUpload
+            onChange={(url) =>
+              handleChange({
+                target: {
+                  name: 'profileImage',
+                  value: url,
+                },
+              })
+            }
+            initialImage={values.profileImage}
+          />
+          <div className=" mt-10">
             <InputFelid
               title="Name"
               name="name"
@@ -66,7 +103,7 @@ export default function Profile() {
               <InputFelid
                 title="Phone No"
                 name="phoneNo"
-                type="tel"
+                type="string"
                 id="phoneNo"
                 error={errors.phoneNo && touched.phoneNo}
                 errorMessage={errors.phoneNo}
@@ -76,7 +113,9 @@ export default function Profile() {
               />
             </div>
           </div>
-          <Button className=" mt-6"> Save Changes</Button>
+          <Button className=" mt-6" disabled={isSubmitting}>
+            Save Changes
+          </Button>
         </form>
       </div>
     </>

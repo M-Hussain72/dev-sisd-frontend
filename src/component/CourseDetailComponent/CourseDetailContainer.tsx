@@ -11,7 +11,7 @@ import { formatTimeInDays } from '../../utils/formatTime';
 
 export default function CourseDetailContainer({ ...course }: CourseIn) {
   return (
-    <div className="lg:max-w-[904px] max-w-[600px] mx-auto  lg:mt-12 mt-0 ">
+    <div className="lg:max-w-[904px] max-w-[600px] mx-auto  lg:mt-8 mt-0 ">
       <h1 className=" text-resHeading  font-semibold text-themeBlack ">{course.title}</h1>
       <p className=" text-resLg cursor-default  text-themeGray mt-2 ">{course.shortDescription}</p>
       <div className="mt-4">
@@ -82,7 +82,7 @@ export default function CourseDetailContainer({ ...course }: CourseIn) {
       </div>
 
       <div className=" mt-20">
-        <h1 className=" text-[34px] font-semibold">What you’ll learn</h1>
+        <h1 className="text-[28px] sm:text-[34px] font-semibold">What you’ll learn</h1>
         <Spoiler maxHeight={226} showLabel="Show More" hideLabel="Show Less">
           <ul className=" mt-10 grid grid-cols-1 sm:grid-cols-2 gap-6">
             {course.learningOutcomes?.map((item, index) => (
@@ -109,19 +109,6 @@ export default function CourseDetailContainer({ ...course }: CourseIn) {
       </div>
 
       <div className=" mt-20">
-        <h1 className=" text-[34px] font-semibold mb-8">Description</h1>
-        <Spoiler maxHeight={226} showLabel="Show More" hideLabel="Show Less" ml={20} className="">
-          <ReactMarkdown
-            className={
-              ' prose-strong:font-semibold  prose-headings:mb-4 prose-sm text-themeGray prose-headings:text-themeBlack prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl   '
-            }
-          >
-            {course.description}
-          </ReactMarkdown>
-        </Spoiler>
-      </div>
-
-      <div className=" mt-20">
         <h1 className=" text-[34px] font-semibold mb-2 ">Course Content</h1>
         <div className=" flex items-center text-lg text-themeGray6 mb-10">
           <p>{course.content && course.content.length} sections </p>
@@ -131,6 +118,46 @@ export default function CourseDetailContainer({ ...course }: CourseIn) {
           {course.totalVideoDuration > 0 && <p> {formatTimeInDays(course.totalVideoDuration)} total length</p>}
         </div>
         <CourseContent content={course.content} courseId={course.id} />
+      </div>
+
+      <div className=" mt-20">
+        <h1 className=" text-[28px] sm:text-[34px] font-semibold">Requirements</h1>
+        <Spoiler maxHeight={226} showLabel="Show More" hideLabel="Show Less">
+          <ul className=" mt-8 flex flex-col gap-6">
+            {course.learningOutcomes?.map((item, index) => (
+              <li key={index} className=" flex gap-2 text-sm sm:text-base  text-themeGray">
+                <label className=" mt-[4.5px]">
+                  <svg width="14" height="14" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M12.1999 5.55C12.4779 5.87131 12.4644 6.37763 12.1699 6.68089L7.66871 11.3155C7.172 11.827 6.38333 11.827 5.88662 11.3155L3.82987 9.1978C3.53533 8.89454 3.52193 8.38822 3.79992 8.06691C4.07791 7.74559 4.54204 7.73097 4.83658 8.03423L6.77767 10.0329L11.1632 5.51732C11.4577 5.21406 11.9219 5.22868 12.1999 5.55Z"
+                      fill="#626465"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M0 12.5689C0 14.74 1.76003 16.5 3.93114 16.5H12.0689C14.2399 16.5 16 14.74 16 12.5689V4.43114C16 2.26006 14.2399 0.5 12.0689 0.5H3.93114C1.76003 0.5 0 2.26007 0 4.43114V12.5689ZM3.93114 15.1479C2.50678 15.1479 1.35211 13.9932 1.35211 12.5689V4.43114C1.35211 3.00681 2.50679 1.85211 3.93114 1.85211H12.0689C13.4932 1.85211 14.6479 3.00682 14.6479 4.43114V12.5689C14.6479 13.9932 13.4932 15.1479 12.0689 15.1479H3.93114Z"
+                      fill="#626465"
+                    />
+                  </svg>
+                </label>
+                <p>{item}</p>
+              </li>
+            ))}
+          </ul>
+        </Spoiler>
+      </div>
+
+      <div className=" mt-20">
+        <h1 className=" text-[34px] font-semibold mb-8">Description</h1>
+        <Spoiler maxHeight={226} showLabel="Show More" hideLabel="Show Less" ml={20} className="">
+          <ReactMarkdown
+            className={
+              ' prose-strong:font-semibold  prose-headings:mb-4  prose-sm sm:prose-base text-themeGray prose-headings:text-themeBlack sm:prose-h1:text-3xl prose-h1:text-2xl prose-h2:text-xl sm:prose-h2:text-2xl prose-h3:text-xl   '
+            }
+          >
+            {course.description}
+          </ReactMarkdown>
+        </Spoiler>
       </div>
 
       <div className=" mt-20">

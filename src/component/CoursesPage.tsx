@@ -52,7 +52,7 @@ export default function CoursesPage() {
   }
 
   return (
-    <div className=" mx-auto px-6 my-10">
+    <div className=" mx-auto px-6 mb-10">
       <div>
         <h1 className=" mt-[30px] text-[42px] font-semibold capitalize text-themeBlack">{categoryTitle || ''} Courses</h1>
         {/* add no od student learners this category  */}

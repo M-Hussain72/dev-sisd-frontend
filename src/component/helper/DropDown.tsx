@@ -18,12 +18,12 @@ function Courses({ children, items, isLoading }: props) {
           <Menu.Item>
             <Loader size="sm" color="#307EE1" />
           </Menu.Item>
-        ) : (
+        ) : items.length > 0 ? (
           items.map((item) => (
             <Link key={item.id} to={`/courses/category/${item.categorySlug}`}>
               <Menu.Item c="#949697" className="group" m={0}>
                 <div className="flex justify-between">
-                  <span className="group-hover:text-[#307EE1] text-sm">{item.categoryName}</span>
+                  <span className="group-hover:text-[#307EE1] text-sm capitalize">{item.categoryName}</span>
                   <svg
                     width="20"
                     height="20"
@@ -38,6 +38,10 @@ function Courses({ children, items, isLoading }: props) {
               </Menu.Item>
             </Link>
           ))
+        ) : (
+          <Menu.Item c="#949699">
+            <p className=" text-sm  mx-auto w-fit">Not Found</p>
+          </Menu.Item>
         )}
         {/* <Menu.Item c="#307EE1" className="font-medium">
           View all Courses
@@ -59,26 +63,30 @@ function Profile({ children }: profileType) {
       <Menu.Dropdown bg="#FAFAFA">
         <Menu.Label>
           <div>
-            <h2 className=" font-semibold text-black text-lg ">{user?.name}</h2>
-            <p className=" font-normal text-themeGray text-sm text-wrap mt-1">{user?.email}</p>
+            <h2 className=" font-semibold text-black text-lg capitalize ">{user?.name}</h2>
+            <p className=" font-normal text-themeGray text-sm text-wrap mt-1  line-clamp-2">{user?.email}</p>
           </div>
         </Menu.Label>
         <Menu.Divider mb={'md'} />
         {[
           {
             label: 'profile',
-            value: 'profile',
+            value: '/user/profile',
+          },
+          {
+            label: 'My Learning',
+            value: '/?tab=my-learning',
           },
           {
             label: 'My Purchases',
-            value: 'purchases',
+            value: '/user/purchases',
           },
           {
             label: 'Settings',
-            value: 'setting',
+            value: '/user/setting',
           },
         ].map((item) => (
-          <Link key={item.value} to={`/user/${item.value}`}>
+          <Link key={item.value} to={`${item.value}`}>
             <Menu.Item c={'#949697'} className="group">
               <div className=" flex justify-between">
                 <span className=" group-hover:text-[#307EE1] text-sm capitalize">{item.label}</span>

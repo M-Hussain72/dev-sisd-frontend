@@ -6,7 +6,7 @@ import authHttp from '../http/authHttp';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
 import { useCountdown } from '../hook/countDown';
-import { Link } from '@tanstack/react-router';
+import { Link, useSearch } from '@tanstack/react-router';
 
 export default function ForgotPasswordPage() {
   const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit, resetForm, setSubmitting } =
@@ -19,10 +19,11 @@ export default function ForgotPasswordPage() {
       onSubmit,
     });
   const { secondsLeft, start, running } = useCountdown();
+  const { source } = useSearch({ from: '/login/forgotpassword' });
 
   async function onSubmit() {
     try {
-      await authHttp.forgetPassword({ email: values.email });
+      await authHttp.forgetPassword({ email: values.email, source: source });
       start(60);
       toast.success('Password reset link sent! Please also check your spam folder.');
     } catch (error) {

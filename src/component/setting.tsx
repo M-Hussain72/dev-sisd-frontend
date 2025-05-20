@@ -3,8 +3,13 @@ import Button from './ui/Button';
 import InputFelid from './ui/InputFelid';
 import newPasswordSchema from '../schema/newPasswordSchema';
 import ErrorBlock from '../utils/ErrorBlock';
+import { useMutation } from '@tanstack/react-query';
+import userHttp from '../http/userHttp';
+import { toast } from 'react-toastify';
+import useAuthAxios from '../hook/useAuthAxios';
 
 export default function Setting() {
+  const authAxios = useAuthAxios();
   const { values, errors, touched, isSubmitting, handleChange, handleSubmit, resetForm, setSubmitting } = useFormik({
     validateOnMount: true,
     initialValues: {
@@ -16,9 +21,22 @@ export default function Setting() {
     onSubmit,
   });
 
+  const { mutate } = useMutation({
+    mutationFn: userHttp.changePassword,
+    onSuccess: () => {
+      toast.success('Successfully Change Password!');
+      setSubmitting(false);
+      resetForm();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+      setSubmitting(false);
+    },
+  });
+
   function onSubmit() {
     setTimeout(() => {
-      //  mutate({ fromData: values });
+      mutate({ authAxios, currentPassword: values.currentPassword, newPassword: values.newPassword });
     }, 400);
     console.log(values);
     setSubmitting(false);
@@ -71,7 +89,7 @@ export default function Setting() {
           </div>
         </div>
         <Button disabled={isSubmitting} type="submit" name="submit">
-          <span className=" ">Save Changes</span>
+          <span className=" ">Changes Password</span>
         </Button>
       </form>
     </div>

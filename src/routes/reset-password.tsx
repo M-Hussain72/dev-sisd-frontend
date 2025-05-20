@@ -3,7 +3,9 @@ import ResetPassword from '../component/ResetPassword';
 import { z } from 'zod';
 
 const resetSchema = z.object({
-  token: z.string().optional(), // `search` is an optional string
+  token: z.string().optional(),
+  source: z.enum(['panel', 'customer']).default('customer').optional(),
+  // `search` is an optional string
 });
 
 export const Route = createFileRoute('/reset-password')({
@@ -12,7 +14,7 @@ export const Route = createFileRoute('/reset-password')({
 });
 
 function RouteComponent() {
-  const { token } = Route.useSearch();
+  const { token, source } = Route.useSearch();
 
   if (!token) {
     return (
@@ -22,5 +24,5 @@ function RouteComponent() {
       </h1>
     );
   }
-  return <ResetPassword token={token} />;
+  return <ResetPassword token={token} source={source} />;
 }

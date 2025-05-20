@@ -1,19 +1,35 @@
 import { useRef, useState } from 'react';
+import userHttp from '../../http/userHttp';
+import { toast } from 'react-toastify';
 
-export default function ImageUpload() {
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+export default function ImageUpload({
+  initialImage,
+  onChange,
+}: {
+  initialImage: string | null;
+  onChange: (url: string) => void;
+}) {
+  const [selectedImage, setSelectedImage] = useState<string | null>(initialImage);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        if (e.target?.result) {
-          setSelectedImage(e.target.result as string);
-        }
-      };
-      reader.readAsDataURL(file);
+      try {
+        const res = await userHttp.uploadImage({
+          file: file,
+        });
+        onChange(res.url);
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          if (e.target?.result) {
+            setSelectedImage(e.target.result as string);
+          }
+        };
+        reader.readAsDataURL(file);
+      } catch (error: any) {
+        toast.error(error?.message || '');
+      }
     }
   };
 
@@ -21,6 +37,7 @@ export default function ImageUpload() {
     setSelectedImage(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
+      onChange('');
     }
   };
 

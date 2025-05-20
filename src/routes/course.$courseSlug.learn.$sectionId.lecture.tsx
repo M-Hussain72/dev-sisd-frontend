@@ -4,13 +4,14 @@ import { fetchCourse } from '../http/courseHttp';
 import { queryClient } from '../app';
 import { Loader } from '@mantine/core';
 import NotFound from '../component/helper/NotFound';
+import { RequireAuth } from '../component/helper/RequiredAuth';
 
 export const Route = createFileRoute('/course/$courseSlug/learn/$sectionId/lecture')({
   loader: async ({ context: { authAxios }, params }) => {
     const course = await queryClient.ensureQueryData(
       {
         queryKey: ['course', params.courseSlug], // Query key
-        queryFn: () => fetchCourse({ courseSlug: params.courseSlug, authAxios }),
+        queryFn: async () => await fetchCourse({ courseSlug: params.courseSlug, authAxios }),
       }, // Fetcher function
     );
     if (!course) {
@@ -50,7 +51,13 @@ function RouteComponent() {
 
   return (
     <>
-      <CourseLessonPage courseSection={currentSection} initialLectureId={match.params.lectureId} />
+      <RequireAuth>
+        <CourseLessonPage
+          sections={data.course.content}
+          // courseSection={currentSection}
+          initialLectureId={match.params.lectureId}
+        />
+      </RequireAuth>
     </>
   );
 }

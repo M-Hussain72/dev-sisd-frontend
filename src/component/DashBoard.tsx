@@ -25,7 +25,7 @@ export default function DashBoard() {
   //  };
   return (
     <div>
-      <h1 className=" text-[42px] font-semibold mt-12 capitalize"> Welcome Back, {user?.name}! </h1>
+      <h1 className=" text-[42px] font-semibold mt-5 capitalize"> Welcome Back, {user?.name}! </h1>
       <Tabs value={tab || 'home'} onChange={handleTabChange} className="mt-4">
         <Tabs.List>
           {['home', 'my-learning', 'completed'].map((item) => (

@@ -9,10 +9,60 @@ export interface userApiType {
 
 async function getUserApi({ authAxios }: userApiType) {
   try {
-    const res = await authAxios.get(`${config.BASE_URL}/v1/auth/profile`);
+    const res = await authAxios.get(`${config.BASE_URL}/v1/user/profile`);
     return res;
   } catch (error: any) {
     const err = new Error('user Not Found');
+    throw err;
+  }
+}
+
+async function updateUser({
+  authAxios,
+  email,
+  phoneNo,
+  profileImage,
+  name,
+}: {
+  authAxios: AxiosInstance;
+  email: string | null;
+  phoneNo: string | null;
+  profileImage: string | null;
+  name: string;
+}) {
+  try {
+    const res = await authAxios.put(`${config.BASE_URL}/v1/user/profile`, {
+      email,
+      phoneNo,
+      profileImage,
+      name,
+    });
+    return res;
+  } catch (error: any) {
+    const err = new Error('user Not Found');
+    throw err;
+  }
+}
+async function changePassword({
+  authAxios,
+  currentPassword,
+  newPassword,
+}: {
+  authAxios: AxiosInstance;
+  newPassword: string;
+  currentPassword: string;
+}) {
+  try {
+    const res = await authAxios.put(`${config.BASE_URL}/v1/user/change-password`, {
+      currentPassword,
+      newPassword,
+    });
+    return res;
+  } catch (error: any) {
+    const err = new Error('Something went wrong!');
+    if (error.response.code == 400 || error.response.code == 404) {
+      err.message = error.response.message;
+    }
     throw err;
   }
 }
@@ -49,8 +99,24 @@ async function sendContactEmail({
   }
 }
 
+async function uploadImage({ file }: { file: File }) {
+  const formData = new FormData();
+  formData.append('file', file);
+  try {
+    const res = await axios.post(`${config.BASE_URL}/v1/file/upload/public/image`, formData);
+    return { url: res.data?.file.url };
+  } catch (error) {
+    console.log(error);
+    const err = new Error('Uploading issue!');
+    throw err;
+  }
+}
+
 export default {
   getUserApi,
   assignCourse,
   sendContactEmail,
+  changePassword,
+  updateUser,
+  uploadImage,
 };

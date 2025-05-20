@@ -7,25 +7,23 @@ import { Link, Outlet, useNavigate, useParams } from '@tanstack/react-router';
 import { ContentIn } from '../interface/courseInterface';
 import { LectureNavigationContext } from '../context/LectureNavigationContext'; // adjust path
 
-const CourseLessonPage = ({ courseSection, initialLectureId }: { courseSection: ContentIn; initialLectureId: string }) => {
+const CourseLessonPage = ({ sections, initialLectureId }: { sections: ContentIn[]; initialLectureId: string }) => {
   const { courseSlug, sectionId } = useParams({
     from: '/course/$courseSlug/learn/$sectionId/lecture',
   });
+  const initialSectionIndex = sections && sections.findIndex((s) => s._id === sectionId);
+  const [currentSectionIndex, setCurrentSectionIndex] = useState(initialSectionIndex > -1 ? initialSectionIndex : 0);
+  const currentSection = sections[currentSectionIndex];
 
   const [selectedLectureId, setSelectedLectureId] = useState(initialLectureId);
   const navigate = useNavigate();
-  // const isSmallScreen = useMediaQuery('(min-width: 1024px)');
 
   useEffect(() => {
     window.scrollTo({
       top: 50,
       left: 0,
-      behavior: 'smooth',
     });
   }, [selectedLectureId]);
-
-  const currentLecture =
-    courseSection.sectionContent.find((item) => item._id === selectedLectureId) ?? courseSection.sectionContent[0];
 
   function handleLectureChange(id: string, type: 'video' | 'assessment' | 'article') {
     setSelectedLectureId(id);
@@ -35,22 +33,45 @@ const CourseLessonPage = ({ courseSection, initialLectureId }: { courseSection: 
     navigate({ to: `/course/${courseSlug}/learn/${sectionId}/lecture/${id}` });
   }
 
+  const currentLectureList = currentSection.sectionContent;
+  const currentLectureIndex = currentLectureList.findIndex((lec) => lec._id === selectedLectureId);
+  const currentLecture = currentLectureList[currentLectureIndex] ?? currentLectureList[0];
+
+  const goToLecture = (sectionIdx: number, lectureIdx: number) => {
+    const sec = sections[sectionIdx];
+    const lec = sec.sectionContent[lectureIdx];
+    setCurrentSectionIndex(sectionIdx);
+    setSelectedLectureId(lec._id);
+    navigate({
+      to: `/course/${courseSlug}/learn/${sec._id}/${'lecture'}/${lec._id}`,
+    });
+  };
+
   function handlePrevLecture() {
-    const currentLectureIndex = courseSection.sectionContent.findIndex((item) => item._id === selectedLectureId);
-    //  const sectionLength = courseSection.sectionContent.length
-    if (currentLectureIndex > 0 && currentLectureIndex != -1) {
-      const prevLecture = courseSection.sectionContent[currentLectureIndex - 1];
-      handleLectureChange(prevLecture._id, prevLecture.type);
+    // If there’s a previous lecture in this section, go to it:
+    if (currentLectureIndex > 0) {
+      return goToLecture(currentSectionIndex, currentLectureIndex - 1);
     }
+    // Otherwise, roll back into the previous section if it exists:
+    if (currentSectionIndex > 0) {
+      const prevSectIdx = currentSectionIndex - 1;
+      const lastIdx = sections[prevSectIdx].sectionContent.length - 1;
+      return goToLecture(prevSectIdx, lastIdx);
+    }
+    //  else: you’re already at very first lecture of very first section
   }
 
   function handleForwardLecture() {
-    const currentLectureIndex = courseSection.sectionContent.findIndex((item) => item._id === selectedLectureId);
-    const sectionLength = courseSection?.sectionContent?.length;
-    if (currentLectureIndex < sectionLength - 1 && currentLectureIndex != -1) {
-      const prevLecture = courseSection.sectionContent[currentLectureIndex + 1];
-      handleLectureChange(prevLecture._id, prevLecture.type);
+    // If there’s a next lecture in this section, go to it:
+    if (currentLectureIndex < currentLectureList.length - 1) {
+      return goToLecture(currentSectionIndex, currentLectureIndex + 1);
     }
+    // Otherwise, roll forward into the next section if it exists:
+    if (currentSectionIndex < sections.length - 1) {
+      // first lecture of next section
+      return goToLecture(currentSectionIndex + 1, 0);
+    }
+    // else: you’re already at the very last lecture of the very last section
   }
 
   return (
@@ -64,7 +85,12 @@ const CourseLessonPage = ({ courseSection, initialLectureId }: { courseSection: 
     >
       <div className=" lg:mr-3 px-4 mx-auto mb-12 ">
         {/* navigate to back the course dashboard page */}
-        <Link to={`/course/${courseSlug}/learn`} replace={true} className=" flex  items-center">
+        <Link
+          to={`/course/${courseSlug}/learn`}
+          search={{ sectionId: currentSection._id }}
+          replace={true}
+          className=" flex  items-center"
+        >
           <svg width="43" height="17" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M1 5L0.646447 4.64645L0.292893 5L0.646447 5.35355L1 5ZM13 5.5C13.2761 5.5 13.5 5.27614 13.5 5C13.5 4.72386 13.2761 4.5 13 4.5V5.5ZM4.64645 0.646447L0.646447 4.64645L1.35355 5.35355L5.35355 1.35355L4.64645 0.646447ZM0.646447 5.35355L4.64645 9.35355L5.35355 8.64645L1.35355 4.64645L0.646447 5.35355ZM1 5.5H13V4.5H1V5.5Z"
@@ -72,11 +98,11 @@ const CourseLessonPage = ({ courseSection, initialLectureId }: { courseSection: 
             />
           </svg>
 
-          <h1 className=" text-xl font-medium text-themeBlack">{courseSection.sectionTitle}</h1>
+          <h1 className=" text-xl font-medium text-themeBlack">{currentSection.sectionTitle}</h1>
         </Link>
         <div className=" flex lg:flex-row flex-col-reverse sm:gap-6  mt-4">
           <ol className=" flex-1  min-w-[200px] lg:max-h-[600px] lg:overflow-scroll w-full  py-[24px] pr-1 lg:border-r-[2px] lg:border-y-[2px] lg:border-l-0  border-[1px] rounded-xl border-[#eeeeee] lg:rounded-l-none  lg:rounded-r-2xl shadow-sm ">
-            {courseSection.sectionContent.map((item) => (
+            {currentSection.sectionContent.map((item) => (
               <CourseSection
                 section={{
                   id: item._id,

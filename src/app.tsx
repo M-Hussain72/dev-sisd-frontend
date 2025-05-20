@@ -11,6 +11,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { ToastContainer } from 'react-toastify';
 
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import DefaultNotFound from './component/helper/DefaultNotFound';
 
 // Set up a Router instance
 const router = createRouter({
@@ -20,6 +21,7 @@ const router = createRouter({
     auth: undefined!,
     authAxios: undefined!,
   },
+  defaultNotFoundComponent: DefaultNotFound,
 });
 
 // Register things for typeSafety
@@ -45,7 +47,7 @@ export default function App() {
           <PaymentProvider>
             <QueryClientProvider client={queryClient}>
               <InnerApp />
-              <ReactQueryDevtools initialIsOpen={false} />
+              {/* <ReactQueryDevtools initialIsOpen={false} /> */}
             </QueryClientProvider>
           </PaymentProvider>
           {/* </CartProvider> */}
@@ -54,9 +56,9 @@ export default function App() {
 
       <ToastContainer
         position="bottom-right"
-        autoClose={8000} // Auto-close after 5 seconds (optional)
+        autoClose={5000} // Auto-close after 5 seconds (optional)
         hideProgressBar={true}
-        newestOnTop={true}
+        newestOnTop={false}
         closeOnClick
       />
     </>

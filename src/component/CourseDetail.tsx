@@ -8,7 +8,7 @@ export default function CourseDetail({ ...course }: CourseIn) {
   const isSmallScreen = useMediaQuery('(min-width: 1024px)');
 
   return (
-    <div className=" flex lg:flex-nowrap flex-wrap-reverse   justify-between  gap-6 my-10 lg:mx-10 mx-4 ">
+    <div className=" flex lg:flex-nowrap flex-wrap-reverse   justify-between  gap-6 my-10 lg:mx-10 px-4 ">
       <CourseDetailContainer {...course} />
       {isSmallScreen ? (
         <div className="">

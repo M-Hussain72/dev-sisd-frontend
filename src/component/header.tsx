@@ -78,27 +78,31 @@ const Header = () => {
                           </div>
                           {opened && (
                             <ul className=" pl-5 mt-1 space-y-2">
-                              {data
-                                ? data.map((item) => (
-                                    <li className="hover:text-[#307EE1] py-1 px-2  hover:bg-gray-100 rounded-md cursor-pointer">
-                                      <Link key={item.id} to={`/courses/category/${item.categorySlug}`}>
-                                        <div className="flex justify-between">
-                                          <span className="group-hover:text-[#307EE1] text-sm">{item.categoryName}</span>
-                                          <svg
-                                            width="20"
-                                            height="20"
-                                            viewBox="0 0 20 21"
-                                            className="fill-[#307EE1] hidden group-hover:block -rotate-90"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                          >
-                                            <path d="M10 13L6 8.75972L6.71667 8L10 11.4982L13.2833 8.01767L14 8.77739L10 13Z" />
-                                          </svg>
-                                        </div>
-                                      </Link>
-                                    </li>
-                                  ))
-                                : categoryLoading && <Loader size="sm" color="#307EE1" />}
+                              {data && data.length > 0 ? (
+                                data.map((item) => (
+                                  <li className="hover:text-[#307EE1] py-1 px-2  hover:bg-gray-100 rounded-md cursor-pointer">
+                                    <Link key={item.id} to={`/courses/category/${item.categorySlug}`}>
+                                      <div className="flex justify-between">
+                                        <span className="group-hover:text-[#307EE1] text-sm">{item.categoryName}</span>
+                                        <svg
+                                          width="20"
+                                          height="20"
+                                          viewBox="0 0 20 21"
+                                          className="fill-[#307EE1] hidden group-hover:block -rotate-90"
+                                          fill="none"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                          <path d="M10 13L6 8.75972L6.71667 8L10 11.4982L13.2833 8.01767L14 8.77739L10 13Z" />
+                                        </svg>
+                                      </div>
+                                    </Link>
+                                  </li>
+                                ))
+                              ) : categoryLoading ? (
+                                <Loader size="sm" color="#307EE1" />
+                              ) : (
+                                <span className="my-4 text-sm">Not Found</span>
+                              )}
                             </ul>
                           )}
                         </li>
@@ -226,7 +230,13 @@ const Header = () => {
                     </svg> */}
 
                     <DropDown.Profile>
-                      <Avatar role="button" src={null} alt={user?.name} color="blue" className=" uppercase">
+                      <Avatar
+                        role="button"
+                        src={user?.profileImage || null}
+                        alt={user?.name}
+                        color="blue"
+                        className=" uppercase"
+                      >
                         {user?.name[0]}
                         {user?.name.indexOf(' ') !== -1 && user?.name[user?.name.indexOf(' ') + 1]}
                       </Avatar>

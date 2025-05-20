@@ -4,10 +4,15 @@ import NotFound from '../component/helper/NotFound';
 import { Loader } from '@mantine/core';
 import { fetchCourse } from '../http/courseHttp';
 import { useQuery } from '@tanstack/react-query';
-import Button from '../component/ui/Button';
+import { z } from 'zod';
+
+const SchemaSection = z.object({
+  sectionId: z.string().optional(), // `search` is an optional string
+});
 
 export const Route = createFileRoute('/course/$courseSlug/learn/')({
   component: RouteComponent,
+  validateSearch: SchemaSection,
 });
 
 function RouteComponent() {

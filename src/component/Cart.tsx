@@ -13,7 +13,7 @@ export default function Cart() {
   const navigate = useNavigate();
 
   return (
-    <div className="md:mx-10 mx-4 my-5 mb-20 ">
+    <div className="md:mx-10 min-h-dvh mx-4 my-5 mb-20 ">
       <h1 className=" text-resHeading font-bold text-themeBlack md:block hidden">Shopping Cart</h1>
       {data && data?.cart?.items.length > 0 ? (
         <div className="md:mt-8 md:flex md:flex-row-reverse  justify-between lg:gap-16 gap-6">

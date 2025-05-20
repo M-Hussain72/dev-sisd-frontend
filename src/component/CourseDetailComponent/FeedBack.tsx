@@ -13,7 +13,7 @@ export default function FeedBack() {
   return (
     <>
       <FeedBackModal opened={opened} close={close} />
-      <h1 className="text-resHeading font-semibold ">Feedback</h1>
+      <h1 className="text-[28px] sm:text-[34px] font-semibold ">Feedback</h1>
       <span className=" text-lg text-[#626465] mt-3">
         {'4.0'} course rating <span className="text-3xl">.</span> {'24K'} rating & reviews
       </span>

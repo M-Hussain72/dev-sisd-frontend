@@ -12,6 +12,8 @@ export interface User {
   id: string;
   role: string;
   isEmailVerified: boolean;
+  phoneNo: string | null;
+  profileImage: string | null;
 }
 
 export interface AuthContextType {
@@ -90,7 +92,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
       return res.data;
     } catch (error) {
       console.log(error);
-      logOut();
+      // logOut();
       throw error;
     }
   }
