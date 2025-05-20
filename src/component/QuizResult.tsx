@@ -12,15 +12,15 @@ export default function QuizResult({ score }: { score?: number }) {
   return (
     <>
       <div className="lg:mt-32 mt-16 flex justify-between">
-        <h1 className=" text-[24px] text-themeBlack font-semibold ">Submit your assignment</h1>
+        <h1 className=" text-[24px] text-themeBlack font-semibold ">Submit your Quiz</h1>
         {score && score < 80 ? (
-          <Button onClick={handelNavigate}>Retake Assignment</Button>
+          <Button onClick={handelNavigate}>Retake Quiz</Button>
         ) : score && score >= 80 ? (
           <Button onClick={handelNavigate} color="green">
             See Response
           </Button>
         ) : (
-          <Button onClick={handelNavigate}>Start Assignment</Button>
+          <Button onClick={handelNavigate}>Start Quiz</Button>
         )}
       </div>
       <div className="mt-10 my-4">
