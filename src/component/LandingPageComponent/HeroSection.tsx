@@ -46,10 +46,10 @@ const HeroSection = () => {
         <div className=" -z-10 sm:block absolute hidden  bottom-2 -left-12 w-[45px] h-[45px] rounded-full bg-[#61B5D1]"></div>
 
         <div className=" max-w-[556px] min-[845px]:max-w-[256px] lg:max-w-[556px]   w-full   mt-8 gap-4 grid grid-cols-2 min-[845px]:grid-rows-2 min-[845px]:grid-cols-none lg:grid-cols-2 ">
-          <img src={asianWomen} className=" lg:block min-[845px]:hidden block" />
-          <img src={blueMen} className="z-10" />
-          <img src={arabWomen} className=" lg:block min-[845px]:hidden block" />
-          <img src={crispHairMen} />
+          <img src={asianWomen} loading="eager" decoding="sync" className=" lg:block min-[845px]:hidden block" />
+          <img src={blueMen} loading="eager" decoding="sync" className="z-10" />
+          <img src={arabWomen} loading="eager" decoding="sync" className=" lg:block min-[845px]:hidden block" />
+          <img src={crispHairMen} loading="eager" decoding="sync" />
         </div>
       </div>
     </div>

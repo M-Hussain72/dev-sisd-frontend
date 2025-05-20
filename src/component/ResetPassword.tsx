@@ -26,7 +26,7 @@ export default function ResetPassword({ token, source }: { token: string; source
       toast.success('Your password has been successfully updated.');
       setTimeout(() => {
         if (source === 'panel') {
-          window.location.href = 'http://localhost:5173/login';
+          window.location.href = 'https://sisd-panel.vercel.app/login';
           return;
         }
         navigate({ to: '/login' });

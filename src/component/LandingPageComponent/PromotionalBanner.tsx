@@ -33,10 +33,10 @@ export default function PromotionalBanner() {
           <div className=" -z-10 absolute top-4 right-[42%] w-[20px] h-[20px] rounded-full bg-[#FEA9CA]"></div>
           <div className=" -z-10 absolute  bottom-[15%]  left-[20%]  w-[20px] h-[20px] rounded-full bg-[#61B5D1]"></div>
           <div className=" image-stack__item--bottom   ">
-            <img src={womenImage} className=" img_overlap max-w-[340px]" />
+            <img src={womenImage} loading="eager" decoding="sync" className=" img_overlap max-w-[340px]" />
           </div>
           <div className=" image-stack__item--top  ">
-            <img src={menImage} className=" img_overlap max-w-[340px]" />
+            <img src={menImage} loading="eager" decoding="sync" className=" img_overlap max-w-[340px]" />
           </div>
         </div>
       </div>
