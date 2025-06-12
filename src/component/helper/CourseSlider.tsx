@@ -23,6 +23,10 @@ const CourseSlider = ({ heading }: prop) => {
         price: undefined,
         level: undefined,
       },
+      paginate: {
+        limit: '15',
+        page: '1',
+      },
     });
   }
   return (

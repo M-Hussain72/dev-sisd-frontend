@@ -5,7 +5,7 @@ export default () => {
     <footer className="w-full bg-[#FAFAFA]   ">
       <hr className="mx-10" />
       <div className=" xs:flex mx-10 items-center justify-between py-4">
-        <p className=" text-[#949697] cursor-default">© 2023 SISD Inc. All rights reserved.</p>
+        <p className=" text-[#949697] cursor-default">© 2025 SISD Inc. All rights reserved.</p>
         <ul className="flex gap-2 xs:mt-o mt-4">
           <Link>
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

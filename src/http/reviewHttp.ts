@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import config from '../utils/config';
-import { ReviewIn } from '../interface/reviewInterface';
+import { getReviewIn, ReviewIn } from '../interface/reviewInterface';
 
 async function addCourseReview({
   courseId,
@@ -38,6 +38,29 @@ async function getReviewById({ courseId }: { courseId: string }): Promise<Review
     throw err;
   }
 }
+async function getCourseReviews({
+  courseId,
+  paginate,
+  rating,
+}: {
+  courseId: string;
+  rating: number | null;
+  paginate: { page: string; limit: string } | null;
+}): Promise<getReviewIn> {
+  try {
+    const res = await axios.get(`${config.BASE_URL}/v1/course/review/${courseId}`, {
+      params: {
+        rating: rating,
+        ...paginate,
+      },
+    });
+    return { ...res.data, reviews: res.data.results.items };
+  } catch (error: any) {
+    const err = new Error('Reviews Not Found');
+    err.message = error.response.data.message || 'Reviews Not Found';
+    throw err;
+  }
+}
 
 async function updateCourseReview({
   courseId,
@@ -69,4 +92,5 @@ export default {
   addCourseReview,
   getReviewById,
   updateCourseReview,
+  getCourseReviews,
 };

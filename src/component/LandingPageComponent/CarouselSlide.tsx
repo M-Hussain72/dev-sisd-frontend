@@ -4,7 +4,7 @@ import { EmblaCarouselType } from 'embla-carousel-react';
 import { useQuery } from '@tanstack/react-query';
 import { getCoursesByCategory } from '../../http/courseHttp';
 import { Loader } from '@mantine/core';
-import { CourseCardIn } from '../../interface/courseInterface';
+import { CourseCardIn, getCoursesIn } from '../../interface/courseInterface';
 import { useNavigate } from '@tanstack/react-router';
 export default function CarouselSlide({
   setEmbla,
@@ -13,10 +13,10 @@ export default function CarouselSlide({
 }: {
   setEmbla: React.Dispatch<React.SetStateAction<EmblaCarouselType | null>>;
   slug: string;
-  handleGetCourses: () => Promise<CourseCardIn[]>;
+  handleGetCourses: () => Promise<getCoursesIn>;
 }) {
   const navigate = useNavigate();
-  const { isLoading, data: courses } = useQuery({
+  const { isLoading, data } = useQuery({
     queryKey: ['carousel/category', slug],
     queryFn: () => handleGetCourses(),
     // getCoursesByCategory({
@@ -60,8 +60,8 @@ export default function CarouselSlide({
       slidesToScroll={'auto'}
       getEmblaApi={setEmbla}
     >
-      {courses && courses.length > 0 ? (
-        courses.map((item, index) => (
+      {data?.courses && data.courses.length > 0 ? (
+        data?.courses.map((item, index) => (
           <Carousel.Slide key={`slide-${item.id}`} className="mb-2">
             <CourseCard isPaid={false} {...item} onClick={() => navigate({ to: `/course/${item.slug}` })} />
           </Carousel.Slide>
@@ -69,7 +69,8 @@ export default function CarouselSlide({
       ) : (
         <div className="w-full text-center mx-2 p-8  bg-white border-2 border-dashed border-gray-300 rounded-lg">
           <p className="text-gray-500 ">
-            No <span className=" capitalize">{slug.replaceAll('-', ' ')}</span> courses available at the moment!
+            No <span className=" capitalize">{data?.category?.categoryName || slug.replaceAll('-', ' ')}</span> courses
+            available at the moment!
           </p>
         </div>
       )}

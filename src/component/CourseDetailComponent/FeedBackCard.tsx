@@ -1,16 +1,19 @@
 import { Avatar, Rating, Spoiler } from '@mantine/core';
+import moment from 'moment';
 
 interface FeedBackType {
   name: string;
   rating: number;
-  iat: string;
+  iat: Date;
   message: string;
-  image?: string;
+  image?: string | null;
 }
 
 export default function FeedBackCard({ image, name, rating, iat, message }: FeedBackType) {
+  console.log(iat);
+  console.log(moment(iat).fromNow());
   return (
-    <div className=" p-4 border-[1px] border-[#EEEEEE] rounded-2xl">
+    <div className=" w-full  p-4 border-[1px] border-[#EEEEEE] rounded-2xl">
       <div className="flex gap-3">
         <Avatar src={image ? image : null} size={'lg'} color="white" className="bg-[#626465]" alt={name}>
           {name[0]}
@@ -18,9 +21,9 @@ export default function FeedBackCard({ image, name, rating, iat, message }: Feed
         </Avatar>
         <div>
           <h2 className=" text-lg text-themeBlack font-semibold">{name}</h2>
-          <div className=" flex gap-2 mt-1">
-            <Rating value={rating} size={'sm'} readOnly color="#FFD05A" />
-            <span className=" text-themeGray text-sm font-light ">a week ago</span>
+          <div className=" flex gap-2 items-center mt-1">
+            <Rating value={rating} fractions={2} size={'xs'} readOnly color="#FFD05A" />
+            <span className=" mt-1 text-themeGray text-[10px] font-medium ">{moment(iat).fromNow()}</span>
           </div>
         </div>
       </div>

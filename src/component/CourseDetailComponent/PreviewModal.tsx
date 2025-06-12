@@ -19,7 +19,7 @@ export default function PreviewModal({
   setOpened: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const { status, isLoading, data } = useQuery({
-    queryKey: ['preview', courseId],
+    queryKey: ['course/preview', courseId],
     queryFn: () => getPreviewOfCourse({ courseId: courseId }),
     refetchOnWindowFocus: false,
     retry: false,

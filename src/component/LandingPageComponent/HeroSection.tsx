@@ -10,7 +10,7 @@ const HeroSection = () => {
   return (
     <div className=" min-[845px]:flex  gap-8 xs:mt-20 my-10 xs:mx-8   justify-between">
       <div className=" md:w-[546px] w-full xs:mt-16 mt-6 ">
-        <h1 className=" relative    xs:text-[52px] text-3xl xs:leading-[71px] font-semibold text-[#2B2B2B] ">
+        <h1 className=" z-10 relative    xs:text-[52px] text-3xl xs:leading-[71px] font-semibold text-[#2B2B2B] ">
           <div className=" -z-10 absolute xs:-left-3 xs:top-1 -left-1 top-[2px] w-[15px] h-[15px] xs:w-[30px] xs:h-[30px] rounded-full bg-[#FEA9CA]"></div>
           Providing the Best Learning Experience, Let's{' '}
           <span className="relative text-nowrap ">

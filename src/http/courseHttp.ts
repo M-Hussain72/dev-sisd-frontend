@@ -1,15 +1,17 @@
 import axios, { AxiosInstance } from 'axios';
-import { CourseCardIn, CourseIn, LectureIn, LectureProgressPayload } from '../interface/courseInterface';
+import { CourseCardIn, CourseIn, getCoursesIn, LectureIn, LectureProgressPayload } from '../interface/courseInterface';
 import { filterIn } from '../interface/filterInterface';
 import config from '../utils/config';
 
 async function getCoursesByCategory({
   categorySlug,
   filters,
+  paginate,
 }: {
   categorySlug: string;
   filters: filterIn | null;
-}): Promise<CourseCardIn[]> {
+  paginate: { page: string; limit: string } | null;
+}): Promise<getCoursesIn> {
   try {
     const res = await axios.get(`${config.BASE_URL}/v1/course/category/${categorySlug}`, {
       params: {
@@ -18,9 +20,11 @@ async function getCoursesByCategory({
         language: filters?.language?.join('|') || '',
         price: filters?.price?.join('|') || '',
         level: filters?.level?.join('|') || '',
+        limit: paginate?.limit,
+        page: paginate?.page,
       },
     });
-    return res.data.course;
+    return { ...res.data, courses: res.data.results.items, category: res.data.results?.category };
   } catch (error: any) {
     const err = new Error('Course  Not Found by this category');
     throw err;
@@ -30,10 +34,12 @@ async function getCoursesByCategory({
 async function getCoursesBySearch({
   search,
   filters,
+  paginate,
 }: {
   search: string;
   filters: filterIn | null;
-}): Promise<CourseCardIn[]> {
+  paginate: { page: string; limit: string } | null;
+}): Promise<getCoursesIn> {
   try {
     const searchQuery = encodeURIComponent(search);
     const res = await axios.get(`${config.BASE_URL}/v1/course/search`, {
@@ -45,9 +51,10 @@ async function getCoursesBySearch({
         price: filters?.price?.join('|') || '',
         level: filters?.level?.join('|') || '',
         featured: filters?.featured,
+        ...paginate,
       },
     });
-    return res.data.course;
+    return { ...res.data, courses: res.data.results.items };
   } catch (error: any) {
     const err = new Error('Course  Not Found by this search');
     throw err;

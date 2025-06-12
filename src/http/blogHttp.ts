@@ -1,11 +1,11 @@
 import axios from 'axios';
 import config from '../utils/config';
-import { BlogDetailIn, BlogsIn } from '../interface/blogInterface';
+import { BlogDetailIn, getBlogsIn } from '../interface/blogInterface';
 
-async function getBlogs(): Promise<BlogsIn[]> {
+async function getBlogs(): Promise<getBlogsIn> {
   try {
     const res = await axios.get(`${config.BASE_URL}/v1/blog`);
-    return res.data.blogs;
+    return { ...res.data, blogs: res.data.results.items };
   } catch (error: any) {
     const err = new Error('Blogs Not Found');
     throw err;

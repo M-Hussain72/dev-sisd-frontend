@@ -8,6 +8,7 @@ import useAuthAxios from '../../hook/useAuthAxios';
 import { toast } from 'react-toastify';
 import { queryClient } from '../../utils/queryClient';
 import { useState } from 'react';
+import { useAuth } from '../../context/AuthContext';
 
 export default function CoursePricing({
   courseId,
@@ -43,8 +44,13 @@ export default function CoursePricing({
   const navigate = useNavigate();
   const [isAssign, setIsAssign] = useState(false);
   const { mutate } = useAddToCart();
+  const { isAuthenticate } = useAuth();
 
   async function handleFreeCourse() {
+    if (!isAuthenticate) {
+      toast.info('Please log in to your account before Enroll course.');
+      return;
+    }
     try {
       await userHttp.assignCourse({ authAxios, courseId });
       await queryClient.invalidateQueries({

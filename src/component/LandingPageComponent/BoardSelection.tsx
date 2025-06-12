@@ -12,10 +12,10 @@ export default function BoardSelection() {
   const [embla, setEmbla] = useState<Embla | null>(null);
 
   const { isLoading: categoryLoading, data } = useQuery({
-    queryKey: ['categories'],
-    queryFn: categoryHttp.getCategories,
+    queryKey: ['categories', 'board'],
+    queryFn: categoryHttp.getBoardSelectedCategories,
     // Adjust staleTime as needed; here we're caching for 10 minutes.
-    staleTime: 1000 * 60 * 30,
+    staleTime: Infinity,
   });
 
   const [activeTab, setActiveTab] = useState<string | null>(data && data?.length > 0 ? data[0].id : 'all');
@@ -36,6 +36,7 @@ export default function BoardSelection() {
   };
 
   async function handleGetCourses(slug: string) {
+    console.log('slug', slug);
     return await getCoursesByCategory({
       categorySlug: slug,
       filters: {
@@ -45,6 +46,10 @@ export default function BoardSelection() {
         price: undefined,
         level: undefined,
         featured: false,
+      },
+      paginate: {
+        limit: '15',
+        page: '1',
       },
     });
   }
@@ -69,7 +74,7 @@ export default function BoardSelection() {
             )}
         </Tabs.List>
         <div className="mt-8">
-          <Tabs.Panel value="all">{renderCarousel('all', '')}</Tabs.Panel>
+          {/* <Tabs.Panel value="all">{renderCarousel('all', '')}</Tabs.Panel> */}
 
           {data &&
             data.map((item, index) => (

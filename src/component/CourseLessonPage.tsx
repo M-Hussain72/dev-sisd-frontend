@@ -125,7 +125,7 @@ const CourseLessonPage = ({ sections, initialLectureId }: { sections: ContentIn[
             ))}
           </ol>
           <div className="w-full mb-4  max-w-[1100px]">
-            <div className=" lg:mb-3 mb-2  flex sm:flex-row flex-col-reverse justify-between sm:gap-6">
+            <div className=" lg:mb-3 sm:mt-0 mt-3  flex flex-row  justify-between  sm:gap-6">
               <h1 className=" text-resHeading font-semibold lg:text-[34px]"> {currentLecture.title}</h1>
               <div className=" sm:mt-0 mt-2 flex justify-end gap-6 items-center xl:mr-20 mr-4 ">
                 <button

@@ -7,6 +7,11 @@ export interface BlogsIn {
   poster: string;
 }
 
+export interface getBlogsIn {
+  pagination: { page: number; limit: number; totalPages: number; totalResults: number };
+  blogs: BlogsIn[];
+}
+
 export interface BlogDetailIn {
   id: string;
   slug: string;

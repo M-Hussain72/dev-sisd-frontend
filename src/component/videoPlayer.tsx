@@ -5,6 +5,7 @@ import Plyr, { APITypes, PlyrInstance } from 'plyr-react';
 import { Loader } from '@mantine/core';
 import useAuthAxios from '../hook/useAuthAxios';
 import { getAuthToken } from '../utils/auth';
+import { usePersistedLectureProgress } from '../hook/usePersistedLectureProgress';
 
 export default function VideoPlayer({
   url,
@@ -44,21 +45,27 @@ export default function VideoPlayer({
   };
 
   // 1) Preload & parse HLS manifest to discover quality levels
+
   useEffect(() => {
     let hls: Hls | null = null;
     let errorHandled = false;
     setErrorMsg(null);
 
-    if (url.endsWith('.m3u8') && accessToken) {
+    if (url.endsWith('.m3u8')) {
       if (Hls.isSupported()) {
         const dummy = document.createElement('video');
         dummy.crossOrigin = 'anonymous';
 
         hls = new Hls({
           xhrSetup: (xhr) => xhr.setRequestHeader('Authorization', `Bearer ${accessToken}`),
-          manifestLoadingMaxRetry: 0,
-          levelLoadingMaxRetry: 0,
-          fragLoadingMaxRetry: 0,
+          manifestLoadingMaxRetry: 3,
+          levelLoadingMaxRetry: 3,
+          fragLoadingMaxRetry: 5,
+
+          // Optional: Better timeout settings
+          fragLoadingTimeOut: 20000,
+          levelLoadingTimeOut: 15000,
+          manifestLoadingTimeOut: 15000,
         });
         hlsRef.current = hls;
 
@@ -92,6 +99,36 @@ export default function VideoPlayer({
         };
         hls.on(Events.MANIFEST_PARSED, onManifest);
 
+        hls.on(Hls.Events.ERROR, (event, data) => {
+          console.warn('HLS.js error event:', data);
+
+          if (data.fatal) {
+            const responseCode = (data.response as any)?.code;
+            const isAuthError = responseCode === 401;
+
+            if (isAuthError && !errorHandled) {
+              errorHandled = true;
+              hls?.off(Events.MANIFEST_PARSED, onManifest);
+              hls?.stopLoad();
+              hls?.detachMedia();
+              hls?.destroy();
+              setErrorMsg('Unauthorized: You do not have permission to view this video.');
+              return;
+            }
+            switch (data.type) {
+              case Hls.ErrorTypes.NETWORK_ERROR:
+                hls?.startLoad();
+                break;
+              case Hls.ErrorTypes.MEDIA_ERROR:
+                hls?.recoverMediaError();
+                break;
+              default:
+                hls?.destroy();
+                break;
+            }
+          }
+        });
+
         const onError = (_event: string, data: ErrorData) => {
           if (errorHandled || !hls) return;
           errorHandled = true;
@@ -114,7 +151,7 @@ export default function VideoPlayer({
 
           setErrorMsg(msg);
         };
-        hls.on(Events.ERROR, onError);
+        // hls.on(Events.ERROR, onError);
       }
     } else {
       // non-HLS fallback
@@ -148,9 +185,21 @@ export default function VideoPlayer({
         hlsRef.current.attachMedia(media);
       }
 
-      plyrInst.on('pause', handlePause);
-      plyrInst.on('ended', handleEnded);
+      // plyrInst.on('ended', handleEnded);
 
+      let earlyFired = false;
+      const onTimeUpdate = () => {
+        const current = plyrInst.currentTime;
+        const total = plyrInst.duration;
+        if (!earlyFired && total - current <= 5) {
+          earlyFired = true;
+          handleEnded();
+        }
+      };
+      if (!previewMode) {
+        plyrInst.on('pause', handlePause);
+        plyrInst.on('timeupdate', onTimeUpdate);
+      }
       if (media && startTime > 0) {
         const onLoaded = () => {
           media.currentTime = Math.min(startTime, media.duration);
@@ -162,13 +211,42 @@ export default function VideoPlayer({
       plyrInst.play();
       return () => {
         plyrInst.off('pause', handlePause);
-        plyrInst.off('ended', handleEnded);
+        // plyrInst.off('ended', handleEnded);
+        plyrInst.off('timeupdate', onTimeUpdate);
       };
     };
 
     const timer = setTimeout(init, 100);
     return () => clearTimeout(timer);
   }, [opts, id, startTime, url, errorMsg]);
+
+  // useEffect(() => {
+  //   // 1) When the page is about to unload…
+  //   const onBeforeUnload = (e: BeforeUnloadEvent) => {
+  //     // Fire-and-forget; you can’t await here
+  //     handlePause();
+  //     // Chrome requires you set returnValue to show the prompt,
+  //     // but if you don’t need a confirmation dialog you can omit it.
+  //     // e.returnValue = '';
+  //   };
+
+  //   // // 2) Also catch when the tab goes to background / user switches away
+  //   // const onVisibilityChange = () => {
+  //   //   if (document.visibilityState === 'hidden') {
+  //   //     handlePause();
+  //   //   }
+  //   // };
+
+  //   window.addEventListener('beforeunload', onBeforeUnload);
+  //   // document.addEventListener('visibilitychange', onVisibilityChange);
+
+  //   return () => {
+  //     window.removeEventListener('beforeunload', onBeforeUnload);
+  //     // document.removeEventListener('visibilitychange', onVisibilityChange);
+  //     // also fire one last time on React unmount
+  //     handlePause();
+  //   };
+  // }, [handlePause]);
 
   if (errorMsg) {
     return (

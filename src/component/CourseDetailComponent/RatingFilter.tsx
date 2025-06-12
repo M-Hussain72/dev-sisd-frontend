@@ -30,7 +30,7 @@ export default function RatingFilter({ selectedRating, setSelectedRating, isMobi
             />
             <span
               className={
-                ' text-themeBlue font-light sm:text-base text-sm ' +
+                ' cursor-pointer text-themeBlue font-light sm:text-base text-sm ' +
                 (selectedRating !== 0 && selectedRating !== value ? ' opacity-50 ' : ' opacity-1')
               }
             >

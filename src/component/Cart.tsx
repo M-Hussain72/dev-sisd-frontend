@@ -46,14 +46,15 @@ export default function Cart() {
             <h2 className=" text-themeBlack font-bold">{data.cart.items.length} Courses in Cart</h2>
             <div className="border-b-[1px] my-2 w-full border-gray-300"></div>
             <ul className=" space-y-4">
-              {data.cart.items.map((value, index) => (
-                <>
-                  <li key={value.course.id}>
-                    <CartCard product={value} type="cart" />
-                  </li>
-                  {data.cart.items.length != 1 && data.cart.items.length != index + 1 && <Divider />}
-                </>
-              ))}
+              {data.cart.items.length &&
+                data.cart.items.map((value, index) => (
+                  <>
+                    <li key={value.course?.id || index}>
+                      <CartCard product={value} type="cart" />
+                    </li>
+                    {data.cart.items.length != 1 && data.cart.items.length != index + 1 && <Divider />}
+                  </>
+                ))}
             </ul>
           </div>
         </div>

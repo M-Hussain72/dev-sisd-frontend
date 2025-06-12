@@ -3,8 +3,6 @@ import { getAuthToken, setAuthToken } from '../utils/auth.ts';
 import React from 'react';
 import authHttp, { loginPropType, registerPropType } from '../http/authHttp.ts';
 import userHttp, { userApiType } from '../http/userHttp.ts';
-import { toast } from 'react-toastify';
-import { useNavigate } from '@tanstack/react-router';
 
 export interface User {
   name: string;

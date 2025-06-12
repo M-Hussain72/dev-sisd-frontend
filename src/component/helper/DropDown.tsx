@@ -3,13 +3,14 @@ import { Link } from '@tanstack/react-router';
 
 import { useAuth } from '../../context/AuthContext';
 import { CategoryIn } from '../../interface/courseInterface';
+import { useState } from 'react';
 type props = {
   children: string | JSX.Element;
   items: CategoryIn[];
   isLoading: boolean;
 };
 
-function Courses({ children, items, isLoading }: props) {
+function Course({ children, items, isLoading }: props) {
   return (
     <Menu trigger="click-hover" closeDelay={200} position="bottom-start" shadow="md" radius={'md'} width={210}>
       <Menu.Target>{children}</Menu.Target>
@@ -48,6 +49,49 @@ function Courses({ children, items, isLoading }: props) {
         </Menu.Item> */}
       </Menu.Dropdown>
     </Menu>
+  );
+}
+
+function Courses({ items: data, setOpen }: { items: CategoryIn[]; setOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
+  const [hovered, setHovered] = useState<string | null>(null);
+
+  return (
+    <ul className="min-w-[240px] mt-2 bg-white border-gray-300 min-h-[200px] rounded-lg ">
+      {data.map((item, index) => (
+        <li className=" " key={item._id} onMouseEnter={() => setHovered(item._id)}>
+          <Link to={`/courses/category/${item.categorySlug}`} onClick={() => setOpen(false)}>
+            <div className=" flex  group justify-between items-center px-4 py-3 hover:bg-blue-50 cursor-pointer">
+              <span
+                className={' group-hover:text-themeBlue text-sm capitalize ' + (hovered === item._id && ' text-themeBlue')}
+              >
+                {item.categoryName}
+              </span>
+              {item.children.length > 0 && (
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 21"
+                  className={
+                    ' group-hover:fill-[#307EE1]  group-hover:block -rotate-90 ' +
+                    (hovered === item._id ? ' fill-themeBlue' : ' fill-gray-400')
+                  }
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M10 13L6 8.75972L6.71667 8L10 11.4982L13.2833 8.01767L14 8.77739L10 13Z" />
+                </svg>
+              )}
+            </div>
+          </Link>
+
+          {item.children.length > 0 && hovered === item._id && (
+            <div className={`absolute -top-[0.8px] border-y border-x border-gray-300   left-full  min-w-[240px] bg-white `}>
+              <Courses items={item.children} setOpen={setOpen} />
+            </div>
+          )}
+        </li>
+      ))}
+    </ul>
   );
 }
 

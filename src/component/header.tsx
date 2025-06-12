@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from '@tanstack/react-router';
 import logo from '../assets/logo.svg';
 import Button from './ui/Button.tsx';
-import DrawerComponent from './LandingPageComponent/DrawerComponent.tsx';
+import DrawerComponent from './LandingPageComponent/DrawerComponentHeader.tsx';
 import { Avatar, Loader } from '@mantine/core';
 import { useState } from 'react';
 import AutoCompleteSearchInput from './AutoCompleteSearchInput.tsx';
@@ -13,6 +13,7 @@ import CartIcon from './helper/CartIcon.tsx';
 import categoryHttp from '../http/categoriesHttp.ts';
 import SearchModal from './helper/SearchModal.tsx';
 import { useMediaQuery } from '@mantine/hooks';
+import DrawerComponentHeader from './LandingPageComponent/DrawerComponentHeader.tsx';
 
 const Category = [
   'design',
@@ -31,6 +32,7 @@ const Header = () => {
   const authAxios = createAuthAxios();
   const { pathname } = useLocation();
   const isMobile = useMediaQuery('(max-width: 40em)');
+  const [open, setOpen] = useState(false);
 
   const { isLoading } = useQuery({
     queryKey: ['user'],
@@ -56,8 +58,9 @@ const Header = () => {
               {/* DrawerComponent for mobile Screen  */}
               <div>
                 <div className=" mr-1 xs:mr-4 lg:hidden p-2   hover:bg-gray-100 rounded-full">
-                  <DrawerComponent>
-                    <div className=" mt-[45px] w-full min-w-[180px]">
+                  {data && data.length > 0 && (
+                    <DrawerComponentHeader data={data}>
+                      {/* <div className=" mt-[45px] w-full min-w-[180px]">
                       <ul className="    px-2 items-center space-y-4   w-full capitalize text-[#949697] text-[16px]  ">
                         <li>
                           <div
@@ -117,8 +120,9 @@ const Header = () => {
                           Contact us
                         </li>
                       </ul>
-                    </div>
-                  </DrawerComponent>
+                    </div> */}
+                    </DrawerComponentHeader>
+                  )}
                 </div>
               </div>
               <img
@@ -127,6 +131,31 @@ const Header = () => {
                 className="xs:w-[85px] w-[65px] h-full object-contain"
                 onClick={() => navigation({ to: '/' })}
               />
+
+              {!isMobile && (
+                <div
+                  onMouseEnter={() => setOpen(true)}
+                  onMouseLeave={() => setOpen(false)}
+                  className="lg:block hidden relative text-[#949697]"
+                >
+                  <div className=" ml-2 py-4 ">
+                    <button
+                      className={
+                        'px-4 py-2 ml-2 hover:text-themeBlue   hover:bg-blue-100 rounded ' +
+                        (open ? ' text-themeBlue ' : ' text-themeGray')
+                      }
+                    >
+                      Explore
+                    </button>
+                  </div>
+
+                  {open && data && (
+                    <div className=" absolute left-0  bg-white  border border-gray-300   min-w-[200px]">
+                      <DropDown.Courses items={data} setOpen={setOpen} />
+                    </div>
+                  )}
+                </div>
+              )}
 
               {/* search bar on header */}
 
@@ -140,8 +169,8 @@ const Header = () => {
             {/* when Event add then add gap-6 here blow  */}
             <div className="flex  ">
               {/* when Event add then change height id h-[345px] here blow  */}
-              <ul className=" lg:flex hidden ml-4 items-center  justify-evenly  w-[300px] capitalize text-[#949697] text-[16px]  ">
-                <DropDown.Courses isLoading={categoryLoading} items={data || []}>
+              <ul className=" lg:flex hidden ml-4 items-center  justify-evenly  w-[200px] capitalize text-[#949697] text-[16px]  ">
+                {/* <DropDown.Courses isLoading={categoryLoading} items={data || []}>
                   <li className=" flex group hover:text-[#307EE1] cursor-pointer">
                     Courses
                     <svg
@@ -155,7 +184,7 @@ const Header = () => {
                       <path d="M10 13L6 8.75972L6.71667 8L10 11.4982L13.2833 8.01767L14 8.77739L10 13Z" />
                     </svg>
                   </li>
-                </DropDown.Courses>
+                </DropDown.Courses> */}
 
                 <li className="hover:text-[#307EE1] cursor-pointer">
                   <Link to="/blogs">Blogs</Link>

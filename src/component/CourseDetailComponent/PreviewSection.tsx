@@ -34,6 +34,7 @@ export default function PreviewSection({
     <div className=" mt-4">
       <div className=" max-h-[340px] rounded-lg overflow-hidden">
         <VideoPlayer
+          key={videoId || ''}
           url={currentPlay.video}
           previewMode={true}
           setLectureProgress={() => undefined}

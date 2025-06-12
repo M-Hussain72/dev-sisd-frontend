@@ -20,6 +20,15 @@ export interface CourseCardIn {
   reviewId: string | null;
 }
 
+export interface getCoursesIn {
+  pagination: { page: number; limit: number; totalPages: number; totalResults: number };
+  courses: CourseCardIn[];
+  category?: {
+    id: string;
+    categoryName: string;
+  };
+}
+
 export interface SectionContentIn {
   _id: string;
   title: string;
@@ -39,7 +48,7 @@ export interface ContentIn {
 }
 
 export interface CourseIn {
-  id: string;
+  _id: string;
   slug: string;
   poster: string;
   title: string;
@@ -96,9 +105,13 @@ export interface LectureIn {
 }
 
 export interface CategoryIn {
+  _id: string;
+  children: CategoryIn[];
   onBoard: boolean;
   categoryName: string;
   categorySlug: string;
+  courseCount: number;
+  icon: string;
   id: string;
 }
 

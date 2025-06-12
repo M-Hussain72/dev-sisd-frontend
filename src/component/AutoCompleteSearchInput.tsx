@@ -75,7 +75,7 @@ export default function AutoCompleteSearchInput() {
       shadow="sm"
     >
       <Combobox.Target>
-        <div className=" max-w-[450px] w-full min-w-0 ">
+        <div className=" max-w-[630px] w-full min-w-0 ">
           <Input
             ref={inputRef}
             type="text"
@@ -91,7 +91,7 @@ export default function AutoCompleteSearchInput() {
                 boxShadow: 'none',
               },
             }}
-            className="  max-w-[450px] min-w-[150px] w-full focus:border-[#2B2B2B]"
+            className="  max-w-[630px] min-w-[150px] w-full focus:border-[#2B2B2B]"
             value={value}
             onChange={(event) => {
               handelChange(event);

@@ -9,13 +9,7 @@ export default function DrawerComponent({ children }: props) {
   const [opened, { close, toggle }] = useDisclosure();
   return (
     <>
-      <Burger
-        opened={opened}
-        color="black"
-        size="sm"
-        onClick={toggle}
-        aria-label="Toggle navigation"
-      />
+      <Burger opened={opened} color="black" size="sm" onClick={toggle} aria-label="Toggle navigation" />
       <Drawer
         position="left"
         size="mantine-breakpoint-sm"

@@ -3,20 +3,33 @@ import CourseDetailCard from './CourseDetailComponent/CourseDetailCard';
 import CourseDetailContainer from './CourseDetailComponent/CourseDetailContainer';
 import defaultImage from '../assets/defaultCourseImg.png';
 import { CourseIn } from '../interface/courseInterface';
+import PreviewModal from './CourseDetailComponent/PreviewModal';
+import { useState } from 'react';
 
 export default function CourseDetail({ ...course }: CourseIn) {
   const isSmallScreen = useMediaQuery('(min-width: 1024px)');
+
+  const [opened, setOpened] = useState(false);
+
+  function handlePreviewModal() {
+    setOpened(true);
+  }
 
   return (
     <div className=" flex lg:flex-nowrap flex-wrap-reverse   justify-between  gap-6 my-10 lg:mx-10 px-4 ">
       <CourseDetailContainer {...course} />
       {isSmallScreen ? (
         <div className="">
-          <CourseDetailCard courseId={course.id} {...course} />
+          <CourseDetailCard courseId={course._id} {...course} />
         </div>
       ) : (
         <div className=" max-w-[600px] mx-auto">
-          <div className=" after:w-full after:absolute after:left-0 after:top-0 relative after:text-[#fff]  after:h-full after:bg-gradient-to-t after:from-[#2d2f31d3]   ">
+          <PreviewModal preview={false} courseId={course._id} videoId={undefined} opened={opened} setOpened={setOpened} />
+
+          <div
+            className=" after:w-full after:absolute after:left-0 after:top-0 relative after:text-[#fff]  after:h-full after:bg-gradient-to-t after:from-[#2d2f31d3]   "
+            onClick={handlePreviewModal}
+          >
             <img
               src={course.poster ? course.poster : defaultImage}
               alt="name"

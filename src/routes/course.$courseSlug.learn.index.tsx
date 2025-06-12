@@ -5,6 +5,7 @@ import { Loader } from '@mantine/core';
 import { fetchCourse } from '../http/courseHttp';
 import { useQuery } from '@tanstack/react-query';
 import { z } from 'zod';
+import { RequireAuth } from '../component/helper/RequiredAuth';
 
 const SchemaSection = z.object({
   sectionId: z.string().optional(), // `search` is an optional string
@@ -55,8 +56,8 @@ function RouteComponent() {
   }
 
   return (
-    <>
+    <RequireAuth>
       <CourseDashboard {...data} />
-    </>
+    </RequireAuth>
   );
 }

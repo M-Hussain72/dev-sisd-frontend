@@ -30,7 +30,7 @@ export default function MyLearning() {
         <div className="  grid gap-4 grid-cols-1  min-[848px]:grid-cols-3  min-[1370px]:grid-cols-5  min-[1110px]:grid-cols-4  sm:grid-cols-2  ">
           {data.map((item) => (
             <CourseCard
-              key={item.course.id}
+              key={item.course?.id}
               {...item.course}
               onClick={() => navigate({ to: `/course/${item.course.slug}/learn` })}
               isPaid={true}
@@ -41,7 +41,7 @@ export default function MyLearning() {
           ))}
         </div>
       ) : (
-        <div className="w-full max-w-[600px] mx-auto text-center p-8  bg-white border-2 border-dashed border-gray-300 rounded-lg">
+        <div className="w-full max-w-[600px] mx-auto text-center  p-8 mt-[10%] bg-white border-2 border-dashed border-gray-300 rounded-lg">
           <p className="text-gray-500 ">No courses Buy at the moment!</p>
         </div>
       )}

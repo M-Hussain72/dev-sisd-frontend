@@ -4,13 +4,12 @@ import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import './index.css';
 import 'react-toastify/dist/ReactToastify.css';
 import AuthProvider, { useAuth } from './context/AuthContext';
-// import CartProvider from './context/CartContext';
 import PaymentProvider from './context/paymentContext';
 import useAuthAxios from './hook/useAuthAxios';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { ToastContainer } from 'react-toastify';
 
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+// import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import DefaultNotFound from './component/helper/DefaultNotFound';
 
 // Set up a Router instance
@@ -56,10 +55,11 @@ export default function App() {
 
       <ToastContainer
         position="bottom-right"
-        autoClose={5000} // Auto-close after 5 seconds (optional)
+        autoClose={4000}
         hideProgressBar={true}
-        newestOnTop={false}
+        newestOnTop={true}
         closeOnClick
+        limit={4}
       />
     </>
   );

@@ -98,10 +98,10 @@ export default function CartCard({
         </div>
         <div className=" flex items-end justify-between">
           <div className=" flex flex-wrap items-center text-themeGray">
-            {totalVideoDuration > 0 && (
+            {totalVideoDuration && totalVideoDuration > 0 && (
               <p className="pr-1 xs:text-sm text-xs">{formatTimeInHours(totalVideoDuration)} total </p>
             )}
-            {totalVideoDuration > 0 && <span className="text-lg font-semibold px-[1px]">•</span>}
+            {totalVideoDuration && totalVideoDuration > 0 && <span className="text-lg font-semibold px-[1px]">•</span>}
             <p className=" xs:text-sm text-xs">{videoCount + articleCount} lectures</p>
             <span className="text-lg font-semibold px-[1px]">•</span>
             <p className="xs:text-sm text-xs">{level}</p>

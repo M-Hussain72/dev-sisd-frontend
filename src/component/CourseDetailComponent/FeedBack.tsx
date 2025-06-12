@@ -1,37 +1,50 @@
 import FeedBackCard from './FeedBackCard';
-import reviewMan from '../../public/reviewMen.png';
-import { Modal, Rating } from '@mantine/core';
-import { useDisclosure, useMediaQuery } from '@mantine/hooks';
-import starIcon from '../assets/starIcon.svg';
-import { useState } from 'react';
-import DrawerComponent from '../LandingPageComponent/DrawerComponent';
+import { useDisclosure } from '@mantine/hooks';
 import FeedBackModal from './FeedBackaModal';
+import { useQuery } from '@tanstack/react-query';
+import reviewHttp from '../../http/reviewHttp';
 
-export default function FeedBack() {
+export default function FeedBack({ courseId }: { courseId: string }) {
   const [opened, { close, open }] = useDisclosure(false);
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['allReview', courseId],
+    queryFn: () => reviewHttp.getCourseReviews({ courseId, paginate: { page: '1', limit: '5' }, rating: null }),
+    refetchOnWindowFocus: false,
+    staleTime: Infinity,
+  });
 
   return (
     <>
-      <FeedBackModal opened={opened} close={close} />
+      <FeedBackModal opened={opened} close={close} courseId={courseId} />
       <h1 className="text-[28px] sm:text-[34px] font-semibold ">Feedback</h1>
-      <span className=" text-lg text-[#626465] mt-3">
-        {'4.0'} course rating <span className="text-3xl">.</span> {'24K'} rating & reviews
-      </span>
-      <ul className=" mt-12 space-y-6 ">
-        {[1, 2, 3, 4].map((review, index) => (
-          <FeedBackCard
-            key={index}
-            name="Daniel Harvey"
-            iat=" 6 day ago"
-            rating={4}
-            message="Buying this course to start my journey in UI/UX was the best decision i made. The lessons were easy to understand and I usually recommend this course to my friends who want to start their UI/UX journey. I am grateful to the instructors of this course!"
-            image={reviewMan}
-          />
-        ))}
+      {data && data.reviews?.length > 0 && (
+        <span className=" text-lg text-[#626465] mt-3">
+          {'4.0'} course rating <span className="text-3xl">.</span> {data?.pagination.totalResults || 0} rating & reviews
+        </span>
+      )}
+      <ul className=" mt-4 space-y-6 ">
+        {data && data.reviews?.length > 0 ? (
+          data.reviews.map((review, index) => (
+            <FeedBackCard
+              key={index}
+              name={review?.user?.name || ''}
+              iat={review?.created_at}
+              rating={review?.rating}
+              message={review?.comment}
+              image={review?.user?.profileImage || null}
+            />
+          ))
+        ) : (
+          <li className=" mb-10 text-lg text-themeGray6">
+            There’s not enough feedback for this course yet. Reviews will appear here once available!
+          </li>
+        )}
       </ul>
-      <button onClick={open} className=" text-themeBlue hover:underline font-medium mt-12">
-        Show All Reviews
-      </button>
+      {data && data.pagination?.totalPages > 1 && (
+        <button onClick={open} className=" text-themeBlue hover:underline font-medium mt-12">
+          Show All Reviews
+        </button>
+      )}
     </>
   );
 }

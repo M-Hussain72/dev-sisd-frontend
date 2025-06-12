@@ -78,7 +78,7 @@ export default function CourseDetailContainer({ ...course }: CourseIn) {
         <p className=" ml-2 cursor-default text-themeGray text-resLg">Last updated on</p>
       </div>
       <div className=" lg:hidden block my-6">
-        <CoursePricing {...course} courseId={course.id} />
+        <CoursePricing {...course} courseId={course._id} />
       </div>
 
       <div className=" mt-20">
@@ -117,7 +117,7 @@ export default function CourseDetailContainer({ ...course }: CourseIn) {
           {course.totalVideoDuration > 0 && <span className=" text-3xl  ml-1 mr-[2px]">•</span>}
           {course.totalVideoDuration > 0 && <p> {formatTimeInDays(course.totalVideoDuration)} total length</p>}
         </div>
-        <CourseContent content={course.content} courseId={course.id} />
+        <CourseContent content={course.content} courseId={course._id} />
       </div>
 
       <div className=" mt-20">
@@ -160,9 +160,7 @@ export default function CourseDetailContainer({ ...course }: CourseIn) {
         </Spoiler>
       </div>
 
-      <div className=" mt-20">
-        <FeedBack />
-      </div>
+      <div className=" mt-20">{course && <FeedBack courseId={course._id} />}</div>
     </div>
   );
 }

@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <footer className=" bg-[#FAFAFA]   shadow-[rgba(43,43,43,0.14)_0px_-7px_14px_0px] text-center lg:text-left">
       <div className="mx-6 xl:flex justify-between py-10 text-center md:text-left">
-        <div className=" grid-1 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 max-w-[1000px] ">
+        <div className=" grid-1 grid gap-4 md:grid-cols-2 lg:grid-cols-4 max-w-[1000px] ">
           <div className="">
             <h6 className="mb-6 flex justify-center font-semibold uppercase md:justify-start text-[#2B2B2B]">SISD</h6>
             {[
@@ -32,9 +32,7 @@ export default function Footer() {
           </div>
           {/* <!-- Useful links section --> */}
           <div className="">
-            <h6 className="mb-6 flex justify-center font-semibold uppercase md:justify-start text-[#2B2B2B]">
-              Popular Courses
-            </h6>
+            <h6 className="mb-6 flex justify-center font-semibold uppercase md:justify-start text-[#2B2B2B]">Legal</h6>
             {[
               { label: 'Help & Support', value: 'contact' },
               { label: 'Privacy Policy', value: 'privacy' },
@@ -50,21 +48,21 @@ export default function Footer() {
           {/* <!-- Contact section --> */}
           <div>
             <h6 className="mb-6 flex justify-center font-semibold uppercase md:justify-start">Contact Us</h6>
-            <p className="mb-4 text-black/80 flex items-center justify-center md:justify-start">
+            <p className="mb-4 text-[#949697] flex items-center justify-center md:justify-start">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="mr-3 h-5 w-5">
                 <path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
                 <path d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
               </svg>
               New York, NY 10012, US
             </p>
-            <p className="mb-4 text-black/80 flex items-center justify-center md:justify-start">
+            <p className="mb-4 text-[#949697] flex items-center justify-center md:justify-start">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="mr-3 h-5 w-5">
                 <path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z" />
                 <path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z" />
               </svg>
               info@example.com
             </p>
-            <p className="mb-4 text-black/80 flex items-center justify-center md:justify-start">
+            <p className="mb-4 text-[#949697] flex items-center justify-center md:justify-start">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="mr-3 h-5 w-5">
                 <path
                   fillRule="evenodd"
@@ -74,7 +72,7 @@ export default function Footer() {
               </svg>
               + 01 234 567 88
             </p>
-            <p className="flex text-black/80 items-center justify-center md:justify-start">
+            <p className="flex text-[#949697] items-center justify-center md:justify-start">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="mr-3 h-5 w-5">
                 <path
                   fillRule="evenodd"

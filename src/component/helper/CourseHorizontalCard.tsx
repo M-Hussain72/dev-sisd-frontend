@@ -35,7 +35,7 @@ export default function CourseHorizontalCard({
             e.currentTarget.onerror = null;
             e.currentTarget.src = defaultImage;
           }}
-          className="  w-[207px] h-[145px] hover:scale-125 transition-all duration-500 cursor-pointer"
+          className="  w-[207px] max-h-[145px] min-w-[60px] min-h-[60px] hover:scale-125 transition-all duration-500 cursor-pointer"
         />
       </div>
       <div className="px-4 flex-1 mt-2">
