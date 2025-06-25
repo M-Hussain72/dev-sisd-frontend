@@ -16,15 +16,16 @@ export default function CoursesPage() {
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['search', search, 1],
-    queryFn: async () =>
-      await getCoursesBySearch({
+    queryFn: async () => {
+      return await getCoursesBySearch({
         search,
         filters: selectedFilters,
         paginate: {
           limit: '10',
           page: '1',
         },
-      }),
+      });
+    },
     refetchOnWindowFocus: false,
     retry: false,
   });

@@ -1,11 +1,20 @@
 import { Link } from '@tanstack/react-router';
 import Button from './ui/Button';
 import InputFelid from './ui/InputFelid';
+import categoriesHttp from '../http/categoriesHttp';
+import { useQuery } from '@tanstack/react-query';
 
 export default function Footer() {
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['diverseCourse'],
+    queryFn: categoriesHttp.getDiverseCourseCategory,
+    refetchOnWindowFocus: false,
+    staleTime: Infinity,
+  });
+
   return (
     <footer className=" bg-[#FAFAFA]   shadow-[rgba(43,43,43,0.14)_0px_-7px_14px_0px] text-center lg:text-left">
-      <div className="mx-6 xl:flex justify-between py-10 text-center md:text-left">
+      <div className="px-4 sm:px-8 xl:flex justify-between py-10 text-center md:text-left">
         <div className=" grid-1 grid gap-4 md:grid-cols-2 lg:grid-cols-4 max-w-[1000px] ">
           <div className="">
             <h6 className="mb-6 flex justify-center font-semibold uppercase md:justify-start text-[#2B2B2B]">SISD</h6>
@@ -15,21 +24,25 @@ export default function Footer() {
               { label: 'Blogs', value: 'blogs' },
             ].map((item) => (
               <p key={item.value} className="mb-4 capitalize">
-                <Link to={`/${item.value}`} className=" text-[#949697]">
+                <Link to={`/${item.value}`} className=" text-[#949697]  hover:text-themeBlue">
                   {item.label}
                 </Link>
               </p>
             ))}
           </div>
-          {/* <!-- Products section --> */}
-          <div className="">
-            <h6 className="mb-6 flex justify-center font-semibold uppercase md:justify-start text-[#2B2B2B]">Quick Links</h6>
-            {['Courses by Subject', 'Featured Courses', 'All Courses', 'FAQs'].map((item, index) => (
-              <p key={index} className="mb-6 capitalize">
-                <Link className=" text-[#949697]">{item}</Link>
-              </p>
-            ))}
-          </div>
+
+          {data && (
+            <div className="">
+              <h6 className="mb-6 flex justify-center font-semibold uppercase md:justify-start text-[#2B2B2B]">Courses</h6>
+              {data.slice(0, 5).map((item, index) => (
+                <p key={index} className="mb-6 capitalize">
+                  <Link to={`/courses/category/${item.categorySlug}`} className=" text-[#949697] hover:text-themeBlue">
+                    {item.categoryName}
+                  </Link>
+                </p>
+              ))}
+            </div>
+          )}
           {/* <!-- Useful links section --> */}
           <div className="">
             <h6 className="mb-6 flex justify-center font-semibold uppercase md:justify-start text-[#2B2B2B]">Legal</h6>
@@ -39,7 +52,7 @@ export default function Footer() {
               { label: 'Terms of Use', value: 'terms' },
             ].map((item, index) => (
               <p key={index} className="mb-4 capitalize">
-                <Link to={`/${item.value}`} className=" text-[#949697]">
+                <Link to={`/${item.value}`} className=" text-[#949697]  hover:text-themeBlue">
                   {item.label}
                 </Link>
               </p>

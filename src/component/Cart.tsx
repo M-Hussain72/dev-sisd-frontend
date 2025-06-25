@@ -49,7 +49,7 @@ export default function Cart() {
               {data.cart.items.length &&
                 data.cart.items.map((value, index) => (
                   <>
-                    <li key={value.course?.id || index}>
+                    <li key={value.course?._id || index}>
                       <CartCard product={value} type="cart" />
                     </li>
                     {data.cart.items.length != 1 && data.cart.items.length != index + 1 && <Divider />}

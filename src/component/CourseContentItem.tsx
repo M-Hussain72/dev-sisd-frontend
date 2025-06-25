@@ -11,7 +11,7 @@ export interface ContentItemType {
   _id: string;
   isCompleted: boolean;
   title: string;
-  type: 'article' | 'video' | 'assessment';
+  type: 'article' | 'video' | 'assessment' | 'assignment';
   duration: number;
   isSideBar?: boolean;
   purchased: boolean;

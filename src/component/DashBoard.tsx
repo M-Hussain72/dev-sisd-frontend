@@ -41,9 +41,9 @@ export default function DashBoard() {
         <div className=" my-12">
           <Tabs.Panel value="home">
             {/* <RecentViewCourses /> */}
-            <CourseSlider heading="Featured Courses" />
+            <CourseSlider featured={true} search="" heading="Featured Courses" />
             <DiverseCoursesStn />
-            <CourseSlider heading="Get Started with these Free Courses" />
+            <CourseSlider featured={false} search="free" heading="Get Started with these Free Courses" />
             <BoardSelection />
           </Tabs.Panel>
           <Tabs.Panel value="my-learning">

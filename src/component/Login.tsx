@@ -87,7 +87,9 @@ export default function Login() {
               </span>
             </p>
             <p className="xs:text-sm text-xs font-light text-themeGray cursor-pointer hover:text-blue-700">
-              <Link to="/login/forgotpassword">Forgot password?</Link>
+              <Link to="/login/forgotpassword" search={{ source: 'customer' }}>
+                Forgot password?
+              </Link>
             </p>
           </div>
           <div className="relative flex items-center justify-center mt-6">

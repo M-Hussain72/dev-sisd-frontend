@@ -3,14 +3,13 @@ import CourseLessonPage from '../component/CourseLessonPage';
 import { fetchLecture, setLectureProgress } from '../http/courseHttp';
 import VideoPlayer from '../component/videoPlayer';
 import QuizResult from '../component/QuizResult';
-import DocumentReading from '../public/document';
+import DocumentReading from '../component/document';
 import { Loader } from '@mantine/core';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import NotFound from '../component/helper/NotFound';
 import { useLectureNav } from '../context/LectureNavigationContext';
-import { useEffect } from 'react';
 import { CourseIn, LectureProgressPayload } from '../interface/courseInterface';
-import { queryClient } from '../utils/queryClient';
+import AssignmentPage from '../component/AssignmentPage';
 
 export const Route = createFileRoute('/course/$courseSlug/learn/$sectionId/lecture/$lectureId/')({
   component: RouteComponent,
@@ -39,6 +38,7 @@ function RouteComponent() {
       completed,
       userAnswers,
       lectureType,
+      assignment,
     }: LectureProgressPayload) => {
       await setLectureProgress({
         courseSlug,
@@ -48,13 +48,14 @@ function RouteComponent() {
         completed,
         userAnswers,
         lectureType,
+        assignment,
       });
     },
   });
 
   if (isLoading) {
     return (
-      <div className="  aspect-video max-h-[580px] bg-white border-[1px] rounded-xl flex items-center justify-center">
+      <div className=" w-full max-w-[1025px] aspect-video max-h-[580px] bg-white border-[1px] rounded-xl flex items-center justify-center">
         <Loader size="xl" />
       </div>
     );
@@ -75,6 +76,7 @@ function RouteComponent() {
       lastViewTime: lastViewTime,
       completed: completed,
       userAnswers: null,
+      assignment: null,
       lectureType: data?.lecture?.type || 'video',
     });
     if (completed) {
@@ -85,7 +87,7 @@ function RouteComponent() {
   }
   return (
     <>
-      <div className="w-full max-w-[1025px] mt-2 md:max-h-[580px] h-auto overflow-scroll  border-[1px] border-[#EEEEEE]  rounded-xl ">
+      <div className="w-full  max-w-[1025px] mt-2 md:max-h-[580px] h-auto shadow-inner shadow-black/20 overflow-scroll  border-[1px] border-[#EEEEEE] bg-white  rounded-xl ">
         {data?.lecture?.type === 'video' ? (
           <div className=" max-h-[580px]  ">
             <VideoPlayer
@@ -98,16 +100,29 @@ function RouteComponent() {
             />
           </div>
         ) : data?.lecture?.type === 'assessment' ? (
-          <div className="p-2">
+          <div className="p-5">
             <QuizResult score={data.progress?.quizScore}></QuizResult>
           </div>
         ) : data?.lecture?.type === 'article' ? (
-          <div className=" p-3  shadow-inner shadow-black/20 rounded-xl">
+          <div className=" p-3 px-4">
             {' '}
             <DocumentReading
               article={data?.lecture?.article || ' Oops Empty File'}
               isSeen={data?.progress?.completed}
               mutate={mutate}
+            />
+          </div>
+        ) : data?.lecture?.type === 'assignment' ? (
+          <div className="p-5  relative ">
+            <AssignmentPage
+              assignment={{
+                title: data?.lecture?.title,
+                startedAt: data?.progress?.assignment?.startedAt || new Date(),
+                ...data?.lecture?.assignment,
+              }}
+              timeStarted={!!data?.progress?.assignment?.startedAt}
+              mutate={mutate}
+              resSubmit={!!data?.progress?.assignment?.fileUrl}
             />
           </div>
         ) : (

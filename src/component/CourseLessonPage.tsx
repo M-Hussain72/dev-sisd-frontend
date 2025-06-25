@@ -25,7 +25,7 @@ const CourseLessonPage = ({ sections, initialLectureId }: { sections: ContentIn[
     });
   }, [selectedLectureId]);
 
-  function handleLectureChange(id: string, type: 'video' | 'assessment' | 'article') {
+  function handleLectureChange(id: string, type: 'video' | 'assessment' | 'article' | 'assignment') {
     setSelectedLectureId(id);
     if (type === 'assessment') {
       navigate({ to: `/course/${courseSlug}/learn/${sectionId}/quiz/${id}` });
@@ -89,16 +89,21 @@ const CourseLessonPage = ({ sections, initialLectureId }: { sections: ContentIn[
           to={`/course/${courseSlug}/learn`}
           search={{ sectionId: currentSection._id }}
           replace={true}
-          className=" flex  items-center"
+          className=" flex  items-center sm::mt-0 mt-2"
         >
-          <svg width="43" height="17" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            className=" sm:w-[43px] sm:h-[17px] w-[33px] h-[12px]"
+            viewBox="0 0 14 10"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path
               d="M1 5L0.646447 4.64645L0.292893 5L0.646447 5.35355L1 5ZM13 5.5C13.2761 5.5 13.5 5.27614 13.5 5C13.5 4.72386 13.2761 4.5 13 4.5V5.5ZM4.64645 0.646447L0.646447 4.64645L1.35355 5.35355L5.35355 1.35355L4.64645 0.646447ZM0.646447 5.35355L4.64645 9.35355L5.35355 8.64645L1.35355 4.64645L0.646447 5.35355ZM1 5.5H13V4.5H1V5.5Z"
               fill="#222222"
             />
           </svg>
 
-          <h1 className=" text-xl font-medium text-themeBlack">{currentSection.sectionTitle}</h1>
+          <h1 className=" md:text-xl sm:text-lg text-sm font-medium text-themeBlack">{currentSection.sectionTitle}</h1>
         </Link>
         <div className=" flex lg:flex-row flex-col-reverse sm:gap-6  mt-4">
           <ol className=" flex-1  min-w-[200px] lg:max-h-[600px] lg:overflow-scroll w-full  py-[24px] pr-1 lg:border-r-[2px] lg:border-y-[2px] lg:border-l-0  border-[1px] rounded-xl border-[#eeeeee] lg:rounded-l-none  lg:rounded-r-2xl shadow-sm ">
@@ -125,9 +130,16 @@ const CourseLessonPage = ({ sections, initialLectureId }: { sections: ContentIn[
             ))}
           </ol>
           <div className="w-full mb-4  max-w-[1100px]">
-            <div className=" lg:mb-3 sm:mt-0 mt-3  flex flex-row  justify-between  sm:gap-6">
-              <h1 className=" text-resHeading font-semibold lg:text-[34px]"> {currentLecture.title}</h1>
-              <div className=" sm:mt-0 mt-2 flex justify-end gap-6 items-center xl:mr-20 mr-4 ">
+            <div className=" lg:mb-3 sm:mt-0 mt-3 ml-1  flex flex-row  justify-between  sm:gap-6">
+              <h1 className=" min-[400px]:text-resHeading font-semibold lg:text-[34px]">
+                {currentLecture.type === 'assessment'
+                  ? 'Quiz: '
+                  : currentLecture.type === 'assignment'
+                    ? 'Assignment: '
+                    : ''}
+                {currentLecture.title}
+              </h1>
+              <div className=" sm:text-base text-sm sm:mt-0 mt-2 flex justify-end sm:gap-6 gap-4 items-center xl:mr-20 mr-4 ">
                 <button
                   className=" group text-themeBlue hover:text-blue-600 font-medium flex items-center "
                   onClick={handlePrevLecture}
@@ -142,13 +154,13 @@ const CourseLessonPage = ({ sections, initialLectureId }: { sections: ContentIn[
                   >
                     <path d="M4.95049 0L6 0.954L2.09901 4.5L6 8.046L4.95049 9L0 4.5L4.95049 0Z" />
                   </svg>
-                  <span className=" ml-3">Previous</span>
+                  <span className=" sm:ml-3 ml-[6px]">Previous</span>
                 </button>
                 <button
                   className=" group text-themeBlue font-medium flex items-center hover:text-blue-600 "
                   onClick={handleForwardLecture}
                 >
-                  <span className=" mr-3">Next</span>
+                  <span className=" sm:mr-3 mr-[6px]">Next</span>
                   <svg
                     width="6"
                     height="9"

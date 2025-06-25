@@ -19,16 +19,6 @@ export default function CarouselSlide({
   const { isLoading, data } = useQuery({
     queryKey: ['carousel/category', slug],
     queryFn: () => handleGetCourses(),
-    // getCoursesByCategory({
-    //   categorySlug: slug,
-    //   filters: {
-    //     rating: undefined,
-    //     totalDuration: undefined,
-    //     language: undefined,
-    //     price: undefined,
-    //     level: undefined,
-    //   },
-    // }),
     refetchOnWindowFocus: false,
     retry: 2,
     // Adjust staleTime as needed; here we're caching for 10 minutes.

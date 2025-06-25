@@ -29,6 +29,7 @@ export default function DocumentReading({
         userAnswers: null,
         authAxios,
         lastViewTime: null,
+        assignment: null,
         completed: true,
       });
       return;

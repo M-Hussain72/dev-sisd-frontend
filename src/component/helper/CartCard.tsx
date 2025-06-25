@@ -6,7 +6,7 @@ import { useRemoveFromCart } from '../../hook/useRemoveFromCart';
 
 export default function CartCard({
   product: {
-    course: { totalVideoDuration, videoCount, articleCount, author, poster, price, id, title, rating, level, noOfReviews },
+    course: { totalVideoDuration, videoCount, articleCount, author, poster, price, _id, title, rating, level, noOfReviews },
   },
   type,
 }: {
@@ -110,7 +110,7 @@ export default function CartCard({
             <button
               className=" text-indigo-800 font-medium"
               onClick={() => {
-                mutate(id);
+                mutate(_id);
               }}
               disabled={isPending}
             >

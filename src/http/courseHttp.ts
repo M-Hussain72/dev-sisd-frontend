@@ -153,6 +153,7 @@ async function setLectureProgress({
   userAnswers,
   lectureType,
   completed,
+  assignment,
 }: LectureProgressPayload) {
   try {
     const requestData = {
@@ -161,12 +162,48 @@ async function setLectureProgress({
       lectureId,
       ...(lastViewTime ? { last_watched_second: lastViewTime } : {}),
       ...(userAnswers ? { userAnswers } : {}),
+      ...(assignment
+        ? { assignment: { startedAt: assignment.startedAt, ...(assignment.fileUrl ? { fileUrl: assignment.fileUrl } : {}) } }
+        : {}),
     };
 
     const res = await authAxios.post(`${config.BASE_URL}/v1/user/${courseSlug}/${lectureId}`, requestData);
     return res.data;
   } catch (error: any) {
     const err = new Error(' Lecture Not Found');
+    throw err;
+  }
+}
+
+async function uploadAssignment({
+  file,
+  courseSlug,
+  lectureId,
+  authAxios,
+}: {
+  file: File;
+  courseSlug: string;
+  lectureId: string;
+  authAxios: AxiosInstance;
+}) {
+  try {
+    const fileName = file.name;
+    const res = await authAxios.post(`${config.BASE_URL}/v1/file/upload/user-assignment/url`, {
+      courseSlug,
+      lectureId,
+      fileName,
+      contentType: file.type,
+    });
+    try {
+      await axios.put(res.data?.putUrl, file);
+      return { key: res.data?.path };
+    } catch (error) {
+      const err = new Error(' File Not Upload!');
+      throw err;
+    }
+    // return res;
+  } catch (error) {
+    const err = new Error(' File Uploading issue!');
     throw err;
   }
 }
@@ -181,4 +218,5 @@ export {
   getUserLearningCourses,
   getCompleteCourse,
   getCoursesBySuggestion,
+  uploadAssignment,
 };

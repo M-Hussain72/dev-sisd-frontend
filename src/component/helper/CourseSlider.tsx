@@ -7,16 +7,18 @@ import { getCoursesBySearch } from '../../http/courseHttp';
 
 interface prop {
   heading: string;
+  search: string;
+  featured: boolean | undefined;
 }
 
-const CourseSlider = ({ heading }: prop) => {
+const CourseSlider = ({ heading, search, featured }: prop) => {
   const [embla, setEmbla] = useState<Embla | null>(null);
 
   async function handleCourse() {
     return await getCoursesBySearch({
-      search: '',
+      search: search,
       filters: {
-        featured: true,
+        featured: featured,
         rating: undefined,
         totalDuration: undefined,
         language: undefined,
@@ -33,7 +35,7 @@ const CourseSlider = ({ heading }: prop) => {
     <div className=" mb-20">
       <ControlCarousel heading={heading} embla={embla} />
       <div className=" mt-12">
-        <CarouselSlide setEmbla={setEmbla} handleGetCourses={handleCourse} slug="featured" />
+        <CarouselSlide setEmbla={setEmbla} handleGetCourses={handleCourse} slug={search} />
       </div>
     </div>
   );

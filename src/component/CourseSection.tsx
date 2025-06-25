@@ -3,7 +3,7 @@ import { useState } from 'react';
 interface SectionType {
   id: string;
   value: string | React.ReactNode;
-  type: 'video' | 'article' | 'assessment';
+  type: 'video' | 'article' | 'assessment' | 'assignment';
 }
 
 export default ({
@@ -14,7 +14,7 @@ export default ({
   section: SectionType;
   selectedSection: string;
 
-  onChange: (id: string, type: 'video' | 'assessment' | 'article') => void;
+  onChange: (id: string, type: 'video' | 'assessment' | 'article' | 'assignment') => void;
 }) => {
   return (
     <li

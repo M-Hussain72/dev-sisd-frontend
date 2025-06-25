@@ -35,7 +35,7 @@ export default function LandingPage() {
   return (
     <>
       <HeroSection />
-      <CourseSlider heading="Featured Courses" />
+      <CourseSlider featured={true} search="" heading="Featured Courses" />
       <KeyFeaturedSection />
       <BoardSelection />
       <DiverseCoursesStn />
