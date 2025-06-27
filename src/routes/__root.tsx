@@ -22,12 +22,12 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 function RootComponent() {
   return (
     <MantineProvider>
-      <main className="flex flex-col min-h-screen max-w-[1440px] bg-[#fafafa] w-full mx-auto">
+      <main className="flex flex-col min-h-screen  bg-[#fafafa] ">
         <Header />
         <ScrollToTop />
 
         {/* this will expand to fill any extra space */}
-        <div className="flex-1">
+        <div className="flex-1 max-w-[1440px]  w-full mx-auto">
           <Outlet />
         </div>
 

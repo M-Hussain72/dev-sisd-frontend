@@ -136,13 +136,13 @@ const Header = () => {
                 <div
                   onMouseEnter={() => setOpen(true)}
                   onMouseLeave={() => setOpen(false)}
-                  className="lg:block hidden relative text-[#949697]"
+                  className="lg:block hidden relative text-[#565858]"
                 >
                   <div className=" ml-2 py-4 ">
                     <button
                       className={
                         'px-4 py-2 ml-2 hover:text-themeBlue   hover:bg-blue-100 rounded ' +
-                        (open ? ' text-themeBlue ' : ' text-themeGray')
+                        (open ? ' text-themeBlue ' : ' text-[#565858]')
                       }
                     >
                       Explore
@@ -169,7 +169,7 @@ const Header = () => {
             {/* when Event add then add gap-6 here blow  */}
             <div className="flex  ">
               {/* when Event add then change height id h-[345px] here blow  */}
-              <ul className=" lg:flex hidden ml-4 items-center  justify-evenly  w-[200px] capitalize text-[#949697] text-[16px]  ">
+              <ul className=" lg:flex hidden ml-4 items-center  justify-evenly  w-[200px] capitalize text-[#565858] text-[16px]  ">
                 {/* <DropDown.Courses isLoading={categoryLoading} items={data || []}>
                   <li className=" flex group hover:text-[#307EE1] cursor-pointer">
                     Courses
@@ -186,11 +186,11 @@ const Header = () => {
                   </li>
                 </DropDown.Courses> */}
 
-                <li className="hover:text-[#307EE1] cursor-pointer">
+                <li className="px-4 py-2 hover:text-themeBlue   hover:bg-blue-100 rounded cursor-pointer">
                   <Link to="/blogs">Blogs</Link>
                 </li>
                 {/* <li className="hover:text-[#307EE1] cursor-pointer">Events</li> */}
-                <li className="hover:text-[#307EE1] cursor-pointer">
+                <li className="px-4 py-2 hover:text-themeBlue   hover:bg-blue-100 rounded cursor-pointer">
                   <Link to="/contact">Contact us</Link>
                 </li>
               </ul>

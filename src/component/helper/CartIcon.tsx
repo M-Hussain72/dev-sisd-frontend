@@ -6,12 +6,12 @@ export default function CartIcon() {
 
   return (
     <Link to="/cart">
-      <div className=" relative ">
+      <div className=" group relative hover:bg-blue-100 px-2 py-2 rounded ">
         {/* Shopping Cart Icon */}
         <svg
           width="24"
           height="24"
-          className=" fill-[#949697] hover:fill-[#307EE1]"
+          className=" fill-[#565858] group-hover:fill-[#307EE1] "
           viewBox="0 0 32 32"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -24,7 +24,7 @@ export default function CartIcon() {
           </g>
         </svg>
         {data && data.cart?.items.length > 0 && (
-          <label className=" absolute -top-[10px] -right-[10px] bg-themeBlue text-[10px] py-[2px] px-[7px] rounded-full text-white font-semibold ">
+          <label className=" absolute  -top-[1px] -right-[3px] bg-themeBlue text-[10px] py-[2px] px-[7px] rounded-full text-white font-semibold ">
             {data.cart.items.length}
           </label>
         )}

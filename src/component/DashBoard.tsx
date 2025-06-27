@@ -32,7 +32,7 @@ export default function DashBoard() {
             <Tabs.Tab
               key={item}
               value={item}
-              className={`md:text-xl text-md capitalize ${tab === item ? 'text-blue-500' : 'text-[#949697] '}`}
+              className={`md:text-xl text-md capitalize ${(tab || 'home') === item ? 'text-blue-500' : 'text-[#949697] '}`}
             >
               {item}
             </Tabs.Tab>
@@ -40,18 +40,18 @@ export default function DashBoard() {
         </Tabs.List>
         <div className=" my-12">
           <Tabs.Panel value="home">
-            {/* <RecentViewCourses /> */}
-            <CourseSlider featured={true} search="" heading="Featured Courses" />
-            <DiverseCoursesStn />
-            <CourseSlider featured={false} search="free" heading="Get Started with these Free Courses" />
-            <BoardSelection />
+            {(tab || 'home') === 'home' && (
+              <>
+                {/* <RecentViewCourses /> */}
+                <CourseSlider featured search="" heading="Featured Courses" />
+                <DiverseCoursesStn />
+                <CourseSlider featured={false} search="free" heading="Free Courses" />
+                <BoardSelection />
+              </>
+            )}
           </Tabs.Panel>
-          <Tabs.Panel value="my-learning">
-            <MyLearning />
-          </Tabs.Panel>
-          <Tabs.Panel value="completed">
-            <CompletedCourse />
-          </Tabs.Panel>
+          <Tabs.Panel value="my-learning">{tab === 'my-learning' && <MyLearning />}</Tabs.Panel>
+          <Tabs.Panel value="completed">{tab === 'completed' && <CompletedCourse />}</Tabs.Panel>
         </div>
       </Tabs>
     </div>

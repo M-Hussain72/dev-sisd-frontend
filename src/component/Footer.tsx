@@ -14,8 +14,8 @@ export default function Footer() {
 
   return (
     <footer className=" bg-[#FAFAFA]   shadow-[rgba(43,43,43,0.14)_0px_-7px_14px_0px] text-center lg:text-left">
-      <div className="px-4 sm:px-8 xl:flex justify-between py-10 text-center md:text-left">
-        <div className=" grid-1 grid gap-4 md:grid-cols-2 lg:grid-cols-4 max-w-[1000px] ">
+      <div className="px-4 sm:px-8 xl:flex  gap-4 justify-evenly py-10 text-center md:text-left">
+        <div className=" flex-1 grid-1 grid gap-4 md:grid-cols-2 lg:grid-cols-4  ">
           <div className="">
             <h6 className="mb-6 flex justify-center font-semibold uppercase md:justify-start text-[#2B2B2B]">SISD</h6>
             {[
