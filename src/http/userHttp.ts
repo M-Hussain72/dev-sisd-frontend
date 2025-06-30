@@ -33,8 +33,8 @@ async function updateUser({
   try {
     const res = await authAxios.put(`${config.BASE_URL}/v1/user/profile`, {
       email,
-      phoneNo,
-      profileImage,
+      ...(phoneNo ? { phoneNo: phoneNo } : {}),
+      ...(profileImage ? { profileImage: profileImage } : {}),
       name,
     });
     return res;

@@ -13,7 +13,7 @@ export default function FeedBackCard({ image, name, rating, iat, message }: Feed
   console.log(iat);
   console.log(moment(iat).fromNow());
   return (
-    <div className=" w-full  p-4 border-[1px] border-[#EEEEEE] rounded-2xl">
+    <div className=" w-full  p-4 border-[1px] border-[#EEEEEE] shadow rounded-2xl">
       <div className="flex gap-3">
         <Avatar src={image ? image : null} size={'lg'} color="white" className="bg-[#626465]" alt={name}>
           {name[0]}
