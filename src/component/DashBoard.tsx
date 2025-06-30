@@ -9,7 +9,6 @@ import { useNavigate, useSearch } from '@tanstack/react-router';
 import CompletedCourse from './CompletedCourse';
 
 export default function DashBoard() {
-  // const [activeTab, setActiveTab] = useState<string | null>('home');
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -19,10 +18,6 @@ export default function DashBoard() {
   };
   // Retrieve active tab from URL; default to 'home' if not set.
 
-  // Update URL when tab changes.
-  //  const handleTabChange = (value: string|null) => {
-  //    setSearchParams({ tab: value||'home' });
-  //  };
   return (
     <div>
       <h1 className=" text-[42px] font-semibold mt-5 capitalize"> Welcome Back, {user?.name}! </h1>
