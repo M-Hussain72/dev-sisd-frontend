@@ -47,7 +47,15 @@ export default function Profile() {
       setSubmitting(false);
       return;
     }
-    setTimeout(() => {
+    setTimeout(async () => {
+      if (user?.profileImage) {
+        if (user?.profileImage != values.profileImage) {
+          await userHttp.deleteImage({
+            url: user?.profileImage,
+            authAxios,
+          });
+        }
+      }
       mutate({ ...values, authAxios: authAxios });
     }, 400);
     console.log(values);
@@ -68,7 +76,8 @@ export default function Profile() {
                 },
               })
             }
-            initialImage={values.profileImage}
+            initialImage={user?.profileImage}
+            currentImage={values.profileImage}
           />
           <div className=" mt-10">
             <InputFelid

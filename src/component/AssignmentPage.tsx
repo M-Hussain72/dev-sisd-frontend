@@ -17,6 +17,9 @@ export default function AssignmentPage({
     startedAt: Date;
     submitWithinDays: number;
     fileUrl: string;
+    score: number | undefined;
+    feedback: string | undefined;
+    isFeedbackDone: boolean;
   };
   timeStarted: boolean;
   resSubmit: boolean;

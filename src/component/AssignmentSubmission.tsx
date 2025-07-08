@@ -19,6 +19,9 @@ export default function AssignmentSubmission({
     startedAt: Date;
     submitWithinDays: number;
     fileUrl: string;
+    score: number | undefined;
+    feedback: string | undefined;
+    isFeedbackDone: boolean;
   };
   resSubmit: boolean;
   mutate: (
@@ -90,9 +93,27 @@ export default function AssignmentSubmission({
           )}
 
           {status === 'expired' && (
-            <p className="text-red-600 font-semibold mt-8">
-              ❌ Submission closed. Deadline was: {deadline.toLocaleString()}
-            </p>
+            <div className="max-w-2xl mx-auto mt-6  p-6 bg-white shadow-md rounded-lg border border-gray-200">
+              <div className=" items-center w-fit mx-auto space-x-3 text-center">
+                <svg
+                  className=" h-28 w-full fill-red-400 "
+                  data-name="Layer 1"
+                  id="Layer_1"
+                  viewBox="0 0 32 32"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title />
+                  <path d="M27.37,2H14.05a8.07,8.07,0,0,1,2.77,6.1,7.91,7.91,0,0,1-.63,3.12h7.48a.94.94,0,1,1,0,1.87H15.1c-.16.2-.34.4-.52.59a8.12,8.12,0,0,1-5.85,2.51,2.17,2.17,0,0,1-.36,0V28a2,2,0,0,0,2,2h17a2,2,0,0,0,2-2V4A2,2,0,0,0,27.37,2Zm-3.7,18.78h-9.6a.94.94,0,1,1,0-1.87h9.6a.94.94,0,1,1,0,1.87Zm0-3.85h-9.6a.93.93,0,1,1,0-1.86h9.6a.93.93,0,1,1,0,1.86Z" />
+                  <path d="M8.73,14.19a6.07,6.07,0,0,0,4.41-1.9A5.61,5.61,0,0,0,14,11.23a6,6,0,0,0,.87-3.13,6.1,6.1,0,0,0-5-6h0a6,6,0,0,0-1-.09,6.09,6.09,0,0,0-.36,12.17A2.17,2.17,0,0,0,8.73,14.19Zm-2-3.09A1,1,0,0,1,6,10.8,1,1,0,0,1,6,9.39L7.31,8.1,6,6.8A1,1,0,0,1,7.43,5.39l1.3,1.29.57-.57L10,5.39A1,1,0,0,1,11.43,6.8L10.14,8.1l1.29,1.29a1,1,0,0,1,0,1.41,1,1,0,0,1-1.41,0L8.89,9.67l-.16-.16L7.43,10.8A1,1,0,0,1,6.73,11.1Z" />
+                </svg>
+                <h2 className=" mt-4 text-2xl font-semibold text-red-600"> Submission closed</h2>
+              </div>
+              <p className="mt-2  mx-auto w-fit text-center">
+                {' '}
+                Deadline of this Assignment was:{' '}
+                <span className=" text-red-600 font-medium">{deadline.toLocaleString()}</span>
+              </p>
+            </div>
           )}
 
           {status === 'active' && (
@@ -263,6 +284,21 @@ export default function AssignmentSubmission({
             <h2 className="text-xl font-semibold text-green-600">Assignment Submitted</h2>
           </div>
           <p className="mt-2  mx-auto w-fit text-center"> Your response has been submitted successfully.</p>
+          <div className=" mt-4">
+            {assignment.isFeedbackDone ? (
+              <div>
+                <h1 className=" mt-2 text-lg font-semibold">Score:</h1>
+                <p>{assignment.score}</p>
+
+                <h1 className=" mt-6 text-lg font-semibold ">Feedback:</h1>
+                <p className=" mt-2 h-[250px] w-full overflow-scroll p-2 pt-4 shadow-inner shadow-black/30 rounded-md text-themeGray6">
+                  {assignment.feedback}
+                </p>
+              </div>
+            ) : (
+              <p className=" mx-auto w-fit font-medium">Feedback in pending...</p>
+            )}
+          </div>
         </div>
       )}
     </div>

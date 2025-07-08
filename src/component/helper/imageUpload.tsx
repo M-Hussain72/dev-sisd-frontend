@@ -1,23 +1,32 @@
 import { useRef, useState } from 'react';
 import userHttp from '../../http/userHttp';
 import { toast } from 'react-toastify';
+import useAuthAxios from '../../hook/useAuthAxios';
+import { Loader } from '@mantine/core';
 
 export default function ImageUpload({
   initialImage,
   onChange,
+  currentImage,
 }: {
-  initialImage: string | null;
+  initialImage: string | null | undefined;
+  currentImage: string | null;
   onChange: (url: string) => void;
 }) {
-  const [selectedImage, setSelectedImage] = useState<string | null>(initialImage);
+  const [selectedImage, setSelectedImage] = useState<string | null>(currentImage);
+  const [selectedImageUrl, setSelectedImageUrl] = useState<string | null>(currentImage);
+  const [pending, setPending] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const authAxios = useAuthAxios();
 
   const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      setPending(true);
       try {
         const res = await userHttp.uploadImage({
           file: file,
+          authAxios,
         });
         onChange(res.url);
         const reader = new FileReader();
@@ -27,18 +36,32 @@ export default function ImageUpload({
           }
         };
         reader.readAsDataURL(file);
+        setSelectedImageUrl(res.url);
+        setPending(false);
       } catch (error: any) {
+        setPending(false);
         toast.error(error?.message || '');
       }
     }
   };
 
-  const handleDeleteImage = () => {
+  const handleDeleteImage = async () => {
+    if (selectedImageUrl && selectedImage != initialImage) {
+      try {
+        await userHttp.deleteImage({
+          url: selectedImageUrl,
+          authAxios,
+        });
+      } catch (error: any) {
+        toast.error(error?.message || '');
+      }
+    }
     setSelectedImage(null);
+    setSelectedImageUrl(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
-      onChange('');
     }
+    onChange('');
   };
 
   return (
@@ -81,23 +104,28 @@ export default function ImageUpload({
                 className="hidden"
                 id="profile-upload"
               />
-              <div className="cursor-pointer text-gray-500 group-hover:text-blue-600">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8 mx-auto mb-2"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  />
-                </svg>
-                <span className="text-sm">Upload Image</span>
-              </div>
+              {!pending ? (
+                <div className="cursor-pointer text-gray-500 group-hover:text-blue-600">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-8 w-8 mx-auto mb-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    />
+                  </svg>
+
+                  <span className="text-sm">Upload Image</span>
+                </div>
+              ) : (
+                <Loader size={'md'} />
+              )}
             </div>
           </label>
         )}

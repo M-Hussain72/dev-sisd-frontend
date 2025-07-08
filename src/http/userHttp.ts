@@ -33,8 +33,8 @@ async function updateUser({
   try {
     const res = await authAxios.put(`${config.BASE_URL}/v1/user/profile`, {
       email,
-      ...(phoneNo ? { phoneNo: phoneNo } : {}),
-      ...(profileImage ? { profileImage: profileImage } : {}),
+      phoneNo,
+      profileImage,
       name,
     });
     return res;
@@ -99,15 +99,44 @@ async function sendContactEmail({
   }
 }
 
-async function uploadImage({ file }: { file: File }) {
-  const formData = new FormData();
-  formData.append('file', file);
+async function uploadImage({ file, authAxios }: { file: File; authAxios: AxiosInstance }) {
+  // const formData = new FormData();
+  // formData.append('file', file);
   try {
-    const res = await axios.post(`${config.BASE_URL}/v1/file/upload/public/image`, formData);
-    return { url: res.data?.file.url };
+    const res = await authAxios.post(`${config.BASE_URL}/v1/file/upload/public/image`, {
+      fileName: file.name,
+      contentType: file.type,
+    });
+
+    const { putUrl: uploadUrl, path: publicUrl } = res.data;
+
+    await fetch(uploadUrl, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': file.type,
+      },
+      body: file,
+    });
+
+    return { url: publicUrl };
   } catch (error) {
     console.log(error);
     const err = new Error('Uploading issue!');
+    throw err;
+  }
+}
+
+async function deleteImage({ url, authAxios }: { url: string; authAxios: AxiosInstance }) {
+  // const formData = new FormData();
+  // formData.append('file', file);
+
+  try {
+    const encodeUrl = encodeURIComponent(url);
+    const res = await authAxios.delete(`${config.BASE_URL}/v1/file/media/image?url=${encodeUrl}`);
+    return { url: res?.data?.url };
+  } catch (error) {
+    console.log(error);
+    const err = new Error('Fail Deleting Image!');
     throw err;
   }
 }
@@ -119,4 +148,5 @@ export default {
   changePassword,
   updateUser,
   uploadImage,
+  deleteImage,
 };

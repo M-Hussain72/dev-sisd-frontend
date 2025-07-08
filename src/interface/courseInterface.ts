@@ -108,7 +108,7 @@ export interface LectureIn {
     lectureId: string;
     last_watched_second: number;
     completed: boolean;
-    assignment: { fileUrl: string; startedAt: Date; score: number } | null;
+    assignment: { fileUrl: string; startedAt: Date; score: number; feedback: string; isFeedbackDone: boolean } | null;
     quizScore: number | undefined;
     userAnswers: (number | number[])[] | null;
   } | null;

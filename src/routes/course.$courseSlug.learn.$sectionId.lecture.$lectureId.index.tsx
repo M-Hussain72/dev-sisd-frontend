@@ -18,6 +18,7 @@ export const Route = createFileRoute('/course/$courseSlug/learn/$sectionId/lectu
 function RouteComponent() {
   const params = Route.useParams();
   const { authAxios } = Route.useRouteContext();
+  const { handleForwardLecture } = useLectureNav();
   const { data, isLoading, isError } = useQuery({
     queryKey: ['lecture', params.lectureId],
     queryFn: async () => await fetchLecture({ ...params, authAxios }),
@@ -26,8 +27,6 @@ function RouteComponent() {
     staleTime: 6000,
     gcTime: 0,
   });
-
-  const { handleForwardLecture } = useLectureNav();
 
   const { mutate } = useMutation({
     mutationFn: async ({
@@ -79,11 +78,11 @@ function RouteComponent() {
       assignment: null,
       lectureType: data?.lecture?.type || 'video',
     });
-    if (completed) {
-      console.log('completed', completed);
+    // if (completed) {
+    //   console.log('completed', completed);
 
-      handleForwardLecture();
-    }
+    //   handleForwardLecture();
+    // }
   }
   return (
     <>
@@ -97,6 +96,7 @@ function RouteComponent() {
               previewMode={false}
               setLectureProgress={handleLectureProgress}
               startTime={data.progress ? data.progress.last_watched_second : 0}
+              handleForwardLecture={handleForwardLecture}
             />
           </div>
         ) : data?.lecture?.type === 'assessment' ? (
@@ -119,6 +119,9 @@ function RouteComponent() {
                 title: data?.lecture?.title,
                 startedAt: data?.progress?.assignment?.startedAt || new Date(),
                 ...data?.lecture?.assignment,
+                isFeedbackDone: !!data?.progress?.assignment?.isFeedbackDone,
+                score: data?.progress?.assignment?.score,
+                feedback: data?.progress?.assignment?.feedback,
               }}
               timeStarted={!!data?.progress?.assignment?.startedAt}
               mutate={mutate}

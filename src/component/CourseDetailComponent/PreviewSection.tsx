@@ -29,17 +29,29 @@ export default function PreviewSection({
   videoId: string | undefined;
 }) {
   const initialIndex = videoId ? previewVideos.findIndex((item) => item.id === videoId) : 0;
-  const [currentPlay, setCurrentPlay] = useState(previewVideos[initialIndex]);
+  const [currentPlay, setCurrentPlay] = useState(initialIndex);
+
+  function handleForwardLecture() {
+    console.log(currentPlay);
+    console.log(previewVideos.length);
+
+    if (currentPlay >= previewVideos.length - 1) {
+      return;
+    }
+
+    setCurrentPlay((prev) => prev + 1);
+  }
   return (
     <div className=" mt-4">
       <div className=" max-h-[340px] rounded-lg overflow-hidden">
         <VideoPlayer
-          key={videoId || ''}
-          url={currentPlay.video}
+          key={previewVideos[currentPlay].id || ''}
+          url={previewVideos[currentPlay]?.video}
           previewMode={true}
           setLectureProgress={() => undefined}
           startTime={0}
-          id={`${videoId}`}
+          id={`${previewVideos[currentPlay].id}`}
+          handleForwardLecture={handleForwardLecture}
         />
       </div>
       <div className=" mt-6">
@@ -50,12 +62,12 @@ export default function PreviewSection({
               <>
                 <li
                   onClick={() => {
-                    setCurrentPlay(item);
+                    setCurrentPlay(index);
                   }}
                   id={item.id}
                   className={
                     ' flex gap-4 py-4 p-2 justify-between items-center cursor-pointer ' +
-                    (item.id === currentPlay.id && 'bg-[#7aadeb75]')
+                    (item.id === previewVideos[currentPlay].id && 'bg-[#7aadeb75]')
                   }
                 >
                   <div className="flex gap-4  items-center">
