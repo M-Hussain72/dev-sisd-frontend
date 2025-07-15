@@ -14,7 +14,7 @@ interface CourseCardProps extends CourseCardIn {
 }
 
 const CourseCard = ({
-  id,
+  _id: id,
   poster,
   title,
   author,
@@ -146,7 +146,6 @@ const CourseCard = ({
                       onClick={(e) => {
                         e.stopPropagation();
                         if (!isLoading) {
-                          console.log(currentReview);
                           setOpened(true);
                         }
                       }}

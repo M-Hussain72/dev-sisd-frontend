@@ -10,8 +10,6 @@ interface FeedBackType {
 }
 
 export default function FeedBackCard({ image, name, rating, iat, message }: FeedBackType) {
-  console.log(iat);
-  console.log(moment(iat).fromNow());
   return (
     <div className=" w-full  p-4 border-[1px] border-[#EEEEEE] shadow rounded-2xl">
       <div className="flex gap-3">

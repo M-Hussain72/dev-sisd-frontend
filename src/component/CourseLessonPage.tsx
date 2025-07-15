@@ -113,15 +113,13 @@ const CourseLessonPage = ({ sections, initialLectureId }: { sections: ContentIn[
                   id: item._id,
                   type: item.type,
                   value: (
-                    <li key={item._id} className="">
-                      <CourseContentItem
-                        {...item}
-                        isSideBar={true}
-                        purchased={true}
-                        courseId=""
-                        selected={selectedLectureId === item._id}
-                      />
-                    </li>
+                    <CourseContentItem
+                      {...item}
+                      isSideBar={true}
+                      purchased={true}
+                      courseId=""
+                      selected={selectedLectureId === item._id}
+                    />
                   ),
                 }}
                 selectedSection={selectedLectureId}

@@ -36,7 +36,6 @@ export default function BoardSelection() {
   };
 
   async function handleGetCourses(slug: string) {
-    console.log('slug', slug);
     return await getCoursesByCategory({
       categorySlug: slug,
       filters: {

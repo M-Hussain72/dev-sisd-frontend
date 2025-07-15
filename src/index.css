@@ -191,3 +191,14 @@ main {
 .plyr__control--menu.plyr__control--active .plyr__menu__container {
   animation: menu-slide 0.3s ease-out;
 }
+
+.mantine-Spoiler-control {
+  font-weight: 500; /* Tailwind's font-medium = 500 */
+  margin-top: 5px; /* mt-12 = 3rem */
+  text-decoration: none;
+  color: #307ee1;
+}
+
+.mantine-Spoiler-control:hover {
+  text-decoration: underline;
+}

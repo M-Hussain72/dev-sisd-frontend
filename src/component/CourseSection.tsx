@@ -20,7 +20,7 @@ export default ({
     <li
       key={section.id}
       className={
-        '  text-base text-wrap my-2 min-h-[50px] leading-[50px] capitalize ' +
+        'text-sm text-wrap my-2 min-h-[50px] flex align-middle capitalize ' +
         (selectedSection === section.id
           ? ' border-l-[5px]  pl-[10px] pr-[15px] border-l-themeBlue text-themeBlue cursor-default'
           : ' hover:pl-[10px] hover:border-l-[5px]  pl-[15px] pr-[15px] hover:border-l-[#94969790] hover:bg-[#9496972d]  text-themeGray   cursor-pointer')

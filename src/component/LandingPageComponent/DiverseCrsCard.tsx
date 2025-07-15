@@ -8,7 +8,6 @@ type props = {
 
 export default function DiverseCrsCard({ title, noOfCourses, bgIconColor, icon }: props) {
   const bgcolor = ' text-[' + bgIconColor + ']';
-  console.log(bgcolor);
   return (
     <Card
       padding="lg"

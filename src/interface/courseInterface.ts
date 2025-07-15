@@ -5,7 +5,7 @@ export interface CourseCardIn {
   title: string;
   author: string;
   slug: string;
-  id: string;
+  _id: string;
   price: number;
   rating: number;
   noOfReviews: number;
@@ -66,6 +66,8 @@ export interface CourseIn {
   assessmentCount: number;
   articleCount: number;
   subscribe: boolean;
+  createdAt: Date;
+  updatedAt: Date;
   level: 'all-level' | 'beginner' | 'intermediate' | 'experts';
 }
 

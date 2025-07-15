@@ -4,6 +4,7 @@ import useAuthAxios from '../hook/useAuthAxios';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
 import { Loader } from '@mantine/core';
+import userHttp from '../http/userHttp';
 
 export default function MyLearning() {
   const authAxios = useAuthAxios();
@@ -23,6 +24,15 @@ export default function MyLearning() {
     );
   }
 
+  async function handleClick(slug: string) {
+    const res = await userHttp.getUserCourseProgress({ authAxios, courseSlug: slug });
+    if (!res) {
+      navigate({ to: `/course/${slug}/learn` });
+    }
+
+    navigate({ to: `/course/${res?.courseSlug}/learn/${res?.sectionId}/lecture/${res?.lectureId}` });
+  }
+
   return (
     <div className=" min-h-dvh">
       {' '}
@@ -30,9 +40,9 @@ export default function MyLearning() {
         <div className="  grid gap-4 grid-cols-1  min-[848px]:grid-cols-3  min-[1370px]:grid-cols-5  min-[1110px]:grid-cols-4  sm:grid-cols-2  ">
           {data.map((item) => (
             <CourseCard
-              key={item.course?.id}
+              key={item.course?._id}
               {...item.course}
-              onClick={() => navigate({ to: `/course/${item.course.slug}/learn` })}
+              onClick={() => handleClick(item.course.slug)}
               isPaid={true}
               percentageComplete={item.percentageComplete}
               hasReviewed={item.hasReviewed}

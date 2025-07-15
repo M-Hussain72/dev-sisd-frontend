@@ -21,7 +21,6 @@ export default function DrawerComponentHeader({ data }: Props) {
       setPath((prev) => [...prev, cat]);
     } else {
       navigate({ to: `/courses/category/${cat.categorySlug}` });
-      // console.log('navigate to', `/courses/category/${cat.categorySlug}`);
       close();
       setPath([]);
     }
@@ -87,22 +86,21 @@ export default function DrawerComponentHeader({ data }: Props) {
                 {idx > 0 && <div className="text-md font-semibold mb-2">All {path[idx - 1]?.categoryName}</div>}
                 <ul className="space-y-2">
                   {list.map((cat, idx2) => (
-                    <>
-                      <li
-                        key={cat._id}
-                        className="p-2 hover:bg-gray-100 rounded flex justify-between items-center cursor-pointer text-sm font-medium text-gray-800"
-                        onClick={() => drill(cat)}
-                      >
-                        <span>{cat.categoryName}</span>
-                        {cat.children && cat.children.length > 0 && <span className="text-gray-400">›</span>}
-                      </li>
-                    </>
+                    <li
+                      key={cat._id}
+                      className="p-2 hover:bg-gray-100 rounded flex justify-between items-center cursor-pointer text-sm font-medium text-gray-800"
+                      onClick={() => drill(cat)}
+                    >
+                      <span>{cat.categoryName}</span>
+                      {cat.children && cat.children.length > 0 && <span className="text-gray-400">›</span>}
+                    </li>
                   ))}
 
                   {/* Extra links at the bottom */}
                   {idx === 0 && (
                     <>
                       <li
+                        key={'blog'}
                         className="mt-4 border-t pt-4 text-md font-medium text-themeBlack cursor-pointer hover:text-themeBlue"
                         onClick={() => {
                           close();
@@ -112,6 +110,7 @@ export default function DrawerComponentHeader({ data }: Props) {
                         Blog
                       </li>
                       <li
+                        key={'contact us'}
                         className="text-md font-medium text-themeBlack cursor-pointer hover:text-themeBlue"
                         onClick={() => {
                           close();

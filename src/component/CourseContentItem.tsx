@@ -51,13 +51,13 @@ export default ({
   }
 
   return (
-    <div key={_id} className={' flex  my-2 py-[3px] items-center ' + (!isSideBar ? ' gap-4 ' : ' gap-3 ')}>
+    <div key={_id} className={' flex flex-1   py-[3px] items-center ' + (!isSideBar ? ' gap-4 ' : ' gap-3 ')}>
       <div>{isCompleted ? <CompleteIcon w={width} h={height} /> : icon}</div>
       <div className={' flex flex-1  justify-between'}>
         <div>
           <h3
             className={
-              ' line-clamp-2 ' +
+              ' line-clamp-2  pr-1 ' +
               (selected ? ' text-themeBlue ' : ' text-themeGray6 ') +
               (!isSideBar ? ' text-lg ' : ' text-sm')
             }

@@ -22,8 +22,8 @@ export default function Footer() {
               { label: 'About Us', value: 'about' },
               { label: 'Alumni', value: 'about' },
               { label: 'Blogs', value: 'blogs' },
-            ].map((item) => (
-              <p key={item.value} className="mb-4 capitalize">
+            ].map((item, index) => (
+              <p key={item.value + index} className="mb-4 capitalize">
                 <Link to={`/${item.value}`} className=" text-[#949697]  hover:text-themeBlue">
                   {item.label}
                 </Link>

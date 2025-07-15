@@ -38,7 +38,6 @@ export default function Setting() {
     setTimeout(() => {
       mutate({ authAxios, currentPassword: values.currentPassword, newPassword: values.newPassword });
     }, 400);
-    console.log(values);
     setSubmitting(false);
   }
   return (

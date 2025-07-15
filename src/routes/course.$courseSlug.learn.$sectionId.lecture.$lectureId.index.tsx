@@ -92,6 +92,8 @@ function RouteComponent() {
             <VideoPlayer
               key={params.lectureId}
               id={params.lectureId}
+              courseSlug={params.courseSlug}
+              sectionId={params.sectionId}
               url={data.lecture?.video ? data.lecture?.video : ''}
               previewMode={false}
               setLectureProgress={handleLectureProgress}

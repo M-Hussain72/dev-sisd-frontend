@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import VideoPlayer from '../videoPlayer';
 import formatTime from '../../utils/formatTime';
+import VideoIcon from '../../assets/VideoIcon';
 
 function getThumbnail(videoUrl: string) {
   const urlParts = videoUrl.split('/upload/');
@@ -32,9 +33,6 @@ export default function PreviewSection({
   const [currentPlay, setCurrentPlay] = useState(initialIndex);
 
   function handleForwardLecture() {
-    console.log(currentPlay);
-    console.log(previewVideos.length);
-
     if (currentPlay >= previewVideos.length - 1) {
       return;
     }
@@ -52,6 +50,8 @@ export default function PreviewSection({
           startTime={0}
           id={`${previewVideos[currentPlay].id}`}
           handleForwardLecture={handleForwardLecture}
+          courseSlug=""
+          sectionId=""
         />
       </div>
       <div className=" mt-6">
@@ -66,13 +66,14 @@ export default function PreviewSection({
                   }}
                   id={item.id}
                   className={
-                    ' flex gap-4 py-4 p-2 justify-between items-center cursor-pointer ' +
+                    ' flex gap-4 py-4 p-2 justify-between items-center hover:bg-gray-100 cursor-pointer rounded ' +
                     (item.id === previewVideos[currentPlay].id && 'bg-[#7aadeb75]')
                   }
                 >
                   <div className="flex gap-4  items-center">
                     {/* {getThumbnail(item.video)} */}
-                    <div className=" font-bold text-themeBlack">{item.title}</div>
+                    <VideoIcon w={'18'} h={'19'} />
+                    <div className=" font-bold text-themeBlack ">{item.title}</div>
                   </div>
                   <div style={{ color: '#666' }}>{formatTime(item.duration)}</div>
                 </li>

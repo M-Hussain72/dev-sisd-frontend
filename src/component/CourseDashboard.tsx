@@ -37,7 +37,7 @@ export default function CourseDashboard({ language, author, content, title, shor
           onClick={() => {
             setOpen((prev) => !prev);
           }}
-          className=" cursor-pointer font-medium flex items-center w-fit gap-2 p-2 border-[1px]"
+          className=" cursor-pointer font-medium flex items-center w-fit gap-2 p-2 rounded-r-md border-[1px]"
         >
           All Sections
           <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -49,13 +49,13 @@ export default function CourseDashboard({ language, author, content, title, shor
         </div>
       </div>
       <div className=" relative sm:mt-10 mt-4 sm:mr-10 mx-auto px-2 flex gap-4 ">
-        <div className={(open ? ' absolute' : ' hidden') + ' sm:block  bg-white w-[244px]  '}>
-          <ul className="  h-fit w-full  py-[24px] pr-1 lg:border-r-[2px] lg:border-y-[2px] lg:border-l-0  border-[1px] rounded-xl border-[#eeeeee] lg:rounded-l-none  lg:rounded-r-2xl shadow-sm ">
+        <div className={(open ? ' absolute' : ' hidden') + ' sm:block  relative bg-white w-[244px]  '}>
+          <ul className=" h-fit w-full max-h-[500px] sm:pt-[46px] pt-[12px]  pb-[24px] pr-1 lg:border-r-[2px] lg:border-y-[2px] lg:border-l-0  border-[1px] rounded-xl border-[#eeeeee] lg:rounded-l-none  lg:rounded-r-2xl shadow-sm overflow-scroll ">
             <div
               onClick={() => {
                 setOpen((prev) => !prev);
               }}
-              className=" cursor-pointer flex items-center gap-2 sm:hidden p-2 border-[1px] w-fit"
+              className=" mb-1 cursor-pointer flex items-center gap-2 sm:hidden p-2 ml-1 rounded-md border-[1px] w-fit"
             >
               <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -65,10 +65,22 @@ export default function CourseDashboard({ language, author, content, title, shor
               </svg>
               Close
             </div>
+            <h2 className=" sm:block hidden absolute bg-white pb-2 pl-2 w-full right-0 top-0 rounded-tr-lg border-r-2  border-t-2 pt-4 text-themeBlack text-lg font-semibold ml-3">
+              Course Sections
+            </h2>
             {content.map((item, index) => (
               //  in section "type" parameter only just for typeSafe
               <CourseSection
-                section={{ id: item._id, value: item.sectionTitle, type: 'video' }}
+                key={item._id}
+                section={{
+                  id: item._id,
+                  value: (
+                    <div className="  my-3 py-[3px]">
+                      <p className=" text-sm line-clamp-2"> {item.sectionTitle}</p>
+                    </div>
+                  ),
+                  type: 'video',
+                }}
                 selectedSection={selectedSectionId}
                 onChange={(id: string) => {
                   setSelectedSectionId(id);

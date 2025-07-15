@@ -58,7 +58,6 @@ export default function Profile() {
       }
       mutate({ ...values, authAxios: authAxios });
     }, 400);
-    console.log(values);
     setSubmitting(false);
   }
 

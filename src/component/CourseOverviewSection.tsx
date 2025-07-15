@@ -76,9 +76,11 @@ export default ({ sectionContent, sectionTitle, _id: sectionId }: ContentIn) => 
 
         <ul className="  space-y-5 ">
           {sectionContent.map((item) => (
-            <Link to={`/course/${courseSlug}/learn/${sectionId}/lecture/${item._id}`}>
-              <CourseContentItem {...item} isSideBar={false} purchased={true} courseId="" selected={false} />
-            </Link>
+            <li key={item._id}>
+              <Link to={`/course/${courseSlug}/learn/${sectionId}/lecture/${item._id}`}>
+                <CourseContentItem {...item} isSideBar={false} purchased={true} courseId="" selected={false} />
+              </Link>
+            </li>
           ))}
         </ul>
       </div>

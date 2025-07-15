@@ -4,7 +4,7 @@ import FeedBackModal from './FeedBackaModal';
 import { useQuery } from '@tanstack/react-query';
 import reviewHttp from '../../http/reviewHttp';
 
-export default function FeedBack({ courseId }: { courseId: string }) {
+export default function FeedBack({ courseId, rating }: { courseId: string; rating: number }) {
   const [opened, { close, open }] = useDisclosure(false);
   const { data, isLoading, isError } = useQuery({
     queryKey: ['allReview', courseId],
@@ -19,7 +19,8 @@ export default function FeedBack({ courseId }: { courseId: string }) {
       <h1 className="text-[28px] sm:text-[34px] font-semibold ">Feedback</h1>
       {data && data.reviews?.length > 0 && (
         <span className=" text-lg text-[#626465] mt-3">
-          {'4.0'} course rating <span className="text-3xl">.</span> {data?.pagination.totalResults || 0} rating & reviews
+          {rating || 0.0} course rating <span className="text-3xl">.</span> {data?.pagination.totalResults || 0} rating &
+          reviews
         </span>
       )}
       <ul className=" mt-4 space-y-6 ">

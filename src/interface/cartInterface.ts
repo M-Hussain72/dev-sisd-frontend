@@ -1,6 +1,6 @@
 export interface CartItemIn {
   course: {
-    _id: string;
+    id: string;
     poster: string;
     title: string;
     price: number;

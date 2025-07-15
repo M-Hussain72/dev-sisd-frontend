@@ -7,7 +7,7 @@ import { CourseIn } from '../../interface/courseInterface';
 import ReactMarkdown from 'react-markdown';
 import CourseSection from '../CourseSection';
 import CourseContent from './CourseContent';
-import { formatTimeInDays } from '../../utils/formatTime';
+import { formatDate, formatTimeInDays } from '../../utils/formatTime';
 
 export default function CourseDetailContainer({ ...course }: CourseIn) {
   return (
@@ -22,7 +22,7 @@ export default function CourseDetailContainer({ ...course }: CourseIn) {
         {course.rating > 0 && (
           <div className=" flex flex-wrap ">
             {' '}
-            <span className=" mr-2 text-sm font-semibold text-themeBlack">{course.rating}</span>
+            <span className=" mr-2 text-sm font-semibold text-themeBlack">{course.rating.toFixed(1)}</span>
             <Rating
               value={course.rating}
               size={'sm'}
@@ -69,13 +69,15 @@ export default function CourseDetailContainer({ ...course }: CourseIn) {
             fill="#626465"
           />
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M6.96774 0.5C3.11956 0.5 0 3.61956 0 7.46774V9.53226C0 13.3804 3.11956 16.5 6.96774 16.5H9.03226C12.8804 16.5 16 13.3804 16 9.53226V7.46774C16 3.61956 12.8804 0.5 9.03226 0.5H6.96774ZM1.54839 7.46774C1.54839 4.47471 3.97471 2.04839 6.96774 2.04839H9.03226C12.0253 2.04839 14.4516 4.47471 14.4516 7.46774V9.53226C14.4516 12.5253 12.0253 14.9516 9.03226 14.9516H6.96774C3.97471 14.9516 1.54839 12.5253 1.54839 9.53226V7.46774Z"
             fill="#626465"
           />
         </svg>
-        <p className=" ml-2 cursor-default text-themeGray text-resLg">Last updated on</p>
+        {course.updatedAt > course.createdAt && (
+          <p className=" ml-2 cursor-default text-themeGray text-resLg">Last updated {formatDate(course.updatedAt)}</p>
+        )}
       </div>
       <div className=" lg:hidden block my-6">
         <CoursePricing {...course} courseId={course._id} />
@@ -94,8 +96,8 @@ export default function CourseDetailContainer({ ...course }: CourseIn) {
                       fill="#626465"
                     />
                     <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
+                      fillRule="evenodd"
+                      clipRule="evenodd"
                       d="M0 12.5689C0 14.74 1.76003 16.5 3.93114 16.5H12.0689C14.2399 16.5 16 14.74 16 12.5689V4.43114C16 2.26006 14.2399 0.5 12.0689 0.5H3.93114C1.76003 0.5 0 2.26007 0 4.43114V12.5689ZM3.93114 15.1479C2.50678 15.1479 1.35211 13.9932 1.35211 12.5689V4.43114C1.35211 3.00681 2.50679 1.85211 3.93114 1.85211H12.0689C13.4932 1.85211 14.6479 3.00682 14.6479 4.43114V12.5689C14.6479 13.9932 13.4932 15.1479 12.0689 15.1479H3.93114Z"
                       fill="#626465"
                     />
@@ -133,8 +135,8 @@ export default function CourseDetailContainer({ ...course }: CourseIn) {
                       fill="#626465"
                     />
                     <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
+                      fillRule="evenodd"
+                      clipRule="evenodd"
                       d="M0 12.5689C0 14.74 1.76003 16.5 3.93114 16.5H12.0689C14.2399 16.5 16 14.74 16 12.5689V4.43114C16 2.26006 14.2399 0.5 12.0689 0.5H3.93114C1.76003 0.5 0 2.26007 0 4.43114V12.5689ZM3.93114 15.1479C2.50678 15.1479 1.35211 13.9932 1.35211 12.5689V4.43114C1.35211 3.00681 2.50679 1.85211 3.93114 1.85211H12.0689C13.4932 1.85211 14.6479 3.00682 14.6479 4.43114V12.5689C14.6479 13.9932 13.4932 15.1479 12.0689 15.1479H3.93114Z"
                       fill="#626465"
                     />
@@ -149,10 +151,10 @@ export default function CourseDetailContainer({ ...course }: CourseIn) {
 
       <div className=" mt-20">
         <h1 className=" text-[34px] font-semibold mb-8">Description</h1>
-        <Spoiler maxHeight={226} showLabel="Show More" hideLabel="Show Less" ml={20} className="">
+        <Spoiler maxHeight={226} showLabel="Show More" hideLabel="Show Less">
           <ReactMarkdown
             className={
-              ' prose-strong:font-semibold  prose-headings:mb-4  prose-sm sm:prose-base text-themeGray prose-headings:text-themeBlack sm:prose-h1:text-3xl prose-h1:text-2xl prose-h2:text-xl sm:prose-h2:text-2xl prose-h3:text-xl   '
+              ' prose-strong:font-semibold prose-strong:text-themeBlack  prose-headings:font-bold  prose-headings:mb-4  prose-sm sm:prose-base text-themeGray6 prose-headings:text-themeBlack sm:prose-h1:text-3xl prose-h1:text-2xl prose-h2:text-xl sm:prose-h2:text-2xl prose-h3:text-xl p-0   '
             }
           >
             {course.description}
@@ -160,7 +162,7 @@ export default function CourseDetailContainer({ ...course }: CourseIn) {
         </Spoiler>
       </div>
 
-      <div className=" mt-20">{course && <FeedBack courseId={course._id} />}</div>
+      <div className=" mt-20">{course && <FeedBack courseId={course._id} rating={course.rating} />}</div>
     </div>
   );
 }

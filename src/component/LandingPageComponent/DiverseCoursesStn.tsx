@@ -21,10 +21,9 @@ export default function DiverseCoursesStn() {
       <ul className=" mt-10  grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6">
         {data?.length &&
           data.map((item, index) => {
-            console.log(index);
             return (
               <li
-                key={item._id}
+                key={index}
                 onClick={() => {
                   navigate({ to: `/courses/category/${item.categorySlug}` });
                 }}

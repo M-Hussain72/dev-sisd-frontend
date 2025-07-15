@@ -141,6 +141,46 @@ async function deleteImage({ url, authAxios }: { url: string; authAxios: AxiosIn
   }
 }
 
+async function getUserCourseProgress({
+  authAxios,
+  courseSlug,
+}: {
+  authAxios: AxiosInstance;
+  courseSlug: string;
+}): Promise<{ courseSlug: string; lectureId: string; sectionId: string } | void> {
+  try {
+    const res = await authAxios.get(`${config.BASE_URL}/v1/user/course-progress/${courseSlug}`);
+    return { ...res.data };
+  } catch (error: any) {
+    return;
+  }
+}
+
+async function setUserCourseProgress({
+  userId,
+  courseSlug,
+  lectureId,
+  sectionId,
+}: {
+  userId: string;
+  courseSlug: string;
+  lectureId: string;
+  sectionId: string;
+}) {
+  try {
+    const res = await axios.post(`${config.BASE_URL}/v1/user/course-progress`, {
+      courseSlug,
+      sectionId,
+      lectureId,
+      userId,
+    });
+    return;
+  } catch (error: any) {
+    const err = new Error('Error! Update User Course progress');
+    throw err;
+  }
+}
+
 export default {
   getUserApi,
   assignCourse,
@@ -149,4 +189,6 @@ export default {
   updateUser,
   uploadImage,
   deleteImage,
+  getUserCourseProgress,
+  setUserCourseProgress,
 };

@@ -52,7 +52,7 @@ export default function CarouselSlide({
     >
       {data?.courses && data.courses.length > 0 ? (
         data?.courses.map((item, index) => (
-          <Carousel.Slide key={`slide-${item.id}`} className="mb-2">
+          <Carousel.Slide key={`slide-${item._id + index}`} className="mb-2">
             <CourseCard isPaid={false} {...item} onClick={() => navigate({ to: `/course/${item.slug}` })} />
           </Carousel.Slide>
         ))

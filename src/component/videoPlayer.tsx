@@ -270,11 +270,13 @@
 //   return <Plyr id={`plyr${id}`} source={{ type: 'video', sources: [] }} options={opts} ref={playerRef} />;
 // }
 
-import { getAuthToken } from '../utils/auth';
+import { getAuthToken, getUserId } from '../utils/auth';
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import Hls, { ErrorData, ErrorTypes, Events } from 'hls.js';
 import { useLectureNav } from '../context/LectureNavigationContext';
 import config from '../utils/config';
+import userHttp from '../http/userHttp';
+import useAuthAxios from '../hook/useAuthAxios';
 
 // --- Dependency Imports from CDN ---
 // We'll dynamically load these to avoid build-time resolution issues.
@@ -328,12 +330,16 @@ export default function VideoPlayer({
   previewMode,
   startTime = 0,
   id,
+  sectionId,
+  courseSlug,
   setLectureProgress,
   handleForwardLecture,
 }: {
   url: string;
   previewMode: boolean;
   startTime: number;
+  sectionId: string;
+  courseSlug: string;
   id: string;
   handleForwardLecture: () => void;
   setLectureProgress: ({
@@ -351,8 +357,8 @@ export default function VideoPlayer({
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [libsLoaded, setLibsLoaded] = useState(false);
   const [isBuffering, setIsBuffering] = useState(false); // <--- NEW STATE
-
   const token = getAuthToken();
+
   const accessToken = token?.access?.token || '';
 
   // Effect to load external libraries (Plyr CSS and JS)
@@ -386,11 +392,11 @@ export default function VideoPlayer({
       if (Hls.isSupported()) {
         hls = new Hls({
           maxBufferLength: 30,
-          maxMaxBufferLength: 60,
+          maxMaxBufferLength: 30,
           xhrSetup: (xhr) => {
             if (accessToken) xhr.setRequestHeader('Authorization', `Bearer ${accessToken}`);
           },
-          startPosition: startTime > 0 ? startTime : -1,
+          // startPosition: startTime > 0 ? startTime : -1,
         });
         hlsRef.current = hls;
 
@@ -411,7 +417,7 @@ export default function VideoPlayer({
         });
 
         hls.on(Hls.Events.ERROR, (event, data: ErrorData) => {
-          console.error('HLS.js Error:', data);
+          // console.error('HLS.js Error:', data);
           if (data.fatal) {
             if (data.response?.code === 401 || data.response?.code === 403) {
               setErrorMsg('Unauthorized: You do not have permission to view this video.');
@@ -520,14 +526,33 @@ export default function VideoPlayer({
     };
   }, [libsLoaded, opts, previewMode, startTime, handlePause, handleEnded]);
 
-  const saveProgressKeepalive = () => {
+  useEffect(() => {
+    if (!id || !courseSlug || previewMode) return;
+    const saveProgress = async () => {
+      const userId = getUserId();
+      if (!userId) {
+        return;
+      }
+      await userHttp.setUserCourseProgress({ userId, courseSlug, lectureId: id, sectionId: sectionId });
+    };
+
+    // Save on unmount
+    return () => {
+      // saveProgressKeepalive();
+      saveProgress();
+    };
+  }, [courseSlug, id]);
+
+  const saveProgressKeepalive = async () => {
     if (previewMode) return;
+    console.log('enter it');
     const el = playerRef.current;
     if (!el) return;
+    console.log('near call it');
     const lastViewTime = el.currentTime || 0;
     if (el.duration > 0 && el.duration - lastViewTime < 5) return;
-
-    fetch(`${config.BASE_URL}/v1/user/${'test-preview-2'}/${id}`, {
+    console.log('near call it');
+    await fetch(`${config.BASE_URL}/v1/user/${courseSlug}/${id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -535,10 +560,8 @@ export default function VideoPlayer({
         Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify({ lectureId: id, type: 'video', last_watched_second: lastViewTime, completed: false }),
-      keepalive: true, // ← lets this request out on unload
     });
   };
-
   // useEffect(() => {
   //   if (previewMode) return;
   //   const onPageHide = () => {
