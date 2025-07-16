@@ -90,7 +90,7 @@ export default function CoursePricing({
             {price > 0 ? (
               <>
                 {' '}
-                <AddToCartBtn courseId={courseId} addToCart={handleAddToCart} />
+                <AddToCartBtn poster={poster} title={title} author={author} addToCart={handleAddToCart} />
                 {/* <button className=" mt-6 py-3 px-6 w-full text-lg text-[#307EE1] font-semibold text-nowrap bg-white border-[1px] border-[#307EE1] hover:bg-[#307EE1] hover:text-white   rounded-lg">
               Gift This Course
             </button> */}

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Carousel, Embla } from '@mantine/carousel';
-import reviewWomen from '../../public/reviewWomen.png';
-import reviewMen from '../../public/reviewMen.png';
-import reviewMen2 from '../../public/reviewMen2.png';
+import reviewWomen from '../../assets/asianWomen1.png';
+import reviewMen from '../../assets/bigSimleMen.png';
+import reviewMen2 from '../../assets/pinkWomen.png';
 import { Rating } from '@mantine/core';
 import ControlCarousel from '../ui/ControlCarousel';
 const testimonials = [

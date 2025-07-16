@@ -2,14 +2,24 @@ import { Modal } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { useNavigate } from '@tanstack/react-router';
 import cartHttp from '../http/cartHttp';
-import sampleImage from '../public/python.png';
+import defaultCourseImg from '../assets/defaultCourseImg.png';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import useAuthAxios from '../hook/useAuthAxios';
 import { useAddToCart } from '../hook/useAddToCart';
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
 
-export default function AddToCartBtn({ courseId, addToCart }: { courseId: string; addToCart: () => void }) {
+export default function AddToCartBtn({
+  title,
+  poster,
+  author,
+  addToCart,
+}: {
+  title: string;
+  poster: string;
+  author: string;
+  addToCart: () => void;
+}) {
   const [opened, { open, close }] = useDisclosure();
   const navigate = useNavigate();
   const { isAuthenticate } = useAuth();
@@ -56,7 +66,7 @@ export default function AddToCartBtn({ courseId, addToCart }: { courseId: string
         fullScreen={isMobile}
         title={<h1 className=" font-semibold text-lg">Added to cart</h1>}
         onClose={close}
-        size={'auto'}
+        size={'lg'}
         yOffset={'20dvh'}
       >
         <div className="  ">
@@ -69,13 +79,19 @@ export default function AddToCartBtn({ courseId, addToCart }: { courseId: string
         </div>
 
         <div className="flex mt-4 gap-2">
-          <img src={sampleImage} className=" w-[60px]" />
+          <img
+            src={poster ? poster : defaultCourseImg}
+            onError={(e) => {
+              // Prevent infinite loop in case default image also fails
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = defaultCourseImg;
+            }}
+            alt="poster"
+            className=" w-[60px] rounded"
+          />
           <div className=" max-w-[450px]">
-            <h2 className="  text-themeBlack font-semibold line-clamp-2">
-              {' '}
-              {'Master Digital Product Design: UX Research & UI Design '}
-            </h2>
-            <p>By {'Watson Holmes'}</p>
+            <h2 className="  text-themeBlack text-lg font-semibold line-clamp-2">{title}</h2>
+            <p className=" text-sm">By {author}</p>
           </div>
         </div>
         <div className=" w-fit ml-auto mt-4">

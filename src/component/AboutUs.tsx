@@ -1,4 +1,4 @@
-import textImg from '../public/reviewWomen.png';
+import textImg from '../assets/bigSimleMen.png';
 export default function About() {
   return (
     <div className=" max-w-[1136px] mx-auto px-4 py-10 ">
