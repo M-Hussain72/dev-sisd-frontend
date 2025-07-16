@@ -31,7 +31,7 @@ export default function Footer() {
             ))}
           </div>
 
-          {data && (
+          {data && data.length > 0 && (
             <div className="">
               <h6 className="mb-6 flex justify-center font-semibold uppercase md:justify-start text-[#2B2B2B]">Courses</h6>
               {data.slice(0, 5).map((item, index) => (
