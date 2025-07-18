@@ -18,7 +18,7 @@ export const Route = createFileRoute('/course/$courseSlug/learn/$sectionId/lectu
 function RouteComponent() {
   const params = Route.useParams();
   const { authAxios } = Route.useRouteContext();
-  const { handleForwardLecture } = useLectureNav();
+  const { handleForwardLecture, handlePrevLecture } = useLectureNav();
   const { data, isLoading, isError } = useQuery({
     queryKey: ['lecture', params.lectureId],
     queryFn: async () => await fetchLecture({ ...params, authAxios }),
@@ -86,7 +86,7 @@ function RouteComponent() {
   }
   return (
     <>
-      <div className="w-full  max-w-[1025px] mt-2 md:max-h-[580px] h-auto shadow-inner shadow-black/20 overflow-scroll  border-[1px] border-[#EEEEEE] bg-white  rounded-xl ">
+      <div className="w-full  max-w-[1025px] mt-2 md:max-h-[580px] h-auto shadow-inner shadow-black/20 overflow-scroll  border-[1px] border-[#EEEEEE] bg-white  xs:rounded-xl ">
         {data?.lecture?.type === 'video' ? (
           <div className=" max-h-[580px]  ">
             <VideoPlayer
@@ -99,6 +99,7 @@ function RouteComponent() {
               setLectureProgress={handleLectureProgress}
               startTime={data.progress ? data.progress.last_watched_second : 0}
               handleForwardLecture={handleForwardLecture}
+              handlePrevLecture={handlePrevLecture}
             />
           </div>
         ) : data?.lecture?.type === 'assessment' ? (

@@ -39,6 +39,13 @@ export default function PreviewSection({
 
     setCurrentPlay((prev) => prev + 1);
   }
+  function handlePrevLecture() {
+    if (currentPlay <= 0) {
+      return;
+    }
+
+    setCurrentPlay((prev) => prev - 1);
+  }
   return (
     <div className=" mt-4">
       <div className=" max-h-[340px] rounded-lg overflow-hidden">
@@ -50,6 +57,7 @@ export default function PreviewSection({
           startTime={0}
           id={`${previewVideos[currentPlay].id}`}
           handleForwardLecture={handleForwardLecture}
+          handlePrevLecture={handlePrevLecture}
           courseSlug=""
           sectionId=""
         />
@@ -72,8 +80,10 @@ export default function PreviewSection({
                 >
                   <div className="flex gap-4  items-center">
                     {/* {getThumbnail(item.video)} */}
-                    <VideoIcon w={'18'} h={'19'} />
-                    <div className=" font-bold text-themeBlack ">{item.title}</div>
+                    <div>
+                      <VideoIcon w={'18'} h={'19'} />
+                    </div>
+                    <div className=" font-bold text-themeBlack line-clamp-2 ">{item.title}</div>
                   </div>
                   <div style={{ color: '#666' }}>{formatTime(item.duration)}</div>
                 </li>

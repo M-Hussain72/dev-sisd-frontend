@@ -8,6 +8,7 @@ import ReactMarkdown from 'react-markdown';
 import CourseSection from '../CourseSection';
 import CourseContent from './CourseContent';
 import { formatDate, formatTimeInDays } from '../../utils/formatTime';
+import CustomSpoiler from '../helper/Spoiler';
 
 export default function CourseDetailContainer({ ...course }: CourseIn) {
   return (
@@ -85,7 +86,7 @@ export default function CourseDetailContainer({ ...course }: CourseIn) {
 
       <div className=" mt-20">
         <h1 className="text-[28px] sm:text-[34px] font-semibold">What you’ll learn</h1>
-        <Spoiler maxHeight={226} showLabel="Show More" hideLabel="Show Less">
+        <CustomSpoiler maxHeight={226} showLabel="Show More" hideLabel="Show Less">
           <ul className=" mt-10 grid grid-cols-1 sm:grid-cols-2 gap-6">
             {course.learningOutcomes?.map((item, index) => (
               <li key={index} className=" flex gap-2 text-sm text-themeGray">
@@ -107,12 +108,12 @@ export default function CourseDetailContainer({ ...course }: CourseIn) {
               </li>
             ))}
           </ul>
-        </Spoiler>
+        </CustomSpoiler>
       </div>
 
       <div className=" mt-20">
         <h1 className=" text-[34px] font-semibold mb-2 ">Course Content</h1>
-        <div className=" flex items-center text-lg text-themeGray6 mb-10">
+        <div className=" flex flex-wrap items-center sm:text-lg text-base text-themeGray6 mb-10">
           <p>{course.content && course.content.length} sections </p>
           <span className=" text-3xl  ml-1 mr-[2px]">•</span>
           <p>{course.videoCount + course.articleCount + course.assessmentCount} lectures</p>
@@ -124,7 +125,7 @@ export default function CourseDetailContainer({ ...course }: CourseIn) {
 
       <div className=" mt-20">
         <h1 className=" text-[28px] sm:text-[34px] font-semibold">Requirements</h1>
-        <Spoiler maxHeight={226} showLabel="Show More" hideLabel="Show Less">
+        <CustomSpoiler maxHeight={226} showLabel="Show More" hideLabel="Show Less">
           <ul className=" mt-8 flex flex-col gap-6">
             {course.learningOutcomes?.map((item, index) => (
               <li key={index} className=" flex gap-2 text-sm sm:text-base  text-themeGray">
@@ -146,12 +147,12 @@ export default function CourseDetailContainer({ ...course }: CourseIn) {
               </li>
             ))}
           </ul>
-        </Spoiler>
+        </CustomSpoiler>
       </div>
 
       <div className=" mt-20">
         <h1 className=" text-[34px] font-semibold mb-8">Description</h1>
-        <Spoiler maxHeight={226} showLabel="Show More" hideLabel="Show Less">
+        <CustomSpoiler maxHeight={226} showLabel="Show More" hideLabel="Show Less">
           <ReactMarkdown
             className={
               ' prose-strong:font-semibold prose-strong:text-themeBlack  prose-headings:font-bold  prose-headings:mb-4  prose-sm sm:prose-base text-themeGray6 prose-headings:text-themeBlack sm:prose-h1:text-3xl prose-h1:text-2xl prose-h2:text-xl sm:prose-h2:text-2xl prose-h3:text-xl p-0   '
@@ -159,7 +160,8 @@ export default function CourseDetailContainer({ ...course }: CourseIn) {
           >
             {course.description}
           </ReactMarkdown>
-        </Spoiler>
+          {/* <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white to-transparent" /> */}
+        </CustomSpoiler>
       </div>
 
       <div className=" mt-20">{course && <FeedBack courseId={course._id} rating={course.rating} />}</div>

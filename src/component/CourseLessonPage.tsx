@@ -6,6 +6,7 @@ import { Link, Outlet, useNavigate, useParams } from '@tanstack/react-router';
 
 import { ContentIn } from '../interface/courseInterface';
 import { LectureNavigationContext } from '../context/LectureNavigationContext'; // adjust path
+import VideoNavWrapper from './helper/videoNavWrap';
 
 const CourseLessonPage = ({ sections, initialLectureId }: { sections: ContentIn[]; initialLectureId: string }) => {
   const { courseSlug, sectionId } = useParams({
@@ -83,13 +84,12 @@ const CourseLessonPage = ({ sections, initialLectureId }: { sections: ContentIn[
         selectedLectureId,
       }}
     >
-      <div className=" lg:mr-3 px-4 mx-auto mb-12 ">
+      <div className=" lg:mr-3 xs:px-4 mx-auto mb-12 ">
         {/* navigate to back the course dashboard page */}
         <Link
           to={`/course/${courseSlug}/learn`}
           search={{ sectionId: currentSection._id }}
-          replace={true}
-          className=" flex  items-center sm::mt-0 mt-2"
+          className="   xs:flex hidden items-center sm::mt-0 mt-2"
         >
           <svg
             className=" sm:w-[43px] sm:h-[17px] w-[33px] h-[12px]"
@@ -105,7 +105,7 @@ const CourseLessonPage = ({ sections, initialLectureId }: { sections: ContentIn[
 
           <h1 className=" md:text-xl sm:text-lg text-sm font-medium text-themeBlack">{currentSection.sectionTitle}</h1>
         </Link>
-        <div className=" flex lg:flex-row flex-col-reverse sm:gap-6  mt-4">
+        <div className=" flex lg:flex-row flex-col-reverse sm:gap-6  xs:mt-4">
           <ol className=" flex-1  min-w-[200px] lg:max-h-[600px] lg:overflow-scroll w-full  py-[24px] pr-1 lg:border-r-[2px] lg:border-y-[2px] lg:border-l-0  border-[1px] rounded-xl border-[#eeeeee] lg:rounded-l-none  lg:rounded-r-2xl shadow-sm ">
             {currentSection.sectionContent.map((item) => (
               <CourseSection
@@ -129,7 +129,7 @@ const CourseLessonPage = ({ sections, initialLectureId }: { sections: ContentIn[
           </ol>
           <div className="w-full mb-4  max-w-[1100px]">
             <div className=" lg:mb-3 sm:mt-0 mt-3 ml-1  flex flex-row  justify-between  sm:gap-6">
-              <h1 className=" min-[400px]:text-resHeading font-semibold lg:text-[34px]">
+              <h1 className=" min-[400px]:text-resHeading font-semibold lg:text-[34px] line-clamp-2">
                 {currentLecture.type === 'assessment'
                   ? 'Quiz: '
                   : currentLecture.type === 'assignment'
@@ -137,7 +137,7 @@ const CourseLessonPage = ({ sections, initialLectureId }: { sections: ContentIn[
                     : ''}
                 {currentLecture.title}
               </h1>
-              <div className=" sm:text-base text-sm sm:mt-0 mt-2 flex justify-end sm:gap-6 gap-4 items-center xl:mr-20 mr-4 ">
+              <div className=" sm:text-base text-sm sm:mt-0 mt-2 xs:flex hidden justify-end sm:gap-6 gap-4 items-center xl:mr-20 mr-4 ">
                 <button
                   className=" group text-themeBlue hover:text-blue-600 font-medium flex items-center "
                   onClick={handlePrevLecture}
@@ -172,7 +172,13 @@ const CourseLessonPage = ({ sections, initialLectureId }: { sections: ContentIn[
                 </button>
               </div>
             </div>
-            <Outlet />
+            <VideoNavWrapper
+              type={currentLecture.type}
+              handleForwardLecture={handleForwardLecture}
+              handlePrevLecture={handlePrevLecture}
+            >
+              <Outlet />
+            </VideoNavWrapper>
           </div>
         </div>
 

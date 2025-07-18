@@ -49,7 +49,7 @@ export default function CourseDashboard({ language, author, content, title, shor
         </div>
       </div>
       <div className=" relative sm:mt-10 mt-4 sm:mr-10 mx-auto px-2 flex gap-4 ">
-        <div className={(open ? ' absolute' : ' hidden') + ' sm:block  relative bg-white w-[244px]  '}>
+        <div className={(open ? ' absolute' : ' hidden') + ' sm:block  sm:relative bg-white w-[244px]  '}>
           <ul className=" h-fit w-full max-h-[500px] sm:pt-[46px] pt-[12px]  pb-[24px] pr-1 lg:border-r-[2px] lg:border-y-[2px] lg:border-l-0  border-[1px] rounded-xl border-[#eeeeee] lg:rounded-l-none  lg:rounded-r-2xl shadow-sm overflow-scroll ">
             <div
               onClick={() => {

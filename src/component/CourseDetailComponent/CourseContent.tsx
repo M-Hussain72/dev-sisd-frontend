@@ -24,7 +24,7 @@ export default function CourseContent({ content, courseId }: { content: ContentI
           const isOpen = selectedSection?.includes(section._id);
 
           return (
-            <li key={section._id} className=" list-none border-[1px]  rounded-xl mb-8  ">
+            <li key={section._id} className=" list-none border-[1px] border-themeGray  rounded-xl mb-8  ">
               <div
                 onClick={() => handleSelectedSection(section._id)}
                 className=" flex p-6 items-center justify-between cursor-pointer  "
@@ -40,11 +40,7 @@ export default function CourseContent({ content, courseId }: { content: ContentI
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path
-                    d="M4 5.5L0 1.25972L0.716667 0.5L4 3.99823L7.28333 0.517668L8 1.27739L4 5.5Z"
-                    fill="#484849"
-                    fill-opacity="0.45"
-                  />
+                  <path d="M4 5.5L0 1.25972L0.716667 0.5L4 3.99823L7.28333 0.517668L8 1.27739L4 5.5Z" fill="#949697" />
                 </svg>
               </div>
               <div

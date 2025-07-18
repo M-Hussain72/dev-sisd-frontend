@@ -202,3 +202,23 @@ main {
 .mantine-Spoiler-control:hover {
   text-decoration: underline;
 }
+
+/* for video prev anf forward btn */
+
+@keyframes videoFadeOut {
+  to {
+    opacity: 0;
+  }
+}
+
+/* hidden by default */
+.video-nav-button {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* on hover, show then fade after 5s */
+.video-nav-group:hover .video-nav-button {
+  opacity: 1;
+  animation: videoFadeOut 0.3s ease-in-out 5s forwards;
+}

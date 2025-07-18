@@ -333,6 +333,7 @@ export default function VideoPlayer({
   sectionId,
   courseSlug,
   setLectureProgress,
+  handlePrevLecture,
   handleForwardLecture,
 }: {
   url: string;
@@ -342,6 +343,7 @@ export default function VideoPlayer({
   courseSlug: string;
   id: string;
   handleForwardLecture: () => void;
+  handlePrevLecture: () => void;
   setLectureProgress: ({
     lastViewTime,
     completed,
@@ -599,13 +601,52 @@ export default function VideoPlayer({
   }
 
   return (
-    <div className="aspect-video relative max-h-[580px] w-full">
-      <video ref={playerRef} id={`player-${id}`} playsInline controls />
-      {isBuffering && (
-        <div className="absolute inset-0 flex items-center justify-center z-10" style={{ pointerEvents: 'none' }}>
-          <Loader />
-        </div>
-      )}
-    </div>
+    <>
+      <div className="aspect-video relative max-h-[580px] w-full">
+        {/* {handlePrevLecture && (
+          <button
+            onClick={handlePrevLecture}
+            className="
+          absolute top-1/2 left-0 nav-button 
+          -translate-y-1/2 
+          z-20 
+          p-2 
+          bg-themeBlue bg-opacity-50 
+          rounded-r-md 
+          text-white 
+          hover:bg-opacity-75
+        "
+            aria-label="Previous Lecture"
+          >
+            ‹
+          </button>
+        )} */}
+        <video ref={playerRef} id={`player-${id}`} playsInline controls />
+
+        {/* ▶ Next Button */}
+        {/* <button
+          onClick={handleForwardLecture}
+          className="
+        absolute top-1/2 right-0 
+        nav-button 
+        -translate-y-1/2 
+        z-20 
+        p-2 
+        bg-themeBlue bg-opacity-50 
+        rounded-l-md 
+        text-white 
+        hover:bg-opacity-75
+      "
+          aria-label="Next Lecture"
+        >
+          ›
+        </button> */}
+        {isBuffering && (
+          <div className="absolute inset-0 flex items-center justify-center z-10" style={{ pointerEvents: 'none' }}>
+            <Loader />
+          </div>
+        )}
+      </div>
+    </>
   );
 }
