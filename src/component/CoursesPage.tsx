@@ -1,24 +1,23 @@
 import CourseCard from './helper/CourseCard.tsx';
 import Filter from './Filter';
 
-import { Loader, Switch } from '@mantine/core';
+import { Drawer, Loader, Switch } from '@mantine/core';
 
-import { useState } from 'react';
-
+import { useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getCoursesByCategory } from '../http/courseHttp.ts';
 import NotFound from './helper/NotFound.tsx';
-import { string } from 'yup';
 import { filterIn } from '../interface/filterInterface.ts';
 import { useNavigate, useParams } from '@tanstack/react-router';
 import CategoryCoursesSection from './CategoryCoursesSection.tsx';
-import { useCategories } from '../hook/useCategory.tsx';
 import { Element } from 'react-scroll';
+import FilterDrawer, { CustomDrawerRef } from './FilterDrawer.tsx';
 
 export default function CoursesPage() {
   const { categorySlug } = useParams({ from: '/courses/category/$categorySlug/' });
   const [selectedFilters, setSelectedFilters] = useState<filterIn | null>(null);
-  const categories = useCategories();
+  const [drawerOpened, setDrawerOpened] = useState(false);
+  const drawerRef = useRef<CustomDrawerRef>(null);
 
   const navigate = useNavigate();
   const { data, isLoading, isError } = useQuery({
@@ -96,13 +95,32 @@ export default function CoursesPage() {
           <div className=" w-[255px] min-w-[165px] h-fit py-4 rounded-md px-4 shadow-lg min-[1050px]:block hidden">
             <Filter onChange={setSelectedFilters} />
           </div>
+          {/* <div className="mb-4 min-[1050px]:hidden">
+            <button onClick={() => drawerRef.current?.open()} className="bg-blue-600 text-white px-4 py-2 rounded">
+              Filter Courses
+            </button>
+          </div> */}
           <CategoryCoursesSection
             selectedFilters={selectedFilters}
             initialCourses={data}
             handleGetCourses={handleGetCourses}
             componentKey={categorySlug}
+            setDrawerOpened={() => {
+              drawerRef.current?.open();
+            }}
           />
         </div>
+        {/* <Drawer
+          opened={drawerOpened}
+          onClose={() => setDrawerOpened(false)}
+          title="Filter Courses"
+          size="xs"
+          position="right"
+          zIndex={1000}
+        >
+          <Filter onChange={setSelectedFilters} />
+        </Drawer> */}
+        <FilterDrawer ref={drawerRef} onChange={setSelectedFilters} />
       </Element>
     </div>
   );

@@ -44,6 +44,7 @@ export interface SectionContentIn {
 export interface ContentIn {
   _id: string;
   sectionTitle: string;
+  sectionDescription: string;
   sectionContent: SectionContentIn[];
 }
 

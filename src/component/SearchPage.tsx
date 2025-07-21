@@ -1,7 +1,7 @@
 import { useParams } from '@tanstack/react-router';
 import Filter from './Filter';
-import { Loader } from '@mantine/core';
-import { useState } from 'react';
+import { Drawer, Loader } from '@mantine/core';
+import { useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getCoursesBySearch } from '../http/courseHttp.ts';
 
@@ -9,10 +9,13 @@ import NotFound from './helper/NotFound.tsx';
 import { filterIn } from '../interface/filterInterface.ts';
 import CategoryCoursesSection from './CategoryCoursesSection.tsx';
 import { Element } from 'react-scroll';
+import FilterDrawer, { CustomDrawerRef } from './FilterDrawer.tsx';
 
 export default function CoursesPage() {
   const { search } = useParams({ from: '/courses/search/$search/' });
   const [selectedFilters, setSelectedFilters] = useState<filterIn | null>(null);
+  // const [drawerOpened, setDrawerOpened] = useState(false);
+  const drawerRef = useRef<CustomDrawerRef>(null);
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['search', search, 1],
@@ -52,7 +55,7 @@ export default function CoursesPage() {
   return (
     <Element name="courseSection" className="md:mx-10 px-6 mb-10">
       <div>
-        <h1 className=" mt-[20px] mb-[30px] text-[42px] font-semibold text-themeBlack">
+        <h1 className=" mt-[20px] mb-[30px] sm:text-[42px] text-[22px] font-semibold text-themeBlack">
           {data?.pagination.totalResults} results for "{search}"
         </h1>
         <div className="flex gap-4">
@@ -64,9 +67,21 @@ export default function CoursesPage() {
             selectedFilters={selectedFilters}
             initialCourses={data}
             componentKey={search}
+            setDrawerOpened={() => drawerRef.current?.open()}
           />
         </div>
       </div>
+      {/* <Drawer
+        opened={drawerOpened}
+        onClose={() => setDrawerOpened(false)}
+        title="Filter Courses"
+        size="xs"
+        position="right"
+        zIndex={1000}
+      >
+        <Filter onChange={setSelectedFilters} />
+      </Drawer> */}
+      <FilterDrawer ref={drawerRef} onChange={setSelectedFilters} />
     </Element>
   );
 }

@@ -48,7 +48,8 @@ export default function CoursePricing({
 
   async function handleFreeCourse() {
     if (!isAuthenticate) {
-      toast.info('Please log in to your account before Enroll course.');
+      navigate({ to: '/signup' });
+      // toast.info('Please log in to your account before Enroll course.');
       return;
     }
     try {

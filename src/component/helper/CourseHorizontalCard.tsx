@@ -35,10 +35,10 @@ export default function CourseHorizontalCard({
             e.currentTarget.onerror = null;
             e.currentTarget.src = defaultImage;
           }}
-          className="  w-[207px] max-h-[145px] min-w-[60px] min-h-[60px] hover:scale-125 transition-all duration-500 cursor-pointer"
+          className="  w-[207px]  max-h-[145px] min-w-[60px] min-h-[60px] hover:scale-125 transition-all duration-500 cursor-pointer"
         />
       </div>
-      <div className="px-4 flex-1 mt-2">
+      <div className=" px-4 flex-1 w-full mt-2">
         <div className=" flex gap-4  justify-between">
           {
             <div className="flex gap-1 items-center">
@@ -82,8 +82,8 @@ export default function CourseHorizontalCard({
           </div>
         </div>
         <div className="">
-          <p className=" text-themeBlack text-lg font-medium  ">{title}</p>
-          <p className=" text-themeGray md:block hidden line-clamp-2 ">{shortDescription}</p>
+          <p className=" text-themeBlack text-lg font-medium line-clamp-2  ">{title}</p>
+          <p className=" text-themeGray line-clamp-2 max-md:hidden  ">{shortDescription}</p>
         </div>
         <div className=" group flex items-center gap-1 my-[4px]  ">
           <svg

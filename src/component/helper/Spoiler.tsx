@@ -1,5 +1,5 @@
 import { Spoiler } from '@mantine/core';
-import React, { useState, ReactNode } from 'react';
+import React, { useState, ReactNode, useEffect, useRef } from 'react';
 
 interface CustomSpoilerProps {
   children: ReactNode;
@@ -15,6 +15,15 @@ export default function CustomSpoiler({
   hideLabel = 'Show Less',
 }: CustomSpoilerProps) {
   const [expanded, setExpanded] = useState(false);
+  const [shouldSpoil, setShouldSpoil] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (contentRef.current) {
+      const { scrollHeight, clientHeight } = contentRef.current;
+      setShouldSpoil(scrollHeight > maxHeight);
+    }
+  }, [children, maxHeight]);
 
   return (
     <Spoiler
@@ -29,7 +38,7 @@ export default function CustomSpoiler({
       }}
     >
       {children}
-      {!expanded && (
+      {!expanded && shouldSpoil && (
         <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white to-transparent" />
       )}
     </Spoiler>

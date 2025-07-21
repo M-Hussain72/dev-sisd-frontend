@@ -25,8 +25,8 @@ export default function CourseDashboard({ language, author, content, title, shor
   return (
     <div className="  mb-20 ">
       <div className="mx-10">
-        <h1 className=" text-[32px] font-semibold text-themeBlack ">{title}</h1>
-        <p className=" text-[18px] text-themeGray">{shortDescription}</p>
+        <h1 className=" sm:text-[32px] mt-4 text-[22px] font-semibold text-themeBlack ">{title}</h1>
+        <p className=" sm:text-[18px] text-base mt-2 text-themeGray">{shortDescription}</p>
         <div className="mt-4">
           <InstructorInfoBar instructor={author} language={language} subtitle={undefined} />
         </div>
@@ -96,6 +96,7 @@ export default function CourseDashboard({ language, author, content, title, shor
             <CourseOverviewSection
               sectionContent={selectedSection.sectionContent}
               sectionTitle={selectedSection.sectionTitle}
+              sectionDescription={selectedSection.sectionDescription}
               _id={selectedSection._id}
             />
           ) : (

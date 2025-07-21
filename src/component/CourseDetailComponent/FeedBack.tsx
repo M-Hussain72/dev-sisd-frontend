@@ -19,8 +19,8 @@ export default function FeedBack({ courseId, rating }: { courseId: string; ratin
       <h1 className="text-[28px] sm:text-[34px] font-semibold ">Feedback</h1>
       {data && data.reviews?.length > 0 && (
         <span className=" text-lg text-[#626465] mt-3">
-          {rating || 0.0} course rating <span className="text-3xl">.</span> {data?.pagination.totalResults || 0} rating &
-          reviews
+          {rating.toFixed(1) || 0.0} course rating <span className="text-3xl">.</span> {data?.pagination.totalResults || 0}{' '}
+          rating & reviews
         </span>
       )}
       <ul className=" mt-4 space-y-6 ">

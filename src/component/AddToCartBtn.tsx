@@ -51,7 +51,8 @@ export default function AddToCartBtn({
 
   function handleAddToCart() {
     if (!isAuthenticate) {
-      toast.info('Please log in to your account before adding courses to your cart.');
+      navigate({ to: '/signup' });
+      // toast.info('Please log in to your account before adding courses to your cart.');
       // Optionally, send them to the login page:
       return;
     }
