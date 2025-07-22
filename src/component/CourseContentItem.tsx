@@ -51,7 +51,7 @@ export default ({
   }
 
   return (
-    <div key={_id} className={' flex flex-1   py-[3px] items-center ' + (!isSideBar ? ' gap-4 ' : ' gap-3 ')}>
+    <div key={_id} className={' flex flex-1   py-[3px] items-center  ' + (!isSideBar ? ' gap-4 ' : ' gap-3 ')}>
       <div>{isCompleted ? <CompleteIcon w={width} h={height} /> : icon}</div>
       <div className={' flex flex-1  justify-between'}>
         <div>

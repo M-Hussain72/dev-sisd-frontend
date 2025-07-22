@@ -88,7 +88,7 @@ const CourseLessonPage = ({ sections, initialLectureId }: { sections: ContentIn[
         {/* navigate to back the course dashboard page */}
         <Link
           to={`/course/${courseSlug}/learn`}
-          search={{ sectionId: currentSection._id }}
+          search={{ sectionId: currentSection._id, lectureId: currentLecture._id }}
           className="   xs:flex hidden items-center sm::mt-0 mt-2"
         >
           <svg

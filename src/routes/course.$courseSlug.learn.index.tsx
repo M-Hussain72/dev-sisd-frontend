@@ -9,6 +9,7 @@ import { RequireAuth } from '../component/helper/RequiredAuth';
 
 const SchemaSection = z.object({
   sectionId: z.string().optional(), // `search` is an optional string
+  lectureId: z.string().optional(),
 });
 
 export const Route = createFileRoute('/course/$courseSlug/learn/')({

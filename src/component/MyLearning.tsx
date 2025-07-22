@@ -29,8 +29,7 @@ export default function MyLearning() {
     if (!res) {
       navigate({ to: `/course/${slug}/learn` });
     }
-
-    navigate({ to: `/course/${res?.courseSlug}/learn/${res?.sectionId}/lecture/${res?.lectureId}` });
+    navigate({ to: `/course/${slug}/learn?sectionId=${res?.sectionId}&lectureId=${res?.lectureId}` });
   }
 
   return (

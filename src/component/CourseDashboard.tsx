@@ -4,19 +4,22 @@ import CourseSection from './CourseSection';
 import InstructorInfoBar from './helper/InstructorInfoBar';
 import { Loading } from './ui/Loading';
 import { CourseIn } from '../interface/courseInterface';
-import { useSearch } from '@tanstack/react-router';
+import { useNavigate, useSearch } from '@tanstack/react-router';
+import Button from './ui/Button';
+import userHttp from '../http/userHttp';
 
 export default function CourseDashboard({ language, author, content, title, shortDescription }: CourseIn) {
-  const { sectionId: initialSectionId } = useSearch({ from: '/course/$courseSlug/learn/' });
+  const { sectionId: initialSectionId, lectureId } = useSearch({ from: '/course/$courseSlug/learn/' });
   const [selectedSectionId, setSelectedSectionId] = useState(initialSectionId || content[0]._id);
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
-    }, 600);
+    }, 500);
   }, [selectedSectionId]);
 
   const findSection = content.find((item) => item._id === selectedSectionId);
@@ -48,6 +51,35 @@ export default function CourseDashboard({ language, author, content, title, shor
           </svg>
         </div>
       </div>
+      {lectureId && (
+        <div className="max-w-[1160px] sm:mr-12 mr-2 ">
+          <button
+            className="  text-sm  ml-auto w-fit items-center bg-themeBlue rounded-md flex gap-2  text-white px-3 py-2"
+            onClick={() => {
+              navigate({ to: `/course/$courseSlug/learn/${initialSectionId}/lecture/${lectureId}` });
+            }}
+          >
+            <svg
+              fill="#ffff"
+              className=" h-[14px] w-[16px] "
+              version="1.1"
+              id="Layer_1"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 512.055 512.055"
+            >
+              <g>
+                <g>
+                  <path
+                    d="M500.235,236.946L30.901,2.28C16.717-4.813,0.028,5.502,0.028,21.361v469.333c0,15.859,16.689,26.173,30.874,19.081
+			l469.333-234.667C515.958,267.247,515.958,244.808,500.235,236.946z M42.694,456.176V55.879l400.297,200.149L42.694,456.176z"
+                  />
+                </g>
+              </g>
+            </svg>{' '}
+            <span className="hidden sm:inline">Continue Watching</span>
+          </button>
+        </div>
+      )}
       <div className=" relative sm:mt-10 mt-4 sm:mr-10 mx-auto px-2 flex gap-4 ">
         <div className={(open ? ' absolute' : ' hidden') + ' sm:block  sm:relative bg-white w-[244px]  '}>
           <ul className=" h-fit w-full max-h-[500px] sm:pt-[46px] pt-[12px]  pb-[24px] pr-1 lg:border-r-[2px] lg:border-y-[2px] lg:border-l-0  border-[1px] rounded-xl border-[#eeeeee] lg:rounded-l-none  lg:rounded-r-2xl shadow-sm overflow-scroll ">
@@ -100,7 +132,7 @@ export default function CourseDashboard({ language, author, content, title, shor
               _id={selectedSection._id}
             />
           ) : (
-            <div className=" mt-20 w-fit  mx-auto">
+            <div className="  mt-20 w-fit  mx-auto">
               <Loading />
             </div>
           )}

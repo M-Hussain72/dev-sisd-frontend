@@ -363,7 +363,7 @@ export default function VideoPlayer({
   const [isBuffering, setIsBuffering] = useState(false); // <--- NEW STATE
   const token = getAuthToken();
 
-  const accessToken = token?.access?.token || '';
+  const refreshToken = token?.refresh?.token || '';
 
   // Effect to load external libraries (Plyr CSS and JS)
   useEffect(() => {
@@ -398,7 +398,7 @@ export default function VideoPlayer({
           maxBufferLength: 30,
           maxMaxBufferLength: 60,
           xhrSetup: (xhr) => {
-            if (accessToken) xhr.setRequestHeader('Authorization', `Bearer ${accessToken}`);
+            if (refreshToken) xhr.setRequestHeader('Authorization', `Bearer ${refreshToken}`);
           },
           // startPosition: startTime > 0 ? startTime : -1,
         });
@@ -444,7 +444,7 @@ export default function VideoPlayer({
       hls?.destroy();
       hlsRef.current = null;
     };
-  }, [url, accessToken]);
+  }, [url, refreshToken]);
 
   // Effect to initialize Plyr and bind all events
   useEffect(() => {
@@ -562,7 +562,7 @@ export default function VideoPlayer({
       headers: {
         'Content-Type': 'application/json',
         // attach your Bearer token here:
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${refreshToken}`,
       },
       body: JSON.stringify({ lectureId: id, type: 'video', last_watched_second: lastViewTime, completed: false }),
     });

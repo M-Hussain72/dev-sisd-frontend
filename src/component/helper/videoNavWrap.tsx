@@ -35,7 +35,7 @@ export default function VideoNavWrapper({ handlePrevLecture, handleForwardLectur
 
   return (
     <div
-      className="video-nav-group relative"
+      className="video-nav-group relative max-w-[1025px]"
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
       onTouchStart={() => setHovering(true)}
