@@ -1,8 +1,10 @@
 import womenImage from '../../assets/pinkWomen.png';
 import menImage from '../../assets/bigSimleMen.png';
 import Button from '../ui/Button';
+import { useNavigate } from '@tanstack/react-router';
 
 export default function PromotionalBanner() {
+  const navigate = useNavigate();
   return (
     <div className=" flex min-[845px]:flex-nowrap flex-wrap-reverse mb-24 gap-10 justify-normal">
       <div className=" relative max-w-[650px] xs:min-w-[450px] w-full ">
@@ -49,7 +51,7 @@ export default function PromotionalBanner() {
           career advantages, encompassing achievements such as securing promotions, enhancing current job performance, and
           successfully pursuing new employment opportunities.
         </p>
-        <Button>Learn more</Button>
+        <Button onClick={() => navigate({ to: '/login' })}>Learn more</Button>
       </div>
     </div>
   );
