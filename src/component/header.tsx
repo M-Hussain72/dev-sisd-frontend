@@ -141,11 +141,11 @@ const Header = () => {
                   <div className=" ml-2 py-4 ">
                     <button
                       className={
-                        'px-4 py-2 ml-2 hover:text-themeBlue   hover:bg-blue-100 rounded ' +
-                        (open ? ' text-themeBlue ' : ' text-[#565858]')
+                        'px-4 py-2 ml-2 hover:text-white    hover:bg-themeBlue rounded text-nowrap ' +
+                        (open ? ' text-white bg-themeBlue ' : ' text-[#565858]')
                       }
                     >
-                      Explore
+                      Explore Courses
                     </button>
                   </div>
 
@@ -160,7 +160,7 @@ const Header = () => {
               {/* search bar on header */}
 
               {!isMobile && (
-                <div className="ml-8 w-full">
+                <div className="ml-2 w-full">
                   <AutoCompleteSearchInput />
                 </div>
               )}

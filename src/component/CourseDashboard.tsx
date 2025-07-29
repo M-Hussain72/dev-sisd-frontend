@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import CourseOverviewSection from './CourseOverviewSection';
 import CourseSection from './CourseSection';
 import InstructorInfoBar from './helper/InstructorInfoBar';
 import { Loading } from './ui/Loading';
 import { CourseIn } from '../interface/courseInterface';
-import { useNavigate, useSearch } from '@tanstack/react-router';
+import { useNavigate, useRouter, useSearch } from '@tanstack/react-router';
 import Button from './ui/Button';
 import userHttp from '../http/userHttp';
 

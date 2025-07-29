@@ -1,7 +1,7 @@
 import textImg from '../assets/bigSimleMen.png';
 export default function About() {
   return (
-    <div className=" max-w-[1136px] mx-auto px-4 py-10 ">
+    <div className=" max-w-[1136px] mx-auto px-4 pb-10 ">
       <div className=" hidden md:block absolute  right-0 top-[40%] z-0">
         <svg width="206" height="410" viewBox="0 0 206 410" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g opacity="0.5" clip-path="url(#clip0_118_16155)">
@@ -158,35 +158,32 @@ export default function About() {
         </svg>
       </div>
 
-      <div className=" max-w-[672px] pb-8 mx-auto px-6">
+      <div className=" max-w-[672px] pb-4 mx-auto px-6">
         <div className=" mb-12">
           <h1 className="  font-semibold text-themeBlack text-2xl">About Us</h1>
-          <p className=" text-lg text-themeGray mt-6">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          <p className=" text-lg text-themeGray6 mt-6">
+            Sirat Institute is a non-profit organization dedicated to nurturing knowledge, inspiring personal growth, and
+            empowering communities through accessible education and skill development. Founded on the principle that learning
+            is a lifelong journey, we are committed to providing meaningful programs, workshops, and initiatives that support
+            intellectual, ethical, and personal development.
           </p>
-        </div>
-        <div className=" mb-12">
-          <h1 className="  font-semibold text-themeBlack text-2xl">Our mission is to educate young minds</h1>
-          <p className=" text-lg text-themeGray mt-6">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          <p className=" text-lg text-themeGray6 mt-6">
+            Our mission is to educate young minds and equip them with the knowledge, character, and practical skills needed
+            to contribute positively to society. We believe in fostering curiosity, critical thinking, and a spirit of
+            service — guiding learners to become compassionate, informed, and resilient individuals.
+          </p>
+          <p className=" text-lg text-themeGray6 mt-6">
+            We serve as a platform for collaboration between educators, professionals, scholars, and volunteers who share our
+            commitment to inclusive education and community enrichment. Through our programs, we aim to bridge the gap
+            between academic learning and real-world application, especially in underserved and underrepresented communities.
+          </p>
+          <p className=" text-lg text-themeGray6 mt-6">
+            Our work is inspired by a rich legacy of knowledge, ethics, and civic responsibility — and we are passionate
+            about building a future where every young person has the tools and opportunities to thrive.
           </p>
         </div>
       </div>
-      <div className=" my-10">
+      {/* <div className=" my-10">
         <h1 className=" text-4xl font-semibold text-themeBlack my-10 mt-12 ">Our Team</h1>
 
         <ul className=" grid gap-8 grid-cols-1  min-[550px]:grid-cols-2 min-[1100px]:grid-cols-4  min-[810px]:grid-cols-3 ">
@@ -201,6 +198,39 @@ export default function About() {
             </li>
           ))}
         </ul>
+      </div> */}
+      <div className=" mb-10 max-w-[672px] mx-auto ">
+        <h1 className="  font-semibold text-themeBlack text-2xl">Our Team </h1>
+        <p className=" text-lg text-themeGray6 mt-6">
+          At the heart of Sirat Institute is a diverse and passionate team of educators, mentors, organizers, and community
+          leaders. Our team brings together expertise from various disciplines, united by a common goal: to make education
+          accessible, meaningful, and transformative.
+        </p>
+        <p className=" text-lg text-themeGray6 mt-6">
+          <p>We are proud to be supported by:</p>
+          <p className=" text-lg text-themeGray6 ml-6 mt-3 leading-5">
+            {' '}
+            <span className=" text-black font-medium">Founders & Board Members</span> – Visionaries and strategists who guide
+            the mission and uphold our values.{' '}
+          </p>
+          <p className=" text-lg text-themeGray6 ml-6 mt-2 leading-5">
+            <span className=" text-black font-medium ">Program Coordinators</span> – Educators and trainers who design and
+            deliver impactful learning experiences.
+          </p>
+          <p className=" text-lg text-themeGray6 ml-6 mt-2 leading-5">
+            <span className=" text-black font-medium ">Volunteers & Mentors</span> – Individuals committed to sharing their
+            time, skills, and wisdom with the next generation.{' '}
+          </p>{' '}
+          <p className=" text-lg text-themeGray6 ml-6 mt-2 leading-5">
+            {' '}
+            <span className=" text-black font-medium ">Advisors & Partners</span> – Professionals and thought leaders who
+            support our growth and sustainability.{' '}
+          </p>
+        </p>
+        <p className=" text-lg text-themeGray6 mt-6">
+          Every member of our team plays a vital role in shaping a learning environment that is inclusive, empowering, and
+          grounded in integrity. Together, we work to cultivate a vibrant, informed, and inspired community of learners.
+        </p>
       </div>
     </div>
   );

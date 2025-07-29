@@ -83,7 +83,7 @@ export default function AssignmentSubmission({
   };
 
   return (
-    <div className=" mx-auto min-h-[300px]  ">
+    <div className=" mx-auto sm:mt-8   ">
       {!resSubmit ? (
         <>
           {/* <h2 className="text-2xl font-bold mb-6 capitalize">Assignment:{assignment?.title}</h2> */}
@@ -92,7 +92,7 @@ export default function AssignmentSubmission({
             <p className="text-yellow-600 font-semibold mt-8">⏳ Assignment will start at: {availableAt.toLocaleString()}</p>
           )}
 
-          {status === 'expired' && (
+          {/* {status === 'expired' && (
             <div className="max-w-2xl mx-auto mt-6  p-6 bg-white shadow-md rounded-lg border border-gray-200">
               <div className=" items-center w-fit mx-auto space-x-3 text-center">
                 <svg
@@ -114,9 +114,9 @@ export default function AssignmentSubmission({
                 <span className=" text-red-600 font-medium">{deadline.toLocaleString()}</span>
               </p>
             </div>
-          )}
+          )} */}
 
-          {status === 'active' && (
+          {(status === 'active' || status === 'expired') && (
             <>
               <h3 className=" font-bold text-lg mt-2 mb-4">Download Assignment:</h3>
               <button
@@ -235,18 +235,21 @@ export default function AssignmentSubmission({
                 </div>
               </button>
 
-              <div className="mt-8">
-                <p className="text-green-600 font-semibold mb-4">
-                  Submit before: {formatDate(deadline)} {' / '}
+              <div className="sm:mt-8 mt-6 px-2">
+                <p className={`font-semibold mb-4 ${status === 'expired' ? 'text-red-600' : 'text-green-600'}`}>
+                  {status === 'expired' ? 'Late Submission: ' : 'Submit before: '} {formatDate(deadline)} {' / '}
                   {deadline.toLocaleTimeString([], {
                     hour: '2-digit',
                     minute: '2-digit',
                     second: '2-digit',
                   })}
                 </p>
-                <label className="block font-semibold mb-1">Upload Your Answer:</label>
-                <input type="file" className="border p-2 w-full" onChange={handleFileChange} />
-                <div className="mt-4 px-4 py-2 ">
+
+                <label className="block font-semibold mb-1">
+                  Upload Your Answer: ( only .pdf, .docx, .zip file allowed)
+                </label>
+                <input type="file" accept=".pdf,.docx,.zip" className="border  w-full" onChange={handleFileChange} />
+                <div className="mt-4  py-2 ">
                   {!submitting ? (
                     !submit ? (
                       <button className="bg-blue-500 text-white px-4 py-2 rounded " onClick={handelSubmit}>
@@ -276,22 +279,25 @@ export default function AssignmentSubmission({
           )}
         </>
       ) : (
-        <div className="max-w-2xl mx-auto mt-6  p-6 bg-white shadow-md rounded-lg border border-gray-200">
+        <div className=" sm:max-w-2xl mx-auto sm:mt-6  mt-4 sm:p-6 bg-white sm:shadow-md rounded-lg sm:border border-gray-200">
           <div className="flex items-center w-fit mx-auto space-x-3 text-center">
             {/* <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
             </svg> */}
             <h2 className="text-xl font-semibold text-green-600">Assignment Submitted</h2>
           </div>
-          <p className="mt-2  mx-auto w-fit text-center"> Your response has been submitted successfully.</p>
-          <div className=" mt-4">
+          <p className="mt-2 sm:disabled hidden mx-auto w-fit text-center">
+            {' '}
+            Your response has been submitted successfully.
+          </p>
+          <div className=" sm:mt-4">
             {assignment.isFeedbackDone ? (
               <div>
                 <h1 className=" mt-2 text-lg font-semibold">Score:</h1>
                 <p>{assignment.score}</p>
 
-                <h1 className=" mt-6 text-lg font-semibold ">Feedback:</h1>
-                <p className=" mt-2 h-[250px] w-full overflow-scroll p-2 pt-4 shadow-inner shadow-black/30 rounded-md text-themeGray6">
+                <h1 className=" mt-2 text-lg font-semibold ">Feedback:</h1>
+                <p className=" sm:text-base text-sm mt-2 sm:h-[250px] h-[140px] w-full overflow-scroll p-2 pt-4 shadow-inner shadow-black/30 rounded-md text-themeGray6">
                   {assignment.feedback}
                 </p>
               </div>

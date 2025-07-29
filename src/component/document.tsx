@@ -41,7 +41,7 @@ export default function DocumentReading({
   }, []);
 
   return (
-    <div className=" mx-auto min-h-[400px]  ">
+    <div className=" mx-auto lg:min-h-[500px] aspect-video overflow-scroll  ">
       <ReactMarkdown
         className={
           ' prose-strong:font-semibold  prose-headings:mb-4 prose-sm text-themeGray prose-headings:text-themeBlack prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl   '

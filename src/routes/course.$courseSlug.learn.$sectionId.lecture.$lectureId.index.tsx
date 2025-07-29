@@ -103,7 +103,7 @@ function RouteComponent() {
             />
           </div>
         ) : data?.lecture?.type === 'assessment' ? (
-          <div className="p-5">
+          <div className="sm:p-5 px-6 lg:min-h-[500px] sm:min-h-[400px] max-h-[310px]">
             <QuizResult score={data.progress?.quizScore}></QuizResult>
           </div>
         ) : data?.lecture?.type === 'article' ? (
@@ -116,7 +116,7 @@ function RouteComponent() {
             />
           </div>
         ) : data?.lecture?.type === 'assignment' ? (
-          <div className="p-5  relative ">
+          <div className="sm:p-5 p-2  relative lg:min-h-[500px] sm:min-h-[400px] max-h-[310px] overflow-scroll  ">
             <AssignmentPage
               assignment={{
                 title: data?.lecture?.title,

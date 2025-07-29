@@ -24,7 +24,7 @@ export default function VideoNavWrapper({ handlePrevLecture, handleForwardLectur
     if (hovering) {
       setVisible(true);
     } else {
-      hideTimer.current = setTimeout(() => setVisible(false), 5000);
+      hideTimer.current = setTimeout(() => setVisible(false), 1000);
     }
     return () => {
       if (hideTimer.current) {

@@ -10,7 +10,7 @@ export default function QuizResult({ score }: { score?: number }) {
     navigate({ to: `/course/${params.courseSlug}/learn/${params.sectionId}/quiz/${params.lectureId}` });
   }
   return (
-    <>
+    <div className=" sm:p-4">
       <div className="lg:mt-20 mt-12 flex justify-between">
         <h1 className=" sm:text-[24px] text-lg text-themeBlack font-semibold ">Submit your Quiz</h1>
         {score && score < 80 ? (
@@ -42,6 +42,6 @@ export default function QuizResult({ score }: { score?: number }) {
           </span>
         </div>
       </div>
-    </>
+    </div>
   );
 }
