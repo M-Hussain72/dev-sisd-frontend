@@ -11,8 +11,20 @@ import { useLectureNav } from '../context/LectureNavigationContext';
 import { CourseIn, LectureProgressPayload } from '../interface/courseInterface';
 import AssignmentPage from '../component/AssignmentPage';
 
+function NotFoundLecture() {
+  return (
+    <div className="aspect-video flex flex-col items-center justify-center bg-white text-black rounded-lg shadow-sm">
+      <p className="text-base font-semibold text-center">Lecture unavailable right now</p>
+      <p className="text-sm text-gray-600 mt-1 text-center">
+        This may be due to a network issue or the lecture has been removed.
+      </p>
+      <p className="text-sm text-gray-700 mt-3 font-semibold text-center">You can skip this lecture and continue.</p>
+    </div>
+  );
+}
 export const Route = createFileRoute('/course/$courseSlug/learn/$sectionId/lecture/$lectureId/')({
   component: RouteComponent,
+  notFoundComponent: NotFoundLecture,
 });
 
 function RouteComponent() {
@@ -132,7 +144,11 @@ function RouteComponent() {
             />
           </div>
         ) : (
-          <div> Lecture Not Found! Skip This lecture.</div>
+          <div className="aspect-video flex flex-col items-center justify-center bg-white text-black rounded-lg shadow-sm">
+            <p className="text-base font-medium text-center">Lecture unavailable right now.</p>
+            <p className="text-sm text-gray-600 mt-1">It may be due to a network issue or the lecture has been removed.</p>
+            <p className="text-sm text-gray-700 mt-3 font-semibold">You can skip this lecture and continue.</p>
+          </div>
         )}
       </div>
     </>

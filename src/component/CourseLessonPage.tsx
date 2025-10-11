@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import CourseContentItem, { ContentItemType } from './CourseContentItem';
 import CourseSection from './CourseSection';
 import { useMediaQuery } from '@mantine/hooks';
-import { Link, Outlet, useNavigate, useParams } from '@tanstack/react-router';
+import { Link, Outlet, useLocation, useNavigate, useParams } from '@tanstack/react-router';
 
 import { ContentIn } from '../interface/courseInterface';
 import { LectureNavigationContext } from '../context/LectureNavigationContext'; // adjust path
@@ -12,6 +12,7 @@ const CourseLessonPage = ({ sections, initialLectureId }: { sections: ContentIn[
   const { courseSlug, sectionId } = useParams({
     from: '/course/$courseSlug/learn/$sectionId/lecture',
   });
+  const location = useLocation();
   const initialSectionIndex = sections && sections.findIndex((s) => s._id === sectionId);
   const [currentSectionIndex, setCurrentSectionIndex] = useState(initialSectionIndex > -1 ? initialSectionIndex : 0);
   const currentSection = sections[currentSectionIndex];
@@ -27,6 +28,7 @@ const CourseLessonPage = ({ sections, initialLectureId }: { sections: ContentIn[
   }, [selectedLectureId]);
 
   function handleLectureChange(id: string, type: 'video' | 'assessment' | 'article' | 'assignment') {
+    if (id === selectedLectureId) return;
     setSelectedLectureId(id);
     if (type === 'assessment') {
       navigate({ to: `/course/${courseSlug}/learn/${sectionId}/quiz/${id}` });
