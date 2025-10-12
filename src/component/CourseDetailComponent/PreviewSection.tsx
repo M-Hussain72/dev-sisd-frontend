@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import VideoPlayer from '../videoPlayer';
+import VideoPlayer from '../videoPlayer/VideoPlayer';
 import formatTime from '../../utils/formatTime';
 import VideoIcon from '../../assets/VideoIcon';
 
