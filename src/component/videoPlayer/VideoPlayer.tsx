@@ -5,8 +5,7 @@ import { LoadingSpinner } from './LoadingSpinner';
 import { ErrorOverlay } from './ErrorOverlay';
 import { ProgressBar } from './ProgressBar';
 import { Controls } from './Controls';
-import { SettingsPanel } from './SettingsPanel';
-import { AnimatePresence } from 'framer-motion';
+
 import { Play } from 'lucide-react';
 
 export default function VideoPlayer({
@@ -574,7 +573,7 @@ export default function VideoPlayer({
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
-  const playbackRates = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2];
+  const playbackRates = [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2];
 
   return (
     <div
