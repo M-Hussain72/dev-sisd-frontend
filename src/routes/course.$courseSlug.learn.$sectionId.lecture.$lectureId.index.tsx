@@ -1,7 +1,7 @@
 import { createFileRoute, notFound } from '@tanstack/react-router';
 import CourseLessonPage from '../component/CourseLessonPage';
 import { fetchLecture, setLectureProgress } from '../http/courseHttp';
-import VideoPlayer from '../component/videoPlayer';
+import VideoPlayer from '../component/videoPlayer/VideoPlayer';
 import QuizResult from '../component/QuizResult';
 import DocumentReading from '../component/document';
 import { Loader } from '@mantine/core';
