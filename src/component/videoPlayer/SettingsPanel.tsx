@@ -37,7 +37,7 @@ export const SettingsPanel = ({
             stiffness: 200,
             damping: 25,
           }}
-          className={`fixed md:absolute md:bottom-full md:right-0 md:mb-2 bottom-0 left-0 right-0 md:left-auto bg-white md:bg-gray-900 md:rounded-xl rounded-t-2xl shadow-2xl overflow-hidden w-full md:w-80 z-50`}
+          className={`fixed md:absolute md:bottom-full md:right-0 md:mb-2 bottom-0 left-0 right-0 md:left-auto bg-white md:bg-gray-900 md:rounded-xl rounded-t-2xl shadow-2xl overflow-hidden w-full md:w-72 z-50`}
         >
           <div className="md:hidden bg-gray-100 px-4 py-3 flex items-center justify-between border-b">
             <h3 className="font-semibold text-gray-900">Settings</h3>
@@ -61,7 +61,7 @@ export const SettingsPanel = ({
             </button>
           </div>
 
-          <div className="max-h-72 md:max-h-80 overflow-y-auto bg-white md:bg-gray-900">
+          <div className={' max-h-52 overflow-y-auto bg-white md:bg-gray-900 '}>
             {settingsTab === 'quality' && (
               <div className="py-2">
                 {qualities.length > 0 ? (
