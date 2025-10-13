@@ -8,419 +8,170 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-// Import Routes
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as VerifyEmailRouteImport } from './routes/verify-email'
+import { Route as UserRouteImport } from './routes/user'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as SignupRouteImport } from './routes/signup'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CartRouteImport } from './routes/cart'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as LoginIndexRouteImport } from './routes/login/index'
+import { Route as BlogsIndexRouteImport } from './routes/blogs.index'
+import { Route as PaymentSuccessRouteImport } from './routes/payment.success'
+import { Route as PaymentCheckoutRouteImport } from './routes/payment.checkout'
+import { Route as LoginForgotpasswordRouteImport } from './routes/login/forgotpassword'
+import { Route as UserSettingIndexRouteImport } from './routes/user.setting.index'
+import { Route as UserPurchasesIndexRouteImport } from './routes/user.purchases.index'
+import { Route as UserProfileIndexRouteImport } from './routes/user.profile.index'
+import { Route as CourseCourseSlugIndexRouteImport } from './routes/course.$courseSlug.index'
+import { Route as BlogsSlugIndexRouteImport } from './routes/blogs.$slug.index'
+import { Route as CoursesSearchSearchIndexRouteImport } from './routes/courses.search.$search.index'
+import { Route as CoursesCategoryCategorySlugIndexRouteImport } from './routes/courses.category.$categorySlug.index'
+import { Route as CourseCourseSlugLearnIndexRouteImport } from './routes/course.$courseSlug.learn.index'
+import { Route as CourseCourseSlugLearnSectionIdLectureRouteImport } from './routes/course.$courseSlug.learn.$sectionId.lecture'
+import { Route as CourseCourseSlugLearnSectionIdQuizQuizIdRouteImport } from './routes/course.$courseSlug.learn.$sectionId.quiz.$quizId'
+import { Route as CourseCourseSlugLearnSectionIdLectureLectureIdIndexRouteImport } from './routes/course.$courseSlug.learn.$sectionId.lecture.$lectureId.index'
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as VerifyEmailImport } from './routes/verify-email'
-import { Route as UserImport } from './routes/user'
-import { Route as TermsImport } from './routes/terms'
-import { Route as SignupImport } from './routes/signup'
-import { Route as ResetPasswordImport } from './routes/reset-password'
-import { Route as PrivacyImport } from './routes/privacy'
-import { Route as ContactImport } from './routes/contact'
-import { Route as CartImport } from './routes/cart'
-import { Route as AboutImport } from './routes/about'
-import { Route as IndexImport } from './routes/index'
-import { Route as LoginIndexImport } from './routes/login/index'
-import { Route as BlogsIndexImport } from './routes/blogs.index'
-import { Route as PaymentSuccessImport } from './routes/payment.success'
-import { Route as PaymentCheckoutImport } from './routes/payment.checkout'
-import { Route as LoginForgotpasswordImport } from './routes/login/forgotpassword'
-import { Route as UserSettingIndexImport } from './routes/user.setting.index'
-import { Route as UserPurchasesIndexImport } from './routes/user.purchases.index'
-import { Route as UserProfileIndexImport } from './routes/user.profile.index'
-import { Route as CourseCourseSlugIndexImport } from './routes/course.$courseSlug.index'
-import { Route as BlogsSlugIndexImport } from './routes/blogs.$slug.index'
-import { Route as CoursesSearchSearchIndexImport } from './routes/courses.search.$search.index'
-import { Route as CoursesCategoryCategorySlugIndexImport } from './routes/courses.category.$categorySlug.index'
-import { Route as CourseCourseSlugLearnIndexImport } from './routes/course.$courseSlug.learn.index'
-import { Route as CourseCourseSlugLearnSectionIdLectureImport } from './routes/course.$courseSlug.learn.$sectionId.lecture'
-import { Route as CourseCourseSlugLearnSectionIdQuizQuizIdImport } from './routes/course.$courseSlug.learn.$sectionId.quiz.$quizId'
-import { Route as CourseCourseSlugLearnSectionIdLectureLectureIdIndexImport } from './routes/course.$courseSlug.learn.$sectionId.lecture.$lectureId.index'
-
-// Create/Update Routes
-
-const VerifyEmailRoute = VerifyEmailImport.update({
+const VerifyEmailRoute = VerifyEmailRouteImport.update({
   id: '/verify-email',
   path: '/verify-email',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const UserRoute = UserImport.update({
+const UserRoute = UserRouteImport.update({
   id: '/user',
   path: '/user',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const TermsRoute = TermsImport.update({
+const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const SignupRoute = SignupImport.update({
+const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const ResetPasswordRoute = ResetPasswordImport.update({
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const PrivacyRoute = PrivacyImport.update({
+const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const ContactRoute = ContactImport.update({
+const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const CartRoute = CartImport.update({
+const CartRoute = CartRouteImport.update({
   id: '/cart',
   path: '/cart',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const AboutRoute = AboutImport.update({
+const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const IndexRoute = IndexImport.update({
+const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const LoginIndexRoute = LoginIndexImport.update({
+const LoginIndexRoute = LoginIndexRouteImport.update({
   id: '/login/',
   path: '/login/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const BlogsIndexRoute = BlogsIndexImport.update({
+const BlogsIndexRoute = BlogsIndexRouteImport.update({
   id: '/blogs/',
   path: '/blogs/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const PaymentSuccessRoute = PaymentSuccessImport.update({
+const PaymentSuccessRoute = PaymentSuccessRouteImport.update({
   id: '/payment/success',
   path: '/payment/success',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const PaymentCheckoutRoute = PaymentCheckoutImport.update({
+const PaymentCheckoutRoute = PaymentCheckoutRouteImport.update({
   id: '/payment/checkout',
   path: '/payment/checkout',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const LoginForgotpasswordRoute = LoginForgotpasswordImport.update({
+const LoginForgotpasswordRoute = LoginForgotpasswordRouteImport.update({
   id: '/login/forgotpassword',
   path: '/login/forgotpassword',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const UserSettingIndexRoute = UserSettingIndexImport.update({
+const UserSettingIndexRoute = UserSettingIndexRouteImport.update({
   id: '/setting/',
   path: '/setting/',
   getParentRoute: () => UserRoute,
 } as any)
-
-const UserPurchasesIndexRoute = UserPurchasesIndexImport.update({
+const UserPurchasesIndexRoute = UserPurchasesIndexRouteImport.update({
   id: '/purchases/',
   path: '/purchases/',
   getParentRoute: () => UserRoute,
 } as any)
-
-const UserProfileIndexRoute = UserProfileIndexImport.update({
+const UserProfileIndexRoute = UserProfileIndexRouteImport.update({
   id: '/profile/',
   path: '/profile/',
   getParentRoute: () => UserRoute,
 } as any)
-
-const CourseCourseSlugIndexRoute = CourseCourseSlugIndexImport.update({
+const CourseCourseSlugIndexRoute = CourseCourseSlugIndexRouteImport.update({
   id: '/course/$courseSlug/',
   path: '/course/$courseSlug/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const BlogsSlugIndexRoute = BlogsSlugIndexImport.update({
+const BlogsSlugIndexRoute = BlogsSlugIndexRouteImport.update({
   id: '/blogs/$slug/',
   path: '/blogs/$slug/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const CoursesSearchSearchIndexRoute = CoursesSearchSearchIndexImport.update({
-  id: '/courses/search/$search/',
-  path: '/courses/search/$search/',
-  getParentRoute: () => rootRoute,
-} as any)
-
+const CoursesSearchSearchIndexRoute =
+  CoursesSearchSearchIndexRouteImport.update({
+    id: '/courses/search/$search/',
+    path: '/courses/search/$search/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const CoursesCategoryCategorySlugIndexRoute =
-  CoursesCategoryCategorySlugIndexImport.update({
+  CoursesCategoryCategorySlugIndexRouteImport.update({
     id: '/courses/category/$categorySlug/',
     path: '/courses/category/$categorySlug/',
-    getParentRoute: () => rootRoute,
+    getParentRoute: () => rootRouteImport,
   } as any)
-
-const CourseCourseSlugLearnIndexRoute = CourseCourseSlugLearnIndexImport.update(
-  {
+const CourseCourseSlugLearnIndexRoute =
+  CourseCourseSlugLearnIndexRouteImport.update({
     id: '/course/$courseSlug/learn/',
     path: '/course/$courseSlug/learn/',
-    getParentRoute: () => rootRoute,
-  } as any,
-)
-
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const CourseCourseSlugLearnSectionIdLectureRoute =
-  CourseCourseSlugLearnSectionIdLectureImport.update({
+  CourseCourseSlugLearnSectionIdLectureRouteImport.update({
     id: '/course/$courseSlug/learn/$sectionId/lecture',
     path: '/course/$courseSlug/learn/$sectionId/lecture',
-    getParentRoute: () => rootRoute,
+    getParentRoute: () => rootRouteImport,
   } as any)
-
 const CourseCourseSlugLearnSectionIdQuizQuizIdRoute =
-  CourseCourseSlugLearnSectionIdQuizQuizIdImport.update({
+  CourseCourseSlugLearnSectionIdQuizQuizIdRouteImport.update({
     id: '/course/$courseSlug/learn/$sectionId/quiz/$quizId',
     path: '/course/$courseSlug/learn/$sectionId/quiz/$quizId',
-    getParentRoute: () => rootRoute,
+    getParentRoute: () => rootRouteImport,
   } as any)
-
 const CourseCourseSlugLearnSectionIdLectureLectureIdIndexRoute =
-  CourseCourseSlugLearnSectionIdLectureLectureIdIndexImport.update({
+  CourseCourseSlugLearnSectionIdLectureLectureIdIndexRouteImport.update({
     id: '/$lectureId/',
     path: '/$lectureId/',
     getParentRoute: () => CourseCourseSlugLearnSectionIdLectureRoute,
   } as any)
-
-// Populate the FileRoutesByPath interface
-
-declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutImport
-      parentRoute: typeof rootRoute
-    }
-    '/cart': {
-      id: '/cart'
-      path: '/cart'
-      fullPath: '/cart'
-      preLoaderRoute: typeof CartImport
-      parentRoute: typeof rootRoute
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactImport
-      parentRoute: typeof rootRoute
-    }
-    '/privacy': {
-      id: '/privacy'
-      path: '/privacy'
-      fullPath: '/privacy'
-      preLoaderRoute: typeof PrivacyImport
-      parentRoute: typeof rootRoute
-    }
-    '/reset-password': {
-      id: '/reset-password'
-      path: '/reset-password'
-      fullPath: '/reset-password'
-      preLoaderRoute: typeof ResetPasswordImport
-      parentRoute: typeof rootRoute
-    }
-    '/signup': {
-      id: '/signup'
-      path: '/signup'
-      fullPath: '/signup'
-      preLoaderRoute: typeof SignupImport
-      parentRoute: typeof rootRoute
-    }
-    '/terms': {
-      id: '/terms'
-      path: '/terms'
-      fullPath: '/terms'
-      preLoaderRoute: typeof TermsImport
-      parentRoute: typeof rootRoute
-    }
-    '/user': {
-      id: '/user'
-      path: '/user'
-      fullPath: '/user'
-      preLoaderRoute: typeof UserImport
-      parentRoute: typeof rootRoute
-    }
-    '/verify-email': {
-      id: '/verify-email'
-      path: '/verify-email'
-      fullPath: '/verify-email'
-      preLoaderRoute: typeof VerifyEmailImport
-      parentRoute: typeof rootRoute
-    }
-    '/login/forgotpassword': {
-      id: '/login/forgotpassword'
-      path: '/login/forgotpassword'
-      fullPath: '/login/forgotpassword'
-      preLoaderRoute: typeof LoginForgotpasswordImport
-      parentRoute: typeof rootRoute
-    }
-    '/payment/checkout': {
-      id: '/payment/checkout'
-      path: '/payment/checkout'
-      fullPath: '/payment/checkout'
-      preLoaderRoute: typeof PaymentCheckoutImport
-      parentRoute: typeof rootRoute
-    }
-    '/payment/success': {
-      id: '/payment/success'
-      path: '/payment/success'
-      fullPath: '/payment/success'
-      preLoaderRoute: typeof PaymentSuccessImport
-      parentRoute: typeof rootRoute
-    }
-    '/blogs/': {
-      id: '/blogs/'
-      path: '/blogs'
-      fullPath: '/blogs'
-      preLoaderRoute: typeof BlogsIndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/login/': {
-      id: '/login/'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginIndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/blogs/$slug/': {
-      id: '/blogs/$slug/'
-      path: '/blogs/$slug'
-      fullPath: '/blogs/$slug'
-      preLoaderRoute: typeof BlogsSlugIndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/course/$courseSlug/': {
-      id: '/course/$courseSlug/'
-      path: '/course/$courseSlug'
-      fullPath: '/course/$courseSlug'
-      preLoaderRoute: typeof CourseCourseSlugIndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/user/profile/': {
-      id: '/user/profile/'
-      path: '/profile'
-      fullPath: '/user/profile'
-      preLoaderRoute: typeof UserProfileIndexImport
-      parentRoute: typeof UserImport
-    }
-    '/user/purchases/': {
-      id: '/user/purchases/'
-      path: '/purchases'
-      fullPath: '/user/purchases'
-      preLoaderRoute: typeof UserPurchasesIndexImport
-      parentRoute: typeof UserImport
-    }
-    '/user/setting/': {
-      id: '/user/setting/'
-      path: '/setting'
-      fullPath: '/user/setting'
-      preLoaderRoute: typeof UserSettingIndexImport
-      parentRoute: typeof UserImport
-    }
-    '/course/$courseSlug/learn/': {
-      id: '/course/$courseSlug/learn/'
-      path: '/course/$courseSlug/learn'
-      fullPath: '/course/$courseSlug/learn'
-      preLoaderRoute: typeof CourseCourseSlugLearnIndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/courses/category/$categorySlug/': {
-      id: '/courses/category/$categorySlug/'
-      path: '/courses/category/$categorySlug'
-      fullPath: '/courses/category/$categorySlug'
-      preLoaderRoute: typeof CoursesCategoryCategorySlugIndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/courses/search/$search/': {
-      id: '/courses/search/$search/'
-      path: '/courses/search/$search'
-      fullPath: '/courses/search/$search'
-      preLoaderRoute: typeof CoursesSearchSearchIndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/course/$courseSlug/learn/$sectionId/lecture': {
-      id: '/course/$courseSlug/learn/$sectionId/lecture'
-      path: '/course/$courseSlug/learn/$sectionId/lecture'
-      fullPath: '/course/$courseSlug/learn/$sectionId/lecture'
-      preLoaderRoute: typeof CourseCourseSlugLearnSectionIdLectureImport
-      parentRoute: typeof rootRoute
-    }
-    '/course/$courseSlug/learn/$sectionId/quiz/$quizId': {
-      id: '/course/$courseSlug/learn/$sectionId/quiz/$quizId'
-      path: '/course/$courseSlug/learn/$sectionId/quiz/$quizId'
-      fullPath: '/course/$courseSlug/learn/$sectionId/quiz/$quizId'
-      preLoaderRoute: typeof CourseCourseSlugLearnSectionIdQuizQuizIdImport
-      parentRoute: typeof rootRoute
-    }
-    '/course/$courseSlug/learn/$sectionId/lecture/$lectureId/': {
-      id: '/course/$courseSlug/learn/$sectionId/lecture/$lectureId/'
-      path: '/$lectureId'
-      fullPath: '/course/$courseSlug/learn/$sectionId/lecture/$lectureId'
-      preLoaderRoute: typeof CourseCourseSlugLearnSectionIdLectureLectureIdIndexImport
-      parentRoute: typeof CourseCourseSlugLearnSectionIdLectureImport
-    }
-  }
-}
-
-// Create and export the route tree
-
-interface UserRouteChildren {
-  UserProfileIndexRoute: typeof UserProfileIndexRoute
-  UserPurchasesIndexRoute: typeof UserPurchasesIndexRoute
-  UserSettingIndexRoute: typeof UserSettingIndexRoute
-}
-
-const UserRouteChildren: UserRouteChildren = {
-  UserProfileIndexRoute: UserProfileIndexRoute,
-  UserPurchasesIndexRoute: UserPurchasesIndexRoute,
-  UserSettingIndexRoute: UserSettingIndexRoute,
-}
-
-const UserRouteWithChildren = UserRoute._addFileChildren(UserRouteChildren)
-
-interface CourseCourseSlugLearnSectionIdLectureRouteChildren {
-  CourseCourseSlugLearnSectionIdLectureLectureIdIndexRoute: typeof CourseCourseSlugLearnSectionIdLectureLectureIdIndexRoute
-}
-
-const CourseCourseSlugLearnSectionIdLectureRouteChildren: CourseCourseSlugLearnSectionIdLectureRouteChildren =
-  {
-    CourseCourseSlugLearnSectionIdLectureLectureIdIndexRoute:
-      CourseCourseSlugLearnSectionIdLectureLectureIdIndexRoute,
-  }
-
-const CourseCourseSlugLearnSectionIdLectureRouteWithChildren =
-  CourseCourseSlugLearnSectionIdLectureRoute._addFileChildren(
-    CourseCourseSlugLearnSectionIdLectureRouteChildren,
-  )
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -450,7 +201,6 @@ export interface FileRoutesByFullPath {
   '/course/$courseSlug/learn/$sectionId/quiz/$quizId': typeof CourseCourseSlugLearnSectionIdQuizQuizIdRoute
   '/course/$courseSlug/learn/$sectionId/lecture/$lectureId': typeof CourseCourseSlugLearnSectionIdLectureLectureIdIndexRoute
 }
-
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
@@ -479,9 +229,8 @@ export interface FileRoutesByTo {
   '/course/$courseSlug/learn/$sectionId/quiz/$quizId': typeof CourseCourseSlugLearnSectionIdQuizQuizIdRoute
   '/course/$courseSlug/learn/$sectionId/lecture/$lectureId': typeof CourseCourseSlugLearnSectionIdLectureLectureIdIndexRoute
 }
-
 export interface FileRoutesById {
-  __root__: typeof rootRoute
+  __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/cart': typeof CartRoute
@@ -509,7 +258,6 @@ export interface FileRoutesById {
   '/course/$courseSlug/learn/$sectionId/quiz/$quizId': typeof CourseCourseSlugLearnSectionIdQuizQuizIdRoute
   '/course/$courseSlug/learn/$sectionId/lecture/$lectureId/': typeof CourseCourseSlugLearnSectionIdLectureLectureIdIndexRoute
 }
-
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
@@ -597,7 +345,6 @@ export interface FileRouteTypes {
     | '/course/$courseSlug/learn/$sectionId/lecture/$lectureId/'
   fileRoutesById: FileRoutesById
 }
-
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
@@ -622,6 +369,222 @@ export interface RootRouteChildren {
   CourseCourseSlugLearnSectionIdLectureRoute: typeof CourseCourseSlugLearnSectionIdLectureRouteWithChildren
   CourseCourseSlugLearnSectionIdQuizQuizIdRoute: typeof CourseCourseSlugLearnSectionIdQuizQuizIdRoute
 }
+
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/verify-email': {
+      id: '/verify-email'
+      path: '/verify-email'
+      fullPath: '/verify-email'
+      preLoaderRoute: typeof VerifyEmailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/user': {
+      id: '/user'
+      path: '/user'
+      fullPath: '/user'
+      preLoaderRoute: typeof UserRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cart': {
+      id: '/cart'
+      path: '/cart'
+      fullPath: '/cart'
+      preLoaderRoute: typeof CartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login/': {
+      id: '/login/'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blogs/': {
+      id: '/blogs/'
+      path: '/blogs'
+      fullPath: '/blogs'
+      preLoaderRoute: typeof BlogsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/payment/success': {
+      id: '/payment/success'
+      path: '/payment/success'
+      fullPath: '/payment/success'
+      preLoaderRoute: typeof PaymentSuccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/payment/checkout': {
+      id: '/payment/checkout'
+      path: '/payment/checkout'
+      fullPath: '/payment/checkout'
+      preLoaderRoute: typeof PaymentCheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login/forgotpassword': {
+      id: '/login/forgotpassword'
+      path: '/login/forgotpassword'
+      fullPath: '/login/forgotpassword'
+      preLoaderRoute: typeof LoginForgotpasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/user/setting/': {
+      id: '/user/setting/'
+      path: '/setting'
+      fullPath: '/user/setting'
+      preLoaderRoute: typeof UserSettingIndexRouteImport
+      parentRoute: typeof UserRoute
+    }
+    '/user/purchases/': {
+      id: '/user/purchases/'
+      path: '/purchases'
+      fullPath: '/user/purchases'
+      preLoaderRoute: typeof UserPurchasesIndexRouteImport
+      parentRoute: typeof UserRoute
+    }
+    '/user/profile/': {
+      id: '/user/profile/'
+      path: '/profile'
+      fullPath: '/user/profile'
+      preLoaderRoute: typeof UserProfileIndexRouteImport
+      parentRoute: typeof UserRoute
+    }
+    '/course/$courseSlug/': {
+      id: '/course/$courseSlug/'
+      path: '/course/$courseSlug'
+      fullPath: '/course/$courseSlug'
+      preLoaderRoute: typeof CourseCourseSlugIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blogs/$slug/': {
+      id: '/blogs/$slug/'
+      path: '/blogs/$slug'
+      fullPath: '/blogs/$slug'
+      preLoaderRoute: typeof BlogsSlugIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/courses/search/$search/': {
+      id: '/courses/search/$search/'
+      path: '/courses/search/$search'
+      fullPath: '/courses/search/$search'
+      preLoaderRoute: typeof CoursesSearchSearchIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/courses/category/$categorySlug/': {
+      id: '/courses/category/$categorySlug/'
+      path: '/courses/category/$categorySlug'
+      fullPath: '/courses/category/$categorySlug'
+      preLoaderRoute: typeof CoursesCategoryCategorySlugIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/course/$courseSlug/learn/': {
+      id: '/course/$courseSlug/learn/'
+      path: '/course/$courseSlug/learn'
+      fullPath: '/course/$courseSlug/learn'
+      preLoaderRoute: typeof CourseCourseSlugLearnIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/course/$courseSlug/learn/$sectionId/lecture': {
+      id: '/course/$courseSlug/learn/$sectionId/lecture'
+      path: '/course/$courseSlug/learn/$sectionId/lecture'
+      fullPath: '/course/$courseSlug/learn/$sectionId/lecture'
+      preLoaderRoute: typeof CourseCourseSlugLearnSectionIdLectureRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/course/$courseSlug/learn/$sectionId/quiz/$quizId': {
+      id: '/course/$courseSlug/learn/$sectionId/quiz/$quizId'
+      path: '/course/$courseSlug/learn/$sectionId/quiz/$quizId'
+      fullPath: '/course/$courseSlug/learn/$sectionId/quiz/$quizId'
+      preLoaderRoute: typeof CourseCourseSlugLearnSectionIdQuizQuizIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/course/$courseSlug/learn/$sectionId/lecture/$lectureId/': {
+      id: '/course/$courseSlug/learn/$sectionId/lecture/$lectureId/'
+      path: '/$lectureId'
+      fullPath: '/course/$courseSlug/learn/$sectionId/lecture/$lectureId'
+      preLoaderRoute: typeof CourseCourseSlugLearnSectionIdLectureLectureIdIndexRouteImport
+      parentRoute: typeof CourseCourseSlugLearnSectionIdLectureRoute
+    }
+  }
+}
+
+interface UserRouteChildren {
+  UserProfileIndexRoute: typeof UserProfileIndexRoute
+  UserPurchasesIndexRoute: typeof UserPurchasesIndexRoute
+  UserSettingIndexRoute: typeof UserSettingIndexRoute
+}
+
+const UserRouteChildren: UserRouteChildren = {
+  UserProfileIndexRoute: UserProfileIndexRoute,
+  UserPurchasesIndexRoute: UserPurchasesIndexRoute,
+  UserSettingIndexRoute: UserSettingIndexRoute,
+}
+
+const UserRouteWithChildren = UserRoute._addFileChildren(UserRouteChildren)
+
+interface CourseCourseSlugLearnSectionIdLectureRouteChildren {
+  CourseCourseSlugLearnSectionIdLectureLectureIdIndexRoute: typeof CourseCourseSlugLearnSectionIdLectureLectureIdIndexRoute
+}
+
+const CourseCourseSlugLearnSectionIdLectureRouteChildren: CourseCourseSlugLearnSectionIdLectureRouteChildren =
+  {
+    CourseCourseSlugLearnSectionIdLectureLectureIdIndexRoute:
+      CourseCourseSlugLearnSectionIdLectureLectureIdIndexRoute,
+  }
+
+const CourseCourseSlugLearnSectionIdLectureRouteWithChildren =
+  CourseCourseSlugLearnSectionIdLectureRoute._addFileChildren(
+    CourseCourseSlugLearnSectionIdLectureRouteChildren,
+  )
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -649,131 +612,6 @@ const rootRouteChildren: RootRouteChildren = {
   CourseCourseSlugLearnSectionIdQuizQuizIdRoute:
     CourseCourseSlugLearnSectionIdQuizQuizIdRoute,
 }
-
-export const routeTree = rootRoute
+export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "__root.tsx",
-      "children": [
-        "/",
-        "/about",
-        "/cart",
-        "/contact",
-        "/privacy",
-        "/reset-password",
-        "/signup",
-        "/terms",
-        "/user",
-        "/verify-email",
-        "/login/forgotpassword",
-        "/payment/checkout",
-        "/payment/success",
-        "/blogs/",
-        "/login/",
-        "/blogs/$slug/",
-        "/course/$courseSlug/",
-        "/course/$courseSlug/learn/",
-        "/courses/category/$categorySlug/",
-        "/courses/search/$search/",
-        "/course/$courseSlug/learn/$sectionId/lecture",
-        "/course/$courseSlug/learn/$sectionId/quiz/$quizId"
-      ]
-    },
-    "/": {
-      "filePath": "index.tsx"
-    },
-    "/about": {
-      "filePath": "about.tsx"
-    },
-    "/cart": {
-      "filePath": "cart.tsx"
-    },
-    "/contact": {
-      "filePath": "contact.tsx"
-    },
-    "/privacy": {
-      "filePath": "privacy.tsx"
-    },
-    "/reset-password": {
-      "filePath": "reset-password.tsx"
-    },
-    "/signup": {
-      "filePath": "signup.tsx"
-    },
-    "/terms": {
-      "filePath": "terms.tsx"
-    },
-    "/user": {
-      "filePath": "user.tsx",
-      "children": [
-        "/user/profile/",
-        "/user/purchases/",
-        "/user/setting/"
-      ]
-    },
-    "/verify-email": {
-      "filePath": "verify-email.tsx"
-    },
-    "/login/forgotpassword": {
-      "filePath": "login/forgotpassword.tsx"
-    },
-    "/payment/checkout": {
-      "filePath": "payment.checkout.tsx"
-    },
-    "/payment/success": {
-      "filePath": "payment.success.tsx"
-    },
-    "/blogs/": {
-      "filePath": "blogs.index.tsx"
-    },
-    "/login/": {
-      "filePath": "login/index.tsx"
-    },
-    "/blogs/$slug/": {
-      "filePath": "blogs.$slug.index.tsx"
-    },
-    "/course/$courseSlug/": {
-      "filePath": "course.$courseSlug.index.tsx"
-    },
-    "/user/profile/": {
-      "filePath": "user.profile.index.tsx",
-      "parent": "/user"
-    },
-    "/user/purchases/": {
-      "filePath": "user.purchases.index.tsx",
-      "parent": "/user"
-    },
-    "/user/setting/": {
-      "filePath": "user.setting.index.tsx",
-      "parent": "/user"
-    },
-    "/course/$courseSlug/learn/": {
-      "filePath": "course.$courseSlug.learn.index.tsx"
-    },
-    "/courses/category/$categorySlug/": {
-      "filePath": "courses.category.$categorySlug.index.tsx"
-    },
-    "/courses/search/$search/": {
-      "filePath": "courses.search.$search.index.tsx"
-    },
-    "/course/$courseSlug/learn/$sectionId/lecture": {
-      "filePath": "course.$courseSlug.learn.$sectionId.lecture.tsx",
-      "children": [
-        "/course/$courseSlug/learn/$sectionId/lecture/$lectureId/"
-      ]
-    },
-    "/course/$courseSlug/learn/$sectionId/quiz/$quizId": {
-      "filePath": "course.$courseSlug.learn.$sectionId.quiz.$quizId.tsx"
-    },
-    "/course/$courseSlug/learn/$sectionId/lecture/$lectureId/": {
-      "filePath": "course.$courseSlug.learn.$sectionId.lecture.$lectureId.index.tsx",
-      "parent": "/course/$courseSlug/learn/$sectionId/lecture"
-    }
-  }
-}
-ROUTE_MANIFEST_END */

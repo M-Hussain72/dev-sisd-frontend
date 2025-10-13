@@ -131,7 +131,7 @@ const CourseLessonPage = ({ sections, initialLectureId }: { sections: ContentIn[
           </ol>
           <div className="w-full mb-4  max-w-[1100px]">
             <div className=" lg:mb-3 sm:mt-0 mt-3 ml-1  flex flex-row  justify-between  sm:gap-6">
-              <h1 className=" min-[400px]:text-resHeading font-semibold lg:text-[34px] line-clamp-2">
+              <h1 className=" min-[400px]:text-resHeading font-semibold lg:text-[34px] line-clamp-1">
                 {currentLecture.type === 'assessment'
                   ? 'Quiz: '
                   : currentLecture.type === 'assignment'

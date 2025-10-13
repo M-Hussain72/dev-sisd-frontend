@@ -98,7 +98,6 @@ export default function VideoPlayer({
   useEffect(() => {
     const handleOnline = () => {
       setError(null);
-
       const hls = hlsRef.current;
       if (hls) {
         try {
@@ -207,15 +206,20 @@ export default function VideoPlayer({
                   setTimeout(() => {
                     try {
                       hls.startLoad();
-                      setError(null);
-                    } catch (e) {
-                      setError(' Network error');
-                    }
+                      // setError(null);
+                    } catch (e) {}
                   }, 1000);
                   break;
                 default:
                   setError('Cannot play video. Please try again.');
                   break;
+              }
+              if (data.response?.code === 401 || data.response?.code === 403) {
+                setError('Unauthorized: You do not have permission to view this video.');
+              } else if (data.response?.code === 404) {
+                setError('Content not found.');
+              } else {
+                setError('An error occurred while loading the video.');
               }
             }
           });
@@ -376,7 +380,8 @@ export default function VideoPlayer({
     const handleWaiting = () => setIsLoading(true);
     const handleCanPlay = () => setIsLoading(false);
     const handlePlaying = () => setIsLoading(false);
-    const handelEnded = () => {
+    const handelEnded = async () => {
+      await setLectureProgress({ lastViewTime: 0, completed: true });
       handleForwardLecture();
     };
 
@@ -397,6 +402,7 @@ export default function VideoPlayer({
       video.removeEventListener('waiting', handleWaiting);
       video.removeEventListener('canplay', handleCanPlay);
       video.removeEventListener('playing', handlePlaying);
+      video.removeEventListener('ended', handelEnded);
     };
   }, [handleForwardLecture]);
 
@@ -583,6 +589,7 @@ export default function VideoPlayer({
       onMouseLeave={() => isPlaying && setShowControls(false)}
       style={{ aspectRatio: '16/9' }}
     >
+      {error && <ErrorOverlay message={error} />}
       <video
         ref={videoRef}
         className="w-full h-full"
@@ -598,8 +605,6 @@ export default function VideoPlayer({
       />
 
       {isLoading && !error && <LoadingSpinner />}
-
-      {error && <ErrorOverlay message={error} />}
 
       {!isPlaying && !isLoading && !error && showControls && (
         <button
