@@ -159,11 +159,18 @@ export default function VideoPlayer({
 
         const Hls = (window as any).Hls;
 
+        // ---------- REPLACE your existing `if (Hls && Hls.isSupported()) { ... }` block with this ----------
         if (Hls && Hls.isSupported()) {
           const hls = new Hls({
+            // prevent automatic load so we can tell HLS where to start
+            autoStartLoad: false,
+            // hint position if you want (we still explicitly call startLoad below)
+            startPosition: startTime && startTime > 0 ? startTime : -1,
+
+            // your existing config
             backBufferLength: 90,
             maxBufferLength: 30,
-            xhrSetup: (xhr: { setRequestHeader: (arg0: string, arg1: string) => void }) => {
+            xhrSetup: (xhr: { setRequestHeader: (k: string, v: string) => void }) => {
               if (refreshToken) xhr.setRequestHeader('Authorization', `Bearer ${refreshToken}`);
             },
             maxMaxBufferLength: 60,
@@ -184,15 +191,43 @@ export default function VideoPlayer({
             setQualities(levelsList);
             setIsLoading(false);
 
-            if (startTime && video.currentTime === 0) {
+            // If we have a startTime, ask HLS to begin loading at that time.
+            // This avoids fetching from the playlist head (segment 0).
+            if (startTime && startTime > 0) {
+              try {
+                // tell Hls to start at the requested time
+                hls.startLoad(startTime);
+              } catch (err) {
+                // fallback: allow normal start then seek
+                console.warn('hls.startLoad(startTime) failed, falling back to normal load:', err);
+                hls.startLoad();
+              }
+
+              // try to set media position immediately; if metadata isn't available yet,
+              // set it once when 'loadedmetadata' fires.
               try {
                 video.currentTime = startTime;
-              } catch (e) {}
+              } catch (e) {
+                const onMeta = () => {
+                  try {
+                    video.currentTime = startTime;
+                  } catch (err) {
+                    /* ignore */
+                  }
+                  video.removeEventListener('loadedmetadata', onMeta);
+                };
+                video.addEventListener('loadedmetadata', onMeta);
+              }
+            } else {
+              // start normal loading if no startTime
+              hls.startLoad();
             }
 
+            // try autoplay but don't block
             video.play().catch(() => {});
           });
 
+          // keep your other HLS handlers (level switch + error)
           hls.on(Hls.Events.LEVEL_SWITCHED, (event: any, data: any) => {
             setCurrentQuality(data.level ?? -1);
           });
@@ -206,7 +241,6 @@ export default function VideoPlayer({
                   setTimeout(() => {
                     try {
                       hls.startLoad();
-                      // setError(null);
                     } catch (e) {}
                   }, 1000);
                   break;
@@ -214,21 +248,21 @@ export default function VideoPlayer({
                   setError('Cannot play video. Please try again.');
                   break;
               }
-              if (data.response?.code === 401 || data.response?.code === 403) {
-                setError('Unauthorized: You do not have permission to view this video.');
-              } else if (data.response?.code === 404) {
-                setError('Content not found.');
+            }
+
+            if (data.response?.code === 401 || data.response?.code === 403) {
+              setError('Unauthorized: You do not have permission to view this video.');
+            } else if (data.response?.code === 404) {
+              setError('Content not found.');
+            } else {
+              // keep general message for other cases (non-fatal or unknown)
+              if (!data.fatal) {
+                // non-fatal: you may still want to ignore
               } else {
                 setError('An error occurred while loading the video.');
               }
             }
           });
-        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-          video.src = videoUrl;
-          if (startTime) video.currentTime = startTime;
-          setIsLoading(false);
-        } else {
-          setError('Your browser does not support HLS video playback. Please try Chrome, Firefox, or Safari.');
         }
       } catch (err) {
         console.error('Error initializing player:', err);
@@ -275,7 +309,7 @@ export default function VideoPlayer({
   useEffect(() => {
     if (previewMode || !setLectureProgress) return;
 
-    const saveProgress = () => {
+    const saveProgress = async () => {
       const video = videoRef.current;
       if (!video || !isFinite(video.duration)) return;
 
@@ -289,25 +323,20 @@ export default function VideoPlayer({
 
       lastSavedTime.current = now;
 
-      if (saveDebounceTimeout.current) clearTimeout(saveDebounceTimeout.current);
-
-      saveDebounceTimeout.current = window.setTimeout(() => {
-        if (dur - now <= 30 && !hasMarkedComplete.current) {
-          hasMarkedComplete.current = true;
-          setLectureProgress({ lastViewTime: now, completed: true });
-        } else if (!hasMarkedComplete.current) {
-          setLectureProgress({ lastViewTime: now, completed: false });
-        }
-      }, 1000);
+      if (dur - now <= 30 && !hasMarkedComplete.current) {
+        hasMarkedComplete.current = true;
+        await setLectureProgress({ lastViewTime: now, completed: true });
+      } else if (!hasMarkedComplete.current) {
+        await setLectureProgress({ lastViewTime: now, completed: false });
+      }
     };
 
-    progressInterval.current = window.setInterval(saveProgress, 15000);
+    progressInterval.current = window.setInterval(saveProgress, 20000);
 
     const video = videoRef.current;
 
     return () => {
       if (progressInterval.current) clearInterval(progressInterval.current);
-      if (saveDebounceTimeout.current) clearTimeout(saveDebounceTimeout.current);
 
       if (video && !hasMarkedComplete.current && !previewMode) {
         const now = video.currentTime;
@@ -380,8 +409,15 @@ export default function VideoPlayer({
     const handleWaiting = () => setIsLoading(true);
     const handleCanPlay = () => setIsLoading(false);
     const handlePlaying = () => setIsLoading(false);
-    const handelEnded = async () => {
-      await setLectureProgress({ lastViewTime: 0, completed: true });
+    const handleEnded = async () => {
+      console.log('call ended');
+      hasMarkedComplete.current = true;
+
+      try {
+        await setLectureProgress({ lastViewTime: 0, completed: true });
+      } catch (err) {
+        console.error(err);
+      }
       handleForwardLecture();
     };
 
@@ -392,7 +428,7 @@ export default function VideoPlayer({
     video.addEventListener('waiting', handleWaiting);
     video.addEventListener('canplay', handleCanPlay);
     video.addEventListener('playing', handlePlaying);
-    video.addEventListener('ended', handelEnded);
+    video.addEventListener('ended', handleEnded);
 
     return () => {
       video.removeEventListener('timeupdate', handleTimeUpdate);
@@ -402,7 +438,7 @@ export default function VideoPlayer({
       video.removeEventListener('waiting', handleWaiting);
       video.removeEventListener('canplay', handleCanPlay);
       video.removeEventListener('playing', handlePlaying);
-      video.removeEventListener('ended', handelEnded);
+      video.removeEventListener('ended', handleEnded);
     };
   }, [handleForwardLecture]);
 

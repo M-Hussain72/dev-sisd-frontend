@@ -80,6 +80,14 @@ export default function CoursePricing({
       },
     });
   }
+  async function handleClick(slug: string) {
+    const res = await userHttp.getUserCourseProgress({ authAxios, courseSlug: slug });
+    if (!res) {
+      navigate({ to: `/course/${slug}/learn` });
+    }
+    navigate({ to: `/course/${slug}/learn?sectionId=${res?.sectionId}&lectureId=${res?.lectureId}` });
+  }
+
   return (
     <>
       <h1 className=" text-[42px] font-semibold ">
@@ -107,7 +115,7 @@ export default function CoursePricing({
           </>
         ) : (
           <button
-            onClick={() => navigate({ to: `/course/${param.courseSlug}/learn` })}
+            onClick={() => handleClick(param.courseSlug)}
             className=" py-3 px-6 w-full bg-[#307EE1]  text-lg font-semibold text-nowrap text-white   hover:bg-[#3c67ca]  rounded-lg"
           >
             Go To Course
